@@ -36,7 +36,7 @@ public class BattleFieldTemplate2 extends JPanel {
 	String[][] battleField = {
 			{" ", " ", " ", "B", "B", "B", " ", " ", " "},
 			{"B", " ", " ", " ", "B", " ", " ", " ", "B"},
-			{"B", "B", " ", " ", "B", " ", " ", "B", "B"},
+			{"B", "B", " ", " ", " ", " ", " ", "B", "B"},
 			{"B", "B", "B", " ", " ", " ", "B", "B", "B"},
 			{"B", "B", "B", " ", " ", " ", "B", "B", "B"},
 			{"B", "B", " ", " ", "B", " ", " ", "B", "B"},
@@ -52,7 +52,13 @@ public class BattleFieldTemplate2 extends JPanel {
 				
 //		moveRandom();
 		
-		moveToRandomQuadrant();
+//		moveToRandomQuadrant();
+		
+		while(true){
+			clean();
+		}		
+		
+		
 		
 	}
 	
@@ -193,9 +199,8 @@ public class BattleFieldTemplate2 extends JPanel {
 	}
 	
 	void moveToRandomQuadrant() throws Exception{
-		Random r = new Random();
+		Random r = new Random();		
 		
-		while(true){
 		 int i = r.nextInt(9);
 		 int j = r.nextInt(9);
 		 
@@ -203,7 +208,7 @@ public class BattleFieldTemplate2 extends JPanel {
 			 moveToQuadrant(i, j);		
 			 Thread.sleep(1000);	 
 		 }	
-		}
+		
 		
 	}
 	
@@ -234,6 +239,87 @@ public class BattleFieldTemplate2 extends JPanel {
 				move(1);
 			}
 		}
+	}
+	
+	void clean() throws Exception {
+		int step = 64, x, y, dist1=512, dist2=512, dist3=512, dist4=512, min=512;	
+				
+		
+				x=tankX; y=tankY;
+				while(y > 0){
+					y -= step;					
+					if(!isEmpty(tankX, y)){
+						dist1=tankY-y-64;							
+						break;
+					} 				
+				}
+			
+				x=tankX; y=tankY;
+				while(y < 512){					
+					y += step;						
+					if(!isEmpty(tankX, y)){
+						dist2=y-tankY-64;							
+						break;
+					}
+			}
+			
+				x=tankX; y=tankY;
+				while(x > 0){					
+					x -= step;					
+					if(!isEmpty(x, tankY)){
+						dist3=tankX - x - 64;						
+						break;						
+					}
+				}
+			
+				x=tankX; y=tankY;
+				while(x < 512){						
+					x += step;					
+					if(!isEmpty(x, tankY)){
+						dist4=x- tankX - 64;							
+						break;
+					}
+				}
+				
+				
+// 				System.out.println(dist1);
+// 				System.out.println(dist2);
+//				System.out.println(dist3);
+//				System.out.println(dist4);
+				int[] temp = {dist1,dist2,dist3,dist4};
+				 
+				int direction=1;
+				
+				for(int i=0; i<temp.length; i++){					
+					if(temp[i]<min) {
+						min=temp[i];
+						direction=i+1;
+					}
+				}
+				
+				if(min==512) {
+					moveToRandomQuadrant();
+					return;				
+				}
+				turn(direction);	
+				fire();				
+		
+	}
+	
+	boolean isEmpty(int cX, int cY) {		
+		String coordinates;
+		coordinates = getQuadrant(cX, cY);	
+		
+		int separator = coordinates.indexOf("_");
+		int y = Integer.parseInt(coordinates.substring(0, separator)); 
+		int x = Integer.parseInt(coordinates.substring(separator + 1));	
+		
+		if((y>=0&&y<battleField.length)&&(x>=0&&x<battleField.length)){
+			if(!battleField[y][x].trim().isEmpty()){ //удаляет лишние пробелы и проверяет, что осталось				
+				return false;
+			}	
+		}		
+		return true;
 	}
 
 	// Magic bellow. Do not worry about this now, you will understand everything in this course.
