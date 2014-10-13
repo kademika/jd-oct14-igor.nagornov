@@ -1,4 +1,4 @@
-package lesson4;
+package lesson4.Video4;
 
 public class Video4_GreetingService {
 
