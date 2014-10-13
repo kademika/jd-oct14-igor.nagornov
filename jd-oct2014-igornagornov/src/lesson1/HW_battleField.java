@@ -14,7 +14,7 @@ public class HW_battleField {
 			//пробел - пустота
 			//размер поля - 9X9
 			
-			System.out.println("   c     ");
+			System.out.println("   c  c  ");
 			System.out.println("  bbbbbc ");
 			System.out.println("  bbbbb  ");
 			System.out.println("cwbbbbbw ");

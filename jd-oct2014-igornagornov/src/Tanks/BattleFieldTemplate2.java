@@ -79,7 +79,7 @@ public class BattleFieldTemplate2 extends JPanel {
 		return false;
 	}
 	
-	boolean processJam() {		
+	boolean processCollision() {		
 		String coordinates;
 //		coordinates = getQuadrant(tankX, tankY);
 		
@@ -172,7 +172,7 @@ public class BattleFieldTemplate2 extends JPanel {
 			}
 			covered += step;
 
-			if(processJam()) fire();
+			if(processCollision()) fire();
 			repaint();
 			Thread.sleep(speed);
 		}
