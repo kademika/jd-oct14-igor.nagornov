@@ -1,5 +1,7 @@
 package lesson4.Video14;
 
+import java.io.ObjectInputStream.GetField;
+
 public class printTankInfo {
 
 	public static void main(String[] args) {
@@ -9,17 +11,14 @@ public class printTankInfo {
 		
 		static void printAllTankInfo(){
 			
-			Tank t = new Tank();
-			t.color = "черный";
-			t.crew = 3 ;
-			t.maxSpeed = 100;
+			Tank t = new Tank();			
 			
-			System.out.println("Мы создали " + t.color + " танк" + ", экипаж из " + t.crew + " человек," +
-						" максимальная скорость - " + t.maxSpeed);
+			System.out.println("Мы создали " + t.getColor() + " танк" + ", экипаж из " + t.getCrew() + " человек," +
+						" максимальная скорость - " + t.getMaxSpeed());
 			
-			Tank t2 = new Tank("cерый", 5, 150);
-			System.out.println("Мы создали " + t2.color + " танк" + ", экипаж из " + t2.crew + " человек," +
-					" максимальная скорость - " + t2.maxSpeed);
+			Tank t2 = new Tank("cерый", 5, 250);
+			System.out.println("Мы создали " + t2.getColor() + " танк" + ", экипаж из " + t2.getCrew() + " человек," +
+					" максимальная скорость - " + t2.getMaxSpeed());
 		}
 
 }
