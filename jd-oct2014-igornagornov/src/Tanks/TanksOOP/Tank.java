@@ -65,10 +65,18 @@ public class Tank {
 			actionfield.processMove(this);
 		}
 		
+		public void moveRandom() throws Exception{
+			actionfield.processMoveRandom(this);
+		}
+		
 		public void fire() throws Exception{
 			Bullet bullet = new Bullet(x + 25, y + 25, direction);
 			actionfield.processFire(bullet);
 		}		
+		
+		public void moveToQuadrant(int v, int h) throws Exception{
+			actionfield.processMoveToQuadrant(this, v, h);
+		}
 		
 
 }

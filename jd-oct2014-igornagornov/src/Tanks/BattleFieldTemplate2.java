@@ -81,7 +81,6 @@ public class BattleFieldTemplate2 extends JPanel {
 	
 	boolean processCollision() {		
 		String coordinates;
-//		coordinates = getQuadrant(tankX, tankY);
 		
 		if ((tankDirection == 1 && tankY != 0) || (tankDirection == 2 && tankY < 512)
 				|| (tankDirection == 3 && tankX != 0) || (tankDirection == 4 && tankX < 512)){
@@ -207,8 +206,7 @@ public class BattleFieldTemplate2 extends JPanel {
 		 if(i!=0&&j!=0){
 			 moveToQuadrant(i, j);		
 			 Thread.sleep(1000);	 
-		 }	
-		
+		 }		
 		
 	}
 	
@@ -279,13 +277,8 @@ public class BattleFieldTemplate2 extends JPanel {
 						dist4=x- tankX - 64;							
 						break;
 					}
-				}
-				
-				
-// 				System.out.println(dist1);
-// 				System.out.println(dist2);
-//				System.out.println(dist3);
-//				System.out.println(dist4);
+				}				
+
 				int[] temp = {dist1,dist2,dist3,dist4};
 				 
 				int direction=1;

@@ -13,23 +13,30 @@ public class ActionField extends JPanel {
 	
 	final boolean COLORDED_MODE = false;
 	private BattleField battlefield;
-	private Tank tank;
+	private Tank tank;	
 	private Bullet bullet;
+	
+	public ActionField() throws Exception {
+		
+	battlefield = new BattleField();	
+	tank = new Tank(this, battlefield, 192, 128, 2);	
+	bullet = new Bullet(-100, -100, tank.getDirection());
+		
+	JFrame frame = new JFrame("BATTLE FIELD, OOP");
+	frame.setLocation(750, 150);
+	frame.setMinimumSize(new Dimension(battlefield.getBF_WIDTH(), battlefield.getBF_HEIGHT() + 22));
+	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	frame.getContentPane().add(this);
+	frame.pack();
+	frame.setVisible(true);
+}	
 
 
 	void runTheGame() throws Exception {
-		tank.turn(4);
-		tank.move();
-		tank.fire();
-		tank.turn(3);
-		tank.move();
-		tank.fire();
-		tank.turn(2);
-		tank.move();
-		tank.fire();
-		tank.turn(1);
-		tank.move();
-		tank.fire();
+		tank.moveToQuadrant(9,3);
+		
+		
+		
 
 	}	
 	
@@ -49,10 +56,39 @@ public class ActionField extends JPanel {
 		int y = Integer.parseInt(coordinates.substring(0, separator));
 		int x = Integer.parseInt(coordinates.substring(separator + 1));	
 		
-		if((y>=0&&y<battlefield.getBF_HEIGHT())&&(x>=0&&x<battlefield.getBF_WIDTH())){
+		if((y>=0&&y<battlefield.getDimensionY())&&(x>=0&&x<battlefield.getDimensionX())){
 			if(!battlefield.scanQuadrant(y, x).trim().isEmpty()){ //удаляет лишние пробелы и проверяет, что осталось
 				battlefield.updateQuadrant(y, x, "");		
 				bullet.destroy();
+				return true;
+			}	
+		}
+		
+		return false;
+	}
+	
+	private boolean processCollision() {		
+		String coordinates;
+//		coordinates = getQuadrant(tankX, tankY);
+		
+		if ((tank.getDirection() == 1 && tank.getY() != 0) || (tank.getDirection() == 2 && tank.getY() < 512)
+				|| (tank.getDirection() == 3 && tank.getX()!= 0) || (tank.getDirection() == 4 && tank.getX() < 512)){
+			if (tank.getDirection() == 1||tank.getDirection() == 3) {
+				coordinates = getQuadrant(tank.getX(), tank.getY());				
+			} else if (tank.getDirection() == 2) {
+				coordinates = getQuadrant(tank.getX(), tank.getY()+64);								
+			} else {
+				coordinates = getQuadrant(tank.getX()+64, tank.getY());				
+			}	
+		}else return false;
+		
+		
+		int separator = coordinates.indexOf("_");
+		int y = Integer.parseInt(coordinates.substring(0, separator));
+		int x = Integer.parseInt(coordinates.substring(separator + 1));	
+		
+		if((y>=0&&y<battlefield.getDimensionY())&&(x>=0&&x<battlefield.getDimensionX())){
+			if(!battlefield.scanQuadrant(y, x).trim().isEmpty()){ //удаляет лишние пробелы и проверяет, что осталось				
 				return true;
 			}	
 		}
@@ -104,9 +140,60 @@ public class ActionField extends JPanel {
 		
 	}
 	
+	void processMoveToQuadrant(Tank tank, int v, int h) throws Exception 
+	{
+		String coordinates = getQuadrantXY(v, h);
+		int separator = coordinates.indexOf("_");
+		int y = Integer.parseInt(coordinates.substring(0, separator));
+		int x = Integer.parseInt(coordinates.substring(separator + 1));
+
+		
+		if (tank.getX() < x ) {
+			while (tank.getX() != x) {
+				tank.turn(4);
+				tank.move();				
+				
+			}
+		} else {
+			while (tank.getX() != x) {
+				tank.turn(3);
+				tank.move();
+			}
+		}
+
+		if (tank.getY() < y) {
+			while (tank.getY() != y) {
+				tank.turn(2);
+				tank.move();
+			}
+		} else {
+			while (tank.getY() != y) {
+				tank.turn(1);
+				tank.move();
+			}
+		}
+	}
+	
+	public void processMoveRandom(Tank tank) throws Exception{
+		// TODO Auto-generated method stub		
+		
+			Random r = new Random();
+			int i;
+			while (true) {
+				i = r.nextInt(5);
+				if (i > 0) {
+					tank.turn(r.nextInt(5));
+					tank.move();
+					tank.fire();					
+				}
+			}
+		}
+	
+	
+	
 	public void processFire(Bullet bullet) throws Exception {
 		// TODO Auto-generated method stub	
-			this.bullet = bullet;
+			this.bullet = bullet;	
 			int step=1;
 			int direction = bullet.getDirection();
 					
@@ -129,22 +216,6 @@ public class ActionField extends JPanel {
 					
 		
 	}
-
-	public ActionField() throws Exception {
-		
-	battlefield = new BattleField();	
-	tank = new Tank(this, battlefield, 192, 128, 2);	
-	bullet = new Bullet(-100, -100, tank.getDirection());
-		
-	JFrame frame = new JFrame("BATTLE FIELD, OOP");
-	frame.setLocation(750, 150);
-	frame.setMinimumSize(new Dimension(battlefield.getBF_WIDTH(), battlefield.getBF_HEIGHT() + 22));
-	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	frame.getContentPane().add(this);
-	frame.pack();
-	frame.setVisible(true);
-}	
-
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -200,6 +271,10 @@ public class ActionField extends JPanel {
 	g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
 	}
 
-	
+
 
 }
+
+	
+
+
