@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
 
 public class ActionField extends JPanel {	
 	
-	final boolean COLORDED_MODE = false;
+	final boolean COLORDED_MODE = false;	
 	private BattleField battlefield;
 	private Tank tank;	
 	private Bullet bullet;
@@ -33,10 +33,7 @@ public class ActionField extends JPanel {
 
 
 	void runTheGame() throws Exception {
-		tank.moveToQuadrant(9,3);
-		
-		
-		
+		tank.moveToQuadrant(9,3);		
 
 	}	
 	
