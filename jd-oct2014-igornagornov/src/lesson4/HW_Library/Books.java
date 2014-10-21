@@ -6,7 +6,7 @@ public class Books {
 	private String author;
 	private Genre genre;
 	
-	Books(){
+	public Books(){
 		setName("Java Trainer");
 		setAuthor("Yakov Faine");
 		setGenre(genre.ÊÎÌÏÜŞÒÅĞÛ);
