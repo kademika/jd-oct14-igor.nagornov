@@ -74,8 +74,20 @@ public class Tank {
 			actionfield.processFire(bullet);
 		}		
 		
+		public void clean() throws Exception{			
+			actionfield.processClean(this);
+		}	
+		
 		public void moveToQuadrant(int v, int h) throws Exception{
 			actionfield.processMoveToQuadrant(this, v, h);
+		}
+		
+		public void moveToRandomQuadrant() throws Exception{
+			actionfield.processMoveToRandomQuadrant(this);
+		}
+		
+		public boolean isCollision() throws Exception{
+			return actionfield.processCollision(this);
 		}
 		
 

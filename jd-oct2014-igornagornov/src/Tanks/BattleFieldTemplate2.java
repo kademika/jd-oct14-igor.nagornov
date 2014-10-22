@@ -52,7 +52,7 @@ public class BattleFieldTemplate2 extends JPanel {
 				
 //		moveRandom();
 		
-//		moveToRandomQuadrant();
+		moveToRandomQuadrant();
 		
 		while(true){
 			clean();
