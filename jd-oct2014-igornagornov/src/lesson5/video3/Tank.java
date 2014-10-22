@@ -1,5 +1,7 @@
 package lesson5.video3;
 
+import java.io.ObjectInputStream.GetField;
+
 public class Tank {
 
 	private String color;
@@ -7,13 +9,13 @@ public class Tank {
 	private int maxSpeed;	
 	
 	public Tank(){
-		this("черный", 2, 100);
+		this("черный", 2, 100);			
 	}
 	
 	public Tank(String color, int crew, int maxSpeed){
 		setColor(color);
 		setCrew(crew);
-		setMaxSpeed(maxSpeed);		
+		setMaxSpeed(maxSpeed);			
 	}
 
 	
@@ -45,6 +47,16 @@ public class Tank {
 		else{
 			this.maxSpeed = maxSpeed;
 		}
+	}
+	
+	public void move(){
+		System.out.println("Двигаем танк " + this.toString());
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "default";
 	}
 	
 }
