@@ -3,15 +3,16 @@ package Tanks.TanksOOP;
 public class Tank {
 
 	// 1 - top, 2 - bottom, 3 - left, 4 - right
-	private int direction;
+
 	private int x;
 	private int y;
-	private int speed = 10;
+	protected int speed = 10;
+	private Direction direction;
 	private ActionField actionfield;
 	private BattleField battlefield;
 
 	public Tank(ActionField actionfield, BattleField battlefield, int x, int y,
-			int direction) {
+			Direction direction) {
 		this.actionfield = actionfield;
 		this.battlefield = battlefield;
 		this.x = x;
@@ -20,11 +21,11 @@ public class Tank {
 	}
 
 	public Tank(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 192, 128, 2);
+		this(actionfield, battlefield, 192, 128, Direction.UP);
 	}
 
-	public int getDirection() {
-		return direction;
+	public Direction getDirection() {
+		return this.direction;
 	}
 
 	public int getX() {
@@ -55,7 +56,8 @@ public class Tank {
 		this.y += y;
 	}
 
-	public void turn(int direction) throws Exception {
+	public void turn(Direction direction) throws Exception {
+
 		if (this.direction != direction) {
 			this.direction = direction;
 			actionfield.processTurn(this);
@@ -79,7 +81,7 @@ public class Tank {
 	}
 
 	public void fire() throws Exception {
-		Bullet bullet = new Bullet(x + 25, y + 25, direction);
+		Bullet bullet = new Bullet(x + 25, y + 25, this.direction);
 		actionfield.processFire(bullet);
 	}
 
@@ -107,4 +109,10 @@ public class Tank {
 		return actionfield.processCollision(this);
 	}
 
+	public void destroy() {
+		x = -100;
+		y = -100;
+		direction = Direction.NONE;
+		actionfield.repaint();
+	}
 }

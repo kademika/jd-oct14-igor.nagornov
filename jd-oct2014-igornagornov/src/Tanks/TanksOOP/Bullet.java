@@ -5,9 +5,9 @@ public class Bullet {
 	private int x;
 	private int y;
 	private int speed = 5;
-	private int direction;
+	private Direction direction;
 
-	Bullet(int x, int y, int direction) {
+	Bullet(int x, int y, Direction direction) {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -26,8 +26,8 @@ public class Bullet {
 		return speed;
 	}
 
-	public int getDirection() {
-		return direction;
+	public Direction getDirection() {
+		return this.direction;
 	}
 
 	public void updateX(int x) {
@@ -41,6 +41,7 @@ public class Bullet {
 	public void destroy() {
 		x = -100;
 		y = -100;
+		direction = Direction.NONE;
 	}
 
 }
