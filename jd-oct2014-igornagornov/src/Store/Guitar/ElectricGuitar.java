@@ -39,32 +39,16 @@ public class ElectricGuitar extends Guitar {
 		return bodyMaterial;
 	}
 
-	public void setBodyMaterial(String bodyMaterial) {
-		this.bodyMaterial = bodyMaterial;
-	}
-
 	public String getNeckName() {
 		return neckName;
 	}
-
-	public void setNeckName(String neckName) {
-		this.neckName = neckName;
-	}
-
+	
 	public String getBridgeName() {
 		return bridgeName;
 	}
 
-	public void setBridgeName(String bridgeName) {
-		this.bridgeName = bridgeName;
-	}
-
 	public boolean isFloydRose() {
 		return isFloydRose;
-	}
-
-	public void setFloydRose(boolean isFloydRose) {
-		this.isFloydRose = isFloydRose;
 	}
 
 	public static int getCountElecticGuitar() {

@@ -36,7 +36,7 @@ public class Guitar {
 
 		this.guitarBrand = guitarBrand;
 		this.color = color;
-		this.model = model;				
+		this.model = model;
 		this.freatboardMaterial = freatboardMaterial;
 		this.isFreatboardGlued = isFreatboardGlued;
 		this.numberOfStrings = numberOfStrings;
@@ -49,74 +49,36 @@ public class Guitar {
 		return guitarBrand;
 	}
 
-	public void setGuitarBrand(GuitarBrand guitarBrand) {
-		this.guitarBrand = guitarBrand;
-	}
-
 	public FreatboardMaterial getFreatboardMaterial() {
 		return freatboardMaterial;
-	}
-
-	public void setFreatboardMaterial(FreatboardMaterial freatboardMaterial) {
-		this.freatboardMaterial = freatboardMaterial;
 	}
 
 	public boolean isFreatboardGlued() {
 		return isFreatboardGlued;
 	}
 
-	public void setFreatboardGlued(boolean isFreatboardGlued) {
-		this.isFreatboardGlued = isFreatboardGlued;
-	}
-
 	public int getNumberOfStrings() {
 		return numberOfStrings;
-	}
-
-	public void setNumberOfStrings(int numberOfStrings) {
-		this.numberOfStrings = numberOfStrings;
 	}
 
 	public int getNumberOfFrets() {
 		return numberOfFrets;
 	}
 
-	public void setNumberOfFrets(int numberOfFrets) {
-		this.numberOfFrets = numberOfFrets;
-	}
-
 	public String getManufacturer() {
 		return manufacturer;
-	}
-
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
 	}
 
 	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
 	public String getColor() {
 		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public String getModel() {
 		return model;
 	}
-
-	public void setModel(String model) {
-		this.model = model;
-	}
-	
-	
 
 }

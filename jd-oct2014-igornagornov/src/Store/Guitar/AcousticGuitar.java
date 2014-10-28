@@ -28,10 +28,6 @@ public class AcousticGuitar extends Guitar {
 		return stringsIsNylon;
 	}
 
-	public void setStringsIsNylon(boolean stringsIsNylon) {
-		this.stringsIsNylon = stringsIsNylon;
-	}
-
 	public static int getCountAcousticGuitar() {
 		return countAcousticGuitar;
 	}

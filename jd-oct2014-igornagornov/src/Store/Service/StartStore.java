@@ -7,11 +7,13 @@ import Store.Guitar.FreatboardMaterial;
 import Store.Guitar.Guitar;
 import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
+import Store.Purchase.Purchase;
 import lesson4.HW_Library.Books;
 
 public class StartStore {
 
 	private static Guitar guitar[][][] = new Guitar[3][5][];
+	private static Purchase purchase[] = new Purchase[100];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,7 +23,15 @@ public class StartStore {
 		// printStore(guitar);
 		// printNumberOfGuitarType();
 		// printPrices(guitar);
-		printGuitarType(guitar, GuitarType.ACOUSTIC);
+		// printGuitarType(guitar, GuitarType.ACOUSTIC);
+
+		Purchase p = new Purchase(guitar[0][1][0], 1, "Igor Nagornov");
+		executePurchase(p, 0, 1, 0);
+
+		Purchase p1 = new Purchase(guitar[1][4][0], 1);
+		executePurchase(p1, 1, 4, 0);
+
+		printPurchases(purchase);
 
 	}
 
@@ -58,10 +68,10 @@ public class StartStore {
 				"RHD12", FreatboardMaterial.MAPLE, true, 6, 19, "Japan", 40000,
 				true);
 		addGuitarToStore(g6);
-		
+
 		AcousticGuitar g7 = new AcousticGuitar(GuitarBrand.JACKSON, "blue",
-				"PR981", FreatboardMaterial.MACHOGONY, false, 12, 24, "USA", 80000,
-				true);
+				"PR981", FreatboardMaterial.MACHOGONY, false, 12, 24, "USA",
+				80000, true);
 		addGuitarToStore(g7);
 
 	}
@@ -171,6 +181,8 @@ public class StartStore {
 			}
 
 		}
+		System.out
+				.println("_____________________________________________________________________________________________________________");
 
 	}
 
@@ -196,6 +208,9 @@ public class StartStore {
 
 		}
 
+		System.out
+				.println("________________________________________________________");
+
 	}
 
 	public static void printNumberOfGuitarType() {
@@ -206,6 +221,8 @@ public class StartStore {
 				+ " electric guitars in the stock");
 		System.out.println("We have " + BassGuitar.getCountBassGuitar()
 				+ " bass guitars in the stock");
+		System.out
+				.println("________________________________________________________");
 	}
 
 	public static void printGuitarType(Guitar[][][] guitar,
@@ -239,6 +256,47 @@ public class StartStore {
 			}
 
 		}
+		System.out
+				.println("________________________________________________________");
+
+	}
+
+	public static void executePurchase(Purchase p, int k, int i, int j) {		
+
+		guitar[k][i][j] = null;
+
+		int kol = 0;
+		while (purchase[kol] != null) {
+			kol++;
+		}
+		purchase[kol] = p;
+		
+	}
+
+	public static void printPurchases(Purchase[] purchase) {
+
+		int number=0;
+		int sum=0;		
+		
+		for (Purchase value : purchase) {
+			if(value!=null){
+				number++;
+				sum+=(value.getNumber() * value.getGuitar().getPrice());
+				System.out.println("Purchase " + number + " "
+						+ value.getCustomer().getName() + " "
+						+ value.getGuitar().getGuitarBrand() + " "
+						+ value.getGuitar().getModel() + " " + value.getNumber()
+						+ " " + (value.getNumber() * value.getGuitar().getPrice()));								
+			}			
+			
+			
+		}
+		
+		System.out
+		.println("__________________________________________________");
+		System.out.println("All " + number + " purchases                            " + sum);
+
+		
 
 	}
 
