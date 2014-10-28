@@ -6,7 +6,7 @@ public class Tank {
 
 	private int x;
 	private int y;
-	protected int speed = 10;
+	protected int speed = 20;
 	private Direction direction;
 	private ActionField actionfield;
 	private BattleField battlefield;
