@@ -13,14 +13,25 @@ public class ActionField extends JPanel {
 
 	final boolean COLORDED_MODE = false;
 	private BattleField battlefield;
-	private Tank tank;
+	private Tank defender;
+	private Tiger agressor;
 	private Bullet bullet;
 
 	public ActionField() throws Exception {
 
 		battlefield = new BattleField();
-		tank = new Tank(this, battlefield, 192, 128, Direction.DOWN);
-		bullet = new Bullet(-100, -100, Direction.DOWN);
+		defender = new Tank(this, battlefield);
+
+		int x;
+		int y;
+		String temp = battlefield.getAgressorLocation();
+
+		x = Integer.parseInt(temp.substring(0, temp.indexOf("_")));
+		y = Integer.parseInt(temp.substring(temp.indexOf("_")+1));		
+		
+		agressor = new Tiger(this, battlefield, x, y, Direction.DOWN);
+
+		bullet = new Bullet(-100, -100, Direction.NONE);
 
 		JFrame frame = new JFrame("BATTLE FIELD, OOP");
 		frame.setLocation(750, 150);
@@ -34,7 +45,8 @@ public class ActionField extends JPanel {
 
 	void runTheGame() throws Exception {
 		while (true) {
-			tank.clean();
+			agressor.clean();
+			
 		}
 
 	}
@@ -272,7 +284,7 @@ public class ActionField extends JPanel {
 
 	}
 
-	public void processFire(Bullet bullet) throws Exception {
+	public void processFire(Tank tank, Bullet bullet) throws Exception {
 		// TODO Auto-generated method stub
 		this.bullet = bullet;
 		int step = 1;
@@ -423,22 +435,44 @@ public class ActionField extends JPanel {
 			}
 		}
 
-		g.setColor(new Color(255, 0, 0));
-		g.fillRect(tank.getX(), tank.getY(), 64, 64);
-
+		
+		//defender
 		g.setColor(new Color(0, 255, 0));
-		if (tank.getDirection() == Direction.UP) {
-			g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-		} else if (tank.getDirection() == Direction.DOWN) {
-			g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-		} else if (tank.getDirection() == Direction.LEFT) {
-			g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
+		g.fillRect(defender.getX(), defender.getY(), 64, 64);
+
+		g.setColor(new Color(255, 0, 0));
+		if (defender.getDirection() == Direction.UP) {
+			g.fillRect(defender.getX() + 20, defender.getY(), 24, 34);
+		} else if (defender.getDirection() == Direction.DOWN) {
+			g.fillRect(defender.getX() + 20, defender.getY() + 30, 24, 34);
+		} else if (defender.getDirection() == Direction.LEFT) {
+			g.fillRect(defender.getX(), defender.getY() + 20, 34, 24);
 		} else {
-			g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
+			g.fillRect(defender.getX() + 30, defender.getY() + 20, 34, 24);
 		}
 
 		g.setColor(new Color(255, 255, 0));
 		g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+		
+		//agressor		
+		g.setColor(new Color(255, 0, 0));
+		g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
+
+		g.setColor(new Color(0, 255, 0));
+		if (agressor.getDirection() == Direction.UP) {
+			g.fillRect(agressor.getX() + 20, agressor.getY(), 24, 34);
+		} else if (agressor.getDirection() == Direction.DOWN) {
+			g.fillRect(agressor.getX() + 20, agressor.getY() + 30, 24, 34);
+		} else if (agressor.getDirection() == Direction.LEFT) {
+			g.fillRect(agressor.getX(), agressor.getY() + 20, 34, 24);
+		} else {
+			g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
+		}
+
+		g.setColor(new Color(255, 255, 0));
+		g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+		
+		
 	}
 
 }

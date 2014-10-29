@@ -9,7 +9,7 @@ public class Tiger extends Tank {
 	}
 
 	public Tiger(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 192, 128, Direction.UP);
+		this(actionfield, battlefield, 0, 0, Direction.RIGHT);
 		setArmor(1);
 	}
 

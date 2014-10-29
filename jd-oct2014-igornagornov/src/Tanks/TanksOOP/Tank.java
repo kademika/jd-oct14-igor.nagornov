@@ -1,5 +1,7 @@
 package Tanks.TanksOOP;
 
+import java.util.Random;
+
 public class Tank {
 
 	// 1 - top, 2 - bottom, 3 - left, 4 - right
@@ -21,7 +23,7 @@ public class Tank {
 	}
 
 	public Tank(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 192, 128, Direction.UP);
+		this(actionfield, battlefield, 128, 512, Direction.UP);
 	}
 
 	public Direction getDirection() {
@@ -82,7 +84,7 @@ public class Tank {
 
 	public void fire() throws Exception {
 		Bullet bullet = new Bullet(x + 25, y + 25, this.direction);
-		actionfield.processFire(bullet);
+		actionfield.processFire(this, bullet);
 	}
 
 	public void clean() throws Exception {
@@ -107,7 +109,7 @@ public class Tank {
 
 	public boolean isCollision() throws Exception {
 		return actionfield.processCollision(this);
-	}
+	}	
 
 	public void destroy() {
 		x = -100;

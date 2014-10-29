@@ -10,7 +10,7 @@ public class BT7 extends Tank {
 	}
 
 	public BT7(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 192, 128, Direction.UP);
+		this(actionfield, battlefield, 512, 0, Direction.DOWN);
 		speed = 10;
 	}
 
