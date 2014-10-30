@@ -46,7 +46,7 @@ public class BattleField extends JPanel {
 	public int getBF_HEIGHT() {
 		return BF_HEIGHT;
 	}
-	
+
 	public String getAgressorLocation() {
 		int random;
 		String result = "0_0";

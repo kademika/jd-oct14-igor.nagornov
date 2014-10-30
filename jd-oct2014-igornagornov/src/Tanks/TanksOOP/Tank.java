@@ -20,6 +20,7 @@ public class Tank {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
+		// this.setTankOnBattlefield();
 	}
 
 	public Tank(ActionField actionfield, BattleField battlefield) {
@@ -30,6 +31,18 @@ public class Tank {
 		return this.direction;
 	}
 
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -83,8 +96,28 @@ public class Tank {
 	}
 
 	public void fire() throws Exception {
-		Bullet bullet = new Bullet(x + 25, y + 25, this.direction);
-		actionfield.processFire(this, bullet);
+		Bullet bullet = new Bullet(x + 25, y + 25, direction);
+
+		if ((this.getDirection() == Direction.UP && this.getY() != 0)
+				|| (this.getDirection() == Direction.DOWN && this.getY() < 512)
+				|| (this.getDirection() == Direction.LEFT && this.getX() != 0)
+				|| (this.getDirection() == Direction.RIGHT && this.getX() < 512)) {
+			if (this.getDirection() == Direction.UP) {
+				bullet = new Bullet(this.getX() + 25, this.getY(),
+						direction);
+			} else if (this.getDirection() == Direction.DOWN) {
+				bullet = new Bullet(this.getX() + 25, this.getY() + 64,
+						direction);
+			} else if (this.getDirection() == Direction.LEFT) {
+				bullet = new Bullet(this.getX(), this.getY() + 25,
+						direction);
+			} else {
+				bullet = new Bullet(this.getX() +64, this.getY() +25,
+						direction);
+			}
+		}
+
+		actionfield.processFire(bullet);
 	}
 
 	public void clean() throws Exception {
@@ -109,12 +142,21 @@ public class Tank {
 
 	public boolean isCollision() throws Exception {
 		return actionfield.processCollision(this);
-	}	
-
-	public void destroy() {
-		x = -100;
-		y = -100;
-		direction = Direction.NONE;
-		actionfield.repaint();
 	}
+
+	public void destroy() throws InterruptedException {
+		x = -100;
+		y = -100;		
+	}
+
+	// public void setTankOnBattlefield(){
+	//
+	// String coordinates = ActionField.getQuadrant(this.getX(), this.getY());
+	// int separator = coordinates.indexOf("_");
+	// int y = Integer.parseInt(coordinates.substring(0, separator));
+	// int x = Integer.parseInt(coordinates.substring(separator + 1));
+	//
+	// battlefield.updateQuadrant(y, x, "T");
+	//
+	// }
 }

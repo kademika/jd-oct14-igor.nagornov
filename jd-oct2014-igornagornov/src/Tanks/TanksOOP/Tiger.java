@@ -1,5 +1,7 @@
 package Tanks.TanksOOP;
 
+import javax.security.auth.Destroyable;
+
 public class Tiger extends Tank {
 
 	public Tiger(ActionField actionfield, BattleField battlefield, int x,
@@ -21,6 +23,17 @@ public class Tiger extends Tank {
 
 	public void setArmor(int armor) {
 		this.armor = armor;
+	}
+	
+	@Override
+	public void destroy() throws InterruptedException {
+		// TODO Auto-generated method stub
+		if(this.getArmor()>0){
+			setArmor(0);
+		}
+		else {
+			super.destroy();		
+		}
 	}
 
 }
