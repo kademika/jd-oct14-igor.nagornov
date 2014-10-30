@@ -1,18 +1,12 @@
 package lesson4.HW_Library;
 
-public class Books {
+public class Book {
 	
 	private String name;
 	private String author;
-	private Genre genre;
+	private Genre genre;	
 	
-	public Books(){
-		setName("Java Trainer");
-		setAuthor("Yakov Faine");
-		setGenre(genre. ŒÃœ‹ﬁ“≈–€);
-	}
-	
-	Books(String name, String author, Genre genre){
+	public Book(String name, String author, Genre genre){
 		setName(name);
 		setAuthor(author);
 		setGenre(genre);
