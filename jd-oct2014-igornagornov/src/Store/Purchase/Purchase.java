@@ -1,12 +1,14 @@
 package Store.Purchase;
-import java.util.Date;
 
+import Store.Service.Store;
 import  Store.Customer.*;
 import Store.Guitar.*;
 
 public class Purchase {
 	
+	private static Purchase purchase[] = new Purchase[100];	
 	private static short id=0;
+	
 	private Customer customer;
 	private Guitar guitar;
 	private int number;
@@ -46,6 +48,49 @@ public class Purchase {
 	}
 	public String getDate() {
 		return date;
+	}
+	
+	public static Purchase[] getPurchase() {
+		return purchase;
+	}
+	
+	public void executePurchase(Purchase p, int k, int i, int j) {		
+
+		Store.getGuitar()[k][i][j] = null;
+
+		int kol = 0;
+		while (purchase[kol] != null) {
+			kol++;
+		}
+		purchase[kol] = p;
+		
+	}
+
+	public static void printPurchases() {
+
+		int number=0;
+		int sum=0;		
+		
+		for (Purchase value : purchase) {
+			if(value!=null){
+				number++;
+				sum+=(value.getNumber() * value.getGuitar().getPrice());
+				System.out.println("Purchase " + number + " "
+						+ value.getCustomer().getName() + " "
+						+ value.getGuitar().getGuitarBrand() + " "
+						+ value.getGuitar().getModel() + " " + value.getNumber()
+						+ " " + (value.getNumber() * value.getGuitar().getPrice()));								
+			}			
+			
+			
+		}
+		
+		System.out
+		.println("__________________________________________________");
+		System.out.println("All " + number + " purchases                            " + sum);
+
+		
+
 	}
 	
 	
