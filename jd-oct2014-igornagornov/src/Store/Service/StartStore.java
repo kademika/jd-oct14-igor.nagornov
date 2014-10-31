@@ -1,5 +1,6 @@
 package Store.Service;
 
+import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
 import Store.Purchase.Purchase;
 
@@ -11,16 +12,16 @@ public class StartStore {
 		Store store = new Store();
 		store.fillStore();
 
-		store.printStore(Store.getGuitar());
+		store.printStore();
 		store.printNumberOfGuitarType();
-		store.printPrices(Store.getGuitar());
-		store.printGuitarType(Store.getGuitar(), GuitarType.ACOUSTIC);
+		store.printPrices();
+		store.printGuitarType(GuitarType.ACOUSTIC);
 
-		Purchase p = new Purchase(Store.getGuitar()[0][1][0], 1, "Igor Nagornov");
-		p.executePurchase(p, 0, 1, 0);
+		Purchase p = new Purchase(Store.getGuitar()[GuitarType.ACOUSTIC.ordinal()][GuitarBrand.IBANEZ.ordinal()][0], 2, "Igor Nagornov");
+		p.executePurchase(p, GuitarType.ACOUSTIC.ordinal(), GuitarBrand.IBANEZ.ordinal(), 0);
 
-		Purchase p1 = new Purchase(Store.getGuitar()[1][4][0], 1);
-		p1.executePurchase(p1, 1, 4, 0);
+		Purchase p1 = new Purchase(Store.getGuitar()[GuitarType.ELECTRIC.ordinal()][GuitarBrand.ESP.ordinal()][0], 1);
+		p1.executePurchase(p1, GuitarType.ELECTRIC.ordinal(), GuitarBrand.ESP.ordinal(), 1);
 
 		Purchase.printPurchases();
 

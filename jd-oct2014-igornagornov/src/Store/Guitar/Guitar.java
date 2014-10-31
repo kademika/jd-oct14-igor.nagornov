@@ -1,8 +1,8 @@
 package Store.Guitar;
 
 public class Guitar {
-
-	protected GuitarBrand guitarBrand;
+	
+	protected GuitarBrand guitarBrand;	
 	protected String model;
 	protected String color;
 	protected FreatboardMaterial freatboardMaterial;
@@ -27,6 +27,7 @@ public class Guitar {
 		numberOfFrets = 24;
 		this.manufacturer = manufacturer;
 		this.price = price;
+
 	}
 
 	public Guitar(GuitarBrand guitarBrand, String color, String model,
@@ -80,5 +81,6 @@ public class Guitar {
 	public String getModel() {
 		return model;
 	}
+
 
 }

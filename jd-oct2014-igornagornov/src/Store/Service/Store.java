@@ -83,7 +83,7 @@ public class Store {
 
 	}
 
-	public void printStore(Guitar[][][] guitar) {
+	public void printStore() {
 
 		for (Guitar[][] guitarType : guitar) {
 			if (guitarType != null) {
@@ -163,7 +163,7 @@ public class Store {
 
 	}
 
-	public void printPrices(Guitar[][][] guitar) {
+	public void printPrices() {
 
 		for (Guitar[][] guitarType : guitar) {
 			if (guitarType != null) {
@@ -171,10 +171,15 @@ public class Store {
 					if (guitarBrand != null) {
 						for (Guitar guitarTemp : guitarBrand) {
 							if (guitarTemp != null) {
-								System.out.println(guitarTemp.getClass().getName()
-										+ " " + guitarTemp.getGuitarBrand() + " "
-										+ guitarTemp.getColor() + " "
-										+ guitarTemp.getModel() + " " + " "
+								System.out.println(guitarTemp.getClass()
+										.getName()
+										+ " "
+										+ guitarTemp.getGuitarBrand()
+										+ " "
+										+ guitarTemp.getColor()
+										+ " "
+										+ guitarTemp.getModel()
+										+ " "
 										+ guitarTemp.getPrice());
 
 							}
@@ -202,7 +207,7 @@ public class Store {
 				.println("________________________________________________________");
 	}
 
-	public void printGuitarType(Guitar[][][] guitar, GuitarType guitarType) {
+	public void printGuitarType(GuitarType guitarType) {
 
 		if (guitar != null) {
 			for (int i = 0; i < guitar[guitarType.ordinal()].length; i++) {
@@ -221,8 +226,7 @@ public class Store {
 											+ " "
 											+ guitar[guitarType.ordinal()][i][j]
 													.getModel()
-											+ " "
-											+ " "
+											+ " "											
 											+ guitar[guitarType.ordinal()][i][j]
 													.getPrice());
 

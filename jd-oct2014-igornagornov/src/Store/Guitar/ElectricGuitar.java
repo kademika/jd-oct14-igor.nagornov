@@ -6,7 +6,7 @@ public class ElectricGuitar extends Guitar {
 	
 	protected String bodyMaterial;
 	protected String neckName;
-	protected String bridgeName;
+	protected String bridgeName;	
 	private boolean isFloydRose;
 
 	public ElectricGuitar() {
@@ -45,7 +45,7 @@ public class ElectricGuitar extends Guitar {
 	
 	public String getBridgeName() {
 		return bridgeName;
-	}
+	}	
 
 	public boolean isFloydRose() {
 		return isFloydRose;

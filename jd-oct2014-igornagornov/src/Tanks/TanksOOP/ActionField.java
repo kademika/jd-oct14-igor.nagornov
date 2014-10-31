@@ -42,23 +42,24 @@ public class ActionField extends JPanel {
 	}
 
 	void runTheGame() throws Exception {
-//		 while (true) {
-//		 agressor.clean();
-//		 }
+//		while (true) {
+//			defender.clean();
+//			agressor.clean();
+//		}
 
-		agressor.moveToQuadrant(1, 3);
-		agressor.fire();
-		agressor.turn(Direction.RIGHT);
-		agressor.fire();
-		agressor.turn(Direction.DOWN);
-		//agressor.fire();
-		defender.fire();
-		agressor.fire();
-		defender.fire();
-		defender.fire();
-		agressor.moveToQuadrant(1, 3);
-		defender.fire();
-		defender.fire();
+		 agressor.moveToQuadrant(1, 3);
+		 agressor.fire();
+		 agressor.turn(Direction.RIGHT);
+		 agressor.fire();
+		 agressor.turn(Direction.DOWN);
+		 //agressor.fire();
+		 defender.fire();
+		 agressor.fire();
+		 defender.fire();
+		 defender.fire();
+		 agressor.moveToQuadrant(1, 3);
+		 defender.fire();
+		 defender.fire();
 
 	}
 
@@ -324,7 +325,7 @@ public class ActionField extends JPanel {
 				bullet.updateX(step);
 			}
 
-			if (processInterception()){
+			if (processInterception()) {
 				bullet.destroy();
 			}
 			repaint();
@@ -332,8 +333,10 @@ public class ActionField extends JPanel {
 			if (agressor.getX() == -100 && agressor.getY() == -100) {
 				Thread.sleep(3000);
 				String temp = battlefield.getAgressorLocation();
-				int agrX = Integer.parseInt(temp.substring(0, temp.indexOf("_")));
-				int agrY = Integer.parseInt(temp.substring(temp.indexOf("_") + 1));				
+				int agrX = Integer
+						.parseInt(temp.substring(0, temp.indexOf("_")));
+				int agrY = Integer
+						.parseInt(temp.substring(temp.indexOf("_") + 1));
 				agressor.setX(agrX);
 				agressor.setY(agrY);
 				agressor.setArmor(1);
