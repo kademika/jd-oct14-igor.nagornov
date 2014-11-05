@@ -8,7 +8,7 @@ import javax.swing.WindowConstants;
 
 public class ShapesTemplate extends JPanel {
 	
-	private Shape[] shapes;
+	private Drawable[] shapes;
 	
 	public ShapesTemplate(Shape[] shapes) {
 		this.shapes = shapes;
@@ -29,7 +29,7 @@ public class ShapesTemplate extends JPanel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {		
-		for (Shape s : shapes) {
+		for (Drawable s : shapes) {
 			s.draw(g);
 		}
 	}

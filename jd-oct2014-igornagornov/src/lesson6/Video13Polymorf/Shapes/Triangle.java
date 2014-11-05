@@ -12,9 +12,7 @@ public class Triangle extends Shape {
 		// своего метода draw,
 		// он запускает его из класса выше по иерархии
 
-		super.draw(g);
-		
-		//g.setColor(new Color(0, 0, 0));
+		g.setColor(color);
 		int[] x = {100,100,150};
 		int[] y = {100,150,150};		
 		g.drawPolygon(x,y,3);

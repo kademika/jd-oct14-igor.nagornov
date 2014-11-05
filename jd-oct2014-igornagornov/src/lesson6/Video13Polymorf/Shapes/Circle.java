@@ -12,7 +12,10 @@ public class Circle extends Shape{
 //		System.out.println("I'm circle");//если у данного класса нет своего метода draw, 
 									//он запускает его из класса выше по иерархии
 		
-		super.draw(g);		
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setStroke(new BasicStroke(5)); //change line weight to 5		
+		
+		g.setColor(color);		
 		
 		g.drawOval(50, 150, 50, 200);
 		g.fillOval(50, 200, 50, 100);
