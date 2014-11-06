@@ -1,6 +1,7 @@
 package Tanks.TanksOOP;
 
-import javax.security.auth.Destroyable;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class Tiger extends Tank {
 
@@ -8,11 +9,13 @@ public class Tiger extends Tank {
 			int y, Direction direction) {
 		super(actionfield, battlefield, x, y, direction);
 		setArmor(1);
+		tankColor = new Color(255, 0, 0);
+		towerColor = new Color(0, 255, 0);
+		
 	}
 
 	public Tiger(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 0, 0, Direction.RIGHT);
-		setArmor(1);
+		this(actionfield, battlefield, 0, 0, Direction.RIGHT);		
 	}
 
 	private int armor;
@@ -34,6 +37,7 @@ public class Tiger extends Tank {
 		else {
 			super.destroy();		
 		}
-	}
+	}	
+	
 
 }

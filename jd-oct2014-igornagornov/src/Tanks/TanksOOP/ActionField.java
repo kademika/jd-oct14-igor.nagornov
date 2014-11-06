@@ -1,6 +1,5 @@
 package Tanks.TanksOOP;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
@@ -20,7 +19,7 @@ public class ActionField extends JPanel {
 	public ActionField() throws Exception {
 
 		battlefield = new BattleField();
-		defender = new Tank(this, battlefield);
+		defender = new T34(this, battlefield, 128, 512, Direction.UP);
 
 		String temp = battlefield.getAgressorLocation();
 
@@ -42,24 +41,24 @@ public class ActionField extends JPanel {
 	}
 
 	void runTheGame() throws Exception {
-//		while (true) {
-//			defender.clean();
-//			agressor.clean();
-//		}
+		// while (true) {
+		// defender.clean();
+		// agressor.clean();
+		// }
 
-		 agressor.moveToQuadrant(1, 3);
-		 agressor.fire();
-		 agressor.turn(Direction.RIGHT);
-		 agressor.fire();
-		 agressor.turn(Direction.DOWN);
-		 //agressor.fire();
-		 defender.fire();
-		 agressor.fire();
-		 defender.fire();
-		 defender.fire();
-		 agressor.moveToQuadrant(1, 3);
-		 defender.fire();
-		 defender.fire();
+		agressor.moveToQuadrant(1, 3);
+		agressor.fire();
+		agressor.turn(Direction.RIGHT);
+		agressor.fire();
+		agressor.turn(Direction.DOWN);
+		// agressor.fire();
+		defender.fire();
+		agressor.fire();
+		defender.fire();
+		defender.fire();
+		agressor.moveToQuadrant(1, 3);
+		defender.fire();
+		defender.fire();
 
 	}
 
@@ -450,75 +449,13 @@ public class ActionField extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		int i = 0;
-		Color cc;
-		for (int v = 0; v < 9; v++) {
-			for (int h = 0; h < 9; h++) {
-				if (COLORDED_MODE) {
-					if (i % 2 == 0) {
-						cc = new Color(252, 241, 177);
-					} else {
-						cc = new Color(233, 243, 255);
-					}
-				} else {
-					cc = new Color(180, 180, 180);
-				}
-				i++;
-				g.setColor(cc);
-				g.fillRect(h * 64, v * 64, 64, 64);
-			}
-		}
+		battlefield.draw(g);
 
-		for (int j = 0; j < battlefield.getDimensionY(); j++) {
-			for (int k = 0; k < battlefield.getDimensionX(); k++) {
-				if (battlefield.scanQuadrant(j, k).equals("B")) {
-					String coordinates = getQuadrantXY(j + 1, k + 1);
-					int separator = coordinates.indexOf("_");
-					int y = Integer.parseInt(coordinates
-							.substring(0, separator));
-					int x = Integer.parseInt(coordinates
-							.substring(separator + 1));
-					g.setColor(new Color(0, 0, 255));
-					g.fillRect(x, y, 64, 64);
-				}
-			}
-		}
+		defender.draw(g);
 
-		// defender
-		g.setColor(new Color(0, 255, 0));
-		g.fillRect(defender.getX(), defender.getY(), 64, 64);
+		agressor.draw(g);
 
-		g.setColor(new Color(255, 0, 0));
-		if (defender.getDirection() == Direction.UP) {
-			g.fillRect(defender.getX() + 20, defender.getY(), 24, 34);
-		} else if (defender.getDirection() == Direction.DOWN) {
-			g.fillRect(defender.getX() + 20, defender.getY() + 30, 24, 34);
-		} else if (defender.getDirection() == Direction.LEFT) {
-			g.fillRect(defender.getX(), defender.getY() + 20, 34, 24);
-		} else {
-			g.fillRect(defender.getX() + 30, defender.getY() + 20, 34, 24);
-		}
-
-		g.setColor(new Color(255, 255, 0));
-		g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
-
-		// agressor
-		g.setColor(new Color(255, 0, 0));
-		g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
-
-		g.setColor(new Color(0, 255, 0));
-		if (agressor.getDirection() == Direction.UP) {
-			g.fillRect(agressor.getX() + 20, agressor.getY(), 24, 34);
-		} else if (agressor.getDirection() == Direction.DOWN) {
-			g.fillRect(agressor.getX() + 20, agressor.getY() + 30, 24, 34);
-		} else if (agressor.getDirection() == Direction.LEFT) {
-			g.fillRect(agressor.getX(), agressor.getY() + 20, 34, 24);
-		} else {
-			g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
-		}
-
-		g.setColor(new Color(255, 255, 0));
-		g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+		bullet.draw(g);
 
 	}
 

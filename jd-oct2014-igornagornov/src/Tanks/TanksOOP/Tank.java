@@ -1,14 +1,17 @@
 package Tanks.TanksOOP;
 
-import java.util.Random;
+import java.awt.Color;
+import java.awt.Graphics;
 
-public class Tank {
+public abstract class Tank implements Destroyable, Drawable{
 
 	// 1 - top, 2 - bottom, 3 - left, 4 - right
 
 	private int x;
 	private int y;
 	protected int speed = 20;
+	protected Color tankColor;
+	protected Color towerColor;
 	private Direction direction;
 	private ActionField actionfield;
 	private BattleField battlefield;
@@ -19,7 +22,7 @@ public class Tank {
 		this.battlefield = battlefield;
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
+		this.direction = direction;		
 		// this.setTankOnBattlefield();
 	}
 
@@ -144,11 +147,34 @@ public class Tank {
 		return actionfield.processCollision(this);
 	}
 
-	public void destroy() throws InterruptedException {
-		x = -100;
-		y = -100;		
-	}
+	@Override
+	public void destroy() throws InterruptedException{
+		// TODO Auto-generated method stub		
+			x = -100;
+			y = -100;	
+			direction = Direction.NONE;
+		
+	}	
+	
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+				g.setColor(tankColor);
+				g.fillRect(this.getX(), this.getY(), 64, 64);
 
+				g.setColor(towerColor);
+				if (this.getDirection() == Direction.UP) {
+					g.fillRect(this.getX() + 20, this.getY(), 24, 34);
+				} else if (this.getDirection() == Direction.DOWN) {
+					g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
+				} else if (this.getDirection() == Direction.LEFT) {
+					g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+				} else {
+					g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+				}
+	}
+	
 	// public void setTankOnBattlefield(){
 	//
 	// String coordinates = ActionField.getQuadrant(this.getX(), this.getY());

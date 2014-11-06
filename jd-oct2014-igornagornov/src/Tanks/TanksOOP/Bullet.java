@@ -1,6 +1,9 @@
 package Tanks.TanksOOP;
 
-public class Bullet {
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Bullet implements Destroyable, Drawable{
 
 	private int x;
 	private int y;
@@ -38,10 +41,23 @@ public class Bullet {
 		this.y += y;
 	}
 
+	@Override
 	public void destroy() {
-		x = -100;
-		y = -100;
-		direction = Direction.NONE;
+		// TODO Auto-generated method stub		
+			x = -100;
+			y = -100;
+			direction = Direction.NONE;
+		
 	}
+	
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(new Color(255, 255, 0));
+		g.fillRect(this.getX(), this.getY(), 14, 14);
+	}
+
+	
 
 }
