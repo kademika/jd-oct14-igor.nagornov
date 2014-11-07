@@ -50,6 +50,14 @@ public class Store {
 				"PR981", FreatboardMaterial.MACHOGONY, false, 12, 24, "USA",
 				80000, true);
 		addGuitarToStore(g7);
+		
+		ElectricGuitar g8 = new ElectricGuitar();
+		addGuitarToStore(g8);
+		ElectricGuitar.increaseCountElecticGuitar();
+		
+		ElectricGuitar g9 = new ElectricGuitar();
+		addGuitarToStore(g9);
+		ElectricGuitar.increaseCountElecticGuitar();
 
 	}
 
@@ -83,8 +91,8 @@ public class Store {
 
 	}
 
-	public void printStore() {
-
+	public void printStore() {		
+		
 		for (Guitar[][] guitarType : guitar) {
 			if (guitarType != null) {
 				for (Guitar[] guitarBrand : guitarType) {
@@ -158,13 +166,12 @@ public class Store {
 			}
 
 		}
-		System.out
-				.println("_____________________________________________________________________________________________________________");
+		System.out.println("_____________________________________________________________________________________________________________");
 
 	}
 
-	public void printPrices() {
-
+	public void printPrices() {		
+		
 		for (Guitar[][] guitarType : guitar) {
 			if (guitarType != null) {
 				for (Guitar[] guitarBrand : guitarType) {
@@ -190,25 +197,24 @@ public class Store {
 
 		}
 
-		System.out
-				.println("________________________________________________________");
+		System.out.println("________________________________________________________");
 
 	}
 
-	public void printNumberOfGuitarType() {
-
+	public void printNumberOfGuitarType() {		
+		
 		System.out.println("We have " + AcousticGuitar.getCountAcousticGuitar()
 				+ " acoustic guitars in the stock");
 		System.out.println("We have " + ElectricGuitar.getCountElecticGuitar()
 				+ " electric guitars in the stock");
 		System.out.println("We have " + BassGuitar.getCountBassGuitar()
 				+ " bass guitars in the stock");
-		System.out
-				.println("________________________________________________________");
+		System.out.println("________________________________________________________");
 	}
 
 	public void printGuitarType(GuitarType guitarType) {
-
+		
+		
 		if (guitar != null) {
 			for (int i = 0; i < guitar[guitarType.ordinal()].length; i++) {
 				if (guitar[guitarType.ordinal()][i] != null) {
@@ -226,7 +232,7 @@ public class Store {
 											+ " "
 											+ guitar[guitarType.ordinal()][i][j]
 													.getModel()
-											+ " "											
+											+ " "
 											+ guitar[guitarType.ordinal()][i][j]
 													.getPrice());
 
@@ -236,12 +242,11 @@ public class Store {
 			}
 
 		}
-		System.out
-				.println("________________________________________________________");
+		System.out.println("________________________________________________________");
 
 	}
 
-	public int getNumberOfGuitars(Guitar[] guitar) {
+	public static int getNumberOfGuitars(Guitar[] guitar) {
 
 		int i = 0;
 
@@ -257,6 +262,20 @@ public class Store {
 
 	public static Guitar[][][] getGuitar() {
 		return guitar;
+	}
+
+	public static int getGuitarIndexByModel(int k, int i, String model) {			
+		
+		int kol = 0;
+		model = model.toUpperCase();
+		
+		for(int j=0; j<getNumberOfGuitars(guitar[k][i]); j++){
+			if(guitar[k][i][j].getModel().toUpperCase().equals(model)){
+				kol=j;				
+			}
+		}
+
+		return kol;
 	}
 
 }
