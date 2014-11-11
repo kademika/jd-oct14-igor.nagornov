@@ -1,7 +1,11 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.Tanks;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Tanks.TanksOOP.BattleFieldObjects.BattleField;
+import Tanks.TanksOOP.Service.ActionField;
+import Tanks.TanksOOP.Service.Direction;
 
 public class BT7 extends Tank {
 

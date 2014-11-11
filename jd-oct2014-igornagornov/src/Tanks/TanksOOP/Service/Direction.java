@@ -1,4 +1,4 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.Service;
 
 public enum Direction {
 	NONE, UP, DOWN, LEFT, RIGHT;

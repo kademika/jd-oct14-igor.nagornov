@@ -1,4 +1,4 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.BattleFieldObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,24 +6,35 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+import Tanks.TanksOOP.Service.Drawable;
+
 public class BattleField extends JPanel implements Drawable{
 
 	final boolean COLORDED_MODE = false;
 
 	private final int BF_WIDTH = 576;
 	private final int BF_HEIGHT = 576;
+	
+	private Brick brick = new Brick();
+	private Water water = new Water();
+	private Rock rock = new Rock();
+	private Eagle eagle = new Eagle();
 
 	private static String[][] battleField = {
-			{ " ", " ", " ", "B", " ", "B", " ", " ", " " },
-			{ "B", " ", " ", "B", " ", "B", " ", " ", "B" },
-			{ "B", "B", " ", "B", "B", "B", " ", "B", "B" },
-			{ "B", "B", "B", " ", " ", " ", "B", "B", "B" },
-			{ "B", "B", "B", " ", " ", " ", "B", "B", "B" },
+			{ " ", " ", "W", "B", " ", "B", "W", " ", " " },
+			{ "B", " ", "W", "B", " ", "B", "W", " ", "B" },
+			{ "B", "B", "W", "B", "B", "B", "W", "B", "B" },
+			{ "B", "B", "W", "W", "W", "W", "W", "B", "B" },
+			{ "B", "B", "R", "R", "R", "R", "R", "B", "B" },
 			{ "B", "B", " ", " ", "B", " ", " ", "B", "B" },
 			{ "B", " ", " ", " ", "B", " ", " ", " ", "B" },
 			{ "B", " ", " ", "B", "B", "B", " ", " ", "B" },
-			{ " ", " ", " ", "B", "B", "B", " ", " ", " " } };
+			{ " ", " ", " ", "B", "E", "B", " ", " ", " " } };
 
+	public static String[][] getBattleField() {
+		return battleField;
+	}
+	
 	public String scanQuadrant(int v, int h) {
 		return battleField[v][h];
 
@@ -47,7 +58,7 @@ public class BattleField extends JPanel implements Drawable{
 
 	public int getBF_HEIGHT() {
 		return BF_HEIGHT;
-	}
+	}	
 
 	public String getAgressorLocation() {
 		int random;
@@ -98,20 +109,11 @@ public class BattleField extends JPanel implements Drawable{
 			}
 		}
 
-		for (int j = 0; j < this.getDimensionY(); j++) {
-			for (int k = 0; k < this.getDimensionX(); k++) {
-				if (this.scanQuadrant(j, k).equals("B")) {
-					String coordinates = ActionField.getQuadrantXY(j + 1, k + 1);
-					int separator = coordinates.indexOf("_");
-					int y = Integer.parseInt(coordinates
-							.substring(0, separator));
-					int x = Integer.parseInt(coordinates
-							.substring(separator + 1));
-					g.setColor(new Color(0, 0, 255));
-					g.fillRect(x, y, 64, 64);
-				}
-			}
-		}
+		brick.draw(g);
+		water.draw(g);
+		rock.draw(g);
+		eagle.draw(g);
 	}
+	
 
 }

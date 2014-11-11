@@ -1,4 +1,4 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.Service;
 
 public class Launcher {
 

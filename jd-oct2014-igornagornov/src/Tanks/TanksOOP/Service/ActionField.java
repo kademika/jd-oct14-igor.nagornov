@@ -1,4 +1,4 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.Service;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -7,6 +7,12 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import Tanks.TanksOOP.BattleFieldObjects.BattleField;
+import Tanks.TanksOOP.BattleFieldObjects.Bullet;
+import Tanks.TanksOOP.Tanks.T34;
+import Tanks.TanksOOP.Tanks.Tank;
+import Tanks.TanksOOP.Tanks.Tiger;
 
 public class ActionField extends JPanel {
 
@@ -41,10 +47,10 @@ public class ActionField extends JPanel {
 	}
 
 	void runTheGame() throws Exception {
-		// while (true) {
-		// defender.clean();
-		// agressor.clean();
-		// }
+//		 while (true) {
+//		 defender.clean();
+//		 agressor.clean();
+//		 }
 
 		agressor.moveToQuadrant(1, 3);
 		agressor.fire();
@@ -57,6 +63,9 @@ public class ActionField extends JPanel {
 		defender.fire();
 		defender.fire();
 		agressor.moveToQuadrant(1, 3);
+		defender.fire();
+		defender.fire();
+		defender.turn(Direction.RIGHT);
 		defender.fire();
 		defender.fire();
 
@@ -135,16 +144,6 @@ public class ActionField extends JPanel {
 		int y = Integer.parseInt(coordinates.substring(0, separator));
 		int x = Integer.parseInt(coordinates.substring(separator + 1));
 
-		// String coordinatesTank = getQuadrant(tank.getX(), tank.getY());
-		//
-		// int tY = Integer.parseInt(coordinatesTank.substring(0,
-		// coordinatesTank.indexOf("_")));
-		// int tX =
-		// Integer.parseInt(coordinatesTank.substring(coordinatesTank.indexOf("_")
-		// + 1));
-		//
-		// battlefield.updateQuadrant(tY, tX, " ");
-
 		if (tank.getX() < x) {
 			while (tank.getX() != x) {
 				tank.turn(Direction.RIGHT);
@@ -167,8 +166,7 @@ public class ActionField extends JPanel {
 				tank.turn(Direction.UP);
 				tank.move();
 			}
-		}
-		// tank.setTankOnBattlefield();
+		}		
 	}
 
 	public void processMoveRandom(Tank tank) throws Exception { // двигает танк
@@ -207,7 +205,7 @@ public class ActionField extends JPanel {
 
 	}
 
-	void processClean(Tank tank) throws Exception { // если есть кирпичи в
+	public void processClean(Tank tank) throws Exception { // если есть кирпичи в
 													// пределах видимости,
 													// уничтожает их по всем
 													// направлениям
@@ -305,13 +303,12 @@ public class ActionField extends JPanel {
 
 	}
 
-	public void processFire(Bullet bullet) throws Exception {
+	public void processFire(Bullet bullet, boolean isTiger) throws Exception {
 		// TODO Auto-generated method stub
 		this.bullet = bullet;
 		int step = 1;
 		Direction direction = bullet.getDirection();
-
-		// tank.turn(direction);
+		
 		while ((bullet.getY() > -14 && bullet.getY() < 590)
 				&& (bullet.getX() > -14 && bullet.getX() < 590)) {
 			if (direction == Direction.UP) {
@@ -324,7 +321,7 @@ public class ActionField extends JPanel {
 				bullet.updateX(step);
 			}
 
-			if (processInterception()) {
+			if (processInterception(isTiger)) {
 				bullet.destroy();
 			}
 			repaint();
@@ -348,7 +345,7 @@ public class ActionField extends JPanel {
 
 	}
 
-	private boolean processInterception() throws InterruptedException {
+	private boolean processInterception(boolean isTiger) throws InterruptedException {
 
 		String coordinates = getQuadrant(bullet.getX(), bullet.getY());
 		int separator = coordinates.indexOf("_");
@@ -362,9 +359,27 @@ public class ActionField extends JPanel {
 
 		if ((y >= 0 && y < battlefield.getDimensionY())
 				&& (x >= 0 && x < battlefield.getDimensionX())) {
+			
 			if (!battlefield.scanQuadrant(y, x).trim().isEmpty()) {
-				battlefield.updateQuadrant(y, x, "");
-				return true;
+				
+				if (BattleField.getBattleField()[y][x].equals("B")){
+					battlefield.updateQuadrant(y, x, "");
+					return true;
+				}	
+				
+				if (BattleField.getBattleField()[y][x].equals("R")){					
+					if(isTiger){
+						battlefield.updateQuadrant(y, x, "");						
+					}
+					
+					return true;
+				}
+				
+				if (BattleField.getBattleField()[y][x].equals("E")){
+					battlefield.updateQuadrant(y, x, "");
+					return true;
+				}				
+				
 			}
 
 			if (coordinatesAgressor.equals(coordinates)) {
@@ -403,28 +418,16 @@ public class ActionField extends JPanel {
 			return false;
 		}
 
-		int separator = coordinates.indexOf("_");
-		int y = Integer.parseInt(coordinates.substring(0, separator));
-		int x = Integer.parseInt(coordinates.substring(separator + 1));
-
-		if ((y >= 0 && y < battlefield.getDimensionY())
-				&& (x >= 0 && x < battlefield.getDimensionX())) {
-			if (!battlefield.scanQuadrant(y, x).trim().isEmpty()) { // удаляет
-																	// лишние
-																	// пробелы и
-																	// проверяет,
-																	// что
-																	// осталось
-				return true;
-			}
+		if(quadrantIsNotEmpty(coordinates)){
+			return true;
 		}
-
+		
 		return false;
 	}
 
 	private boolean quadrantIsEmpty(int cX, int cY) { // проверяет пуст ли
 														// указанный квадрант
-		String coordinates;
+		String coordinates;									
 		coordinates = getQuadrant(cX, cY);
 
 		int separator = coordinates.indexOf("_");
@@ -433,16 +436,40 @@ public class ActionField extends JPanel {
 
 		if ((y >= 0 && y < battlefield.getDimensionY())
 				&& (x >= 0 && x < battlefield.getDimensionX())) {
-			if (!battlefield.scanQuadrant(y, x).trim().isEmpty()) { // удаляет
-																	// лишние
-																	// пробелы и
-																	// проверяет,
-																	// что
-																	// осталось
+			if (!battlefield.scanQuadrant(y, x).trim().isEmpty()) {
+				
+				if (BattleField.getBattleField()[y][x].equals("W")){					
+					return true;
+				}	
+				
 				return false;
+			}	
+			
+		}
+		
+		return true;
+	}
+	
+	private boolean quadrantIsNotEmpty(String coordinates)	
+	{
+		int separator = coordinates.indexOf("_");
+		int y = Integer.parseInt(coordinates.substring(0, separator));
+		int x = Integer.parseInt(coordinates.substring(separator + 1));
+
+		if ((y >= 0 && y < battlefield.getDimensionY())
+				&& (x >= 0 && x < battlefield.getDimensionX())) {
+			if (!battlefield.scanQuadrant(y, x).trim().isEmpty()) {
+				
+				if (BattleField.getBattleField()[y][x].equals("W")){					
+					return false;
+				}	
+				
+				return true;				
+				
 			}
 		}
-		return true;
+
+		return false;
 	}
 
 	@Override

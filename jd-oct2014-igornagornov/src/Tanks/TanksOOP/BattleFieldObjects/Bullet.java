@@ -1,7 +1,11 @@
-package Tanks.TanksOOP;
+package Tanks.TanksOOP.BattleFieldObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Tanks.TanksOOP.Service.Destroyable;
+import Tanks.TanksOOP.Service.Direction;
+import Tanks.TanksOOP.Service.Drawable;
 
 public class Bullet implements Destroyable, Drawable{
 
@@ -10,7 +14,7 @@ public class Bullet implements Destroyable, Drawable{
 	private int speed = 5;
 	private Direction direction;
 
-	Bullet(int x, int y, Direction direction) {
+	public Bullet(int x, int y, Direction direction) {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
