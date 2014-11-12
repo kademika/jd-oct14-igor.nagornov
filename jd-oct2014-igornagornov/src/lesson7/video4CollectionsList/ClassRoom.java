@@ -13,7 +13,7 @@ public class ClassRoom {
 
 	public void enter(Student s) {
 
-		students.add(s);		
+		students.add(s);
 	}
 
 	public void leave(Student s) {
@@ -30,16 +30,36 @@ public class ClassRoom {
 
 		for (Student studentTemp : students) {
 
-			if (studentTemp.getName().equals(name)
-					&& studentTemp.getSecondName().equals(secondName)) {
-				System.out.println("I'm searching student by entered name... "
-						+ studentTemp.getName() + " "
-						+ studentTemp.getSecondName() + " is present");
-				return;
+			if (name != null && secondName != null) {
+				if (studentTemp.getName().equals(name)
+						&& studentTemp.getSecondName().equals(secondName)) {
+					System.out
+							.println("I'm searching student by entered name... "
+									+ studentTemp.getName()
+									+ " "
+									+ studentTemp.getSecondName()
+									+ " is present");
+					return;
+				}
 			}
 		}
 
 		System.out.println("This student is not present!");
+	}
+
+	public void isPresent(Student student) {	
+		
+		if(students.contains(student)){
+			System.out.println("I'm searching student by entered name... "
+					+ student.getName()
+					+ " "
+					+ student.getSecondName()
+					+ " is present");
+		}
+		else{
+			System.out.println("This student is not present!");
+		}
+		
 	}
 
 	public void printStudents() {

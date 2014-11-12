@@ -8,7 +8,7 @@ public class Student {
 	public Student(String name, String  secondName) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
-		this.secondName = secondName;
+		this.secondName = secondName;		
 	}
 	
 	public String getName() {
@@ -18,5 +18,18 @@ public class Student {
 		return secondName;
 	}
 	
+	
+	public boolean equals(Object object){
+		
+		if(object instanceof Student){
+			
+			Student student = (Student)object;
+			if((name!=null&&name.equals(student.getName()))&&(secondName!=null&&secondName.equals(secondName))){
+				return true;
+			}
+		}	
+		
+		return false;		
+	}
 
 }

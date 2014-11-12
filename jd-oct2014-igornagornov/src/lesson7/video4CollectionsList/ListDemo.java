@@ -20,8 +20,9 @@ public class ListDemo {
 		c.enter(s6);
 		c.leave(s6);
 		
-		c.isPresent("Ivan", "Ivanov");	
-		c.isPresent("Mihail", "Lomonosov");	
+//		c.isPresent("Ivan", "Ivanov");	
+//		c.isPresent("Mihail", "Lomonosov");	
+		c.isPresent(s6);
 		System.out.println();
 		c.printStudents();
 		
