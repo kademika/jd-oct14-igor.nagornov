@@ -7,7 +7,7 @@ public class Tank {
 	private int maxSpeed;	
 	
 	public Tank(){
-		this("синий", 2, 100);
+		this("blue", 2, 100);
 	}
 	
 	public Tank(String color, int crew, int maxSpeed){

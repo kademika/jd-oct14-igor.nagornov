@@ -2,7 +2,7 @@ package lesson4.HW_Library;
 
 public enum Genre {
 
-	ÔİÍÒÀÇÈ(0), ÓÆÀÑÛ(1), ÄÅÒÅÊÒÈÂ(2), ÏĞÈÊËŞ×ÅÍÈß(3), ÈÑÒÎĞÈß(4), ÊÎÌÏÜŞÒÅĞÛ(5);
+	FANTASY(0), HORRORS(1), DETECTIVE(2), ADVANTURES(3), HISTORY(4), COMPUTERS(5);
 
 	private int id;
 
@@ -24,22 +24,22 @@ public enum Genre {
 		Genre result = null;
 		switch (id) {
 		case 0:
-			result = ÔİÍÒÀÇÈ;
+			result = FANTASY;
 			break;
 		case 1:
-			result = ÓÆÀÑÛ;
+			result = HORRORS;
 			break;
 		case 2:
-			result = ÄÅÒÅÊÒÈÂ;
+			result = DETECTIVE;
 			break;
 		case 3:
-			result = ÏĞÈÊËŞ×ÅÍÈß;
+			result = ADVANTURES;
 			break;
 		case 4:
-			result = ÈÑÒÎĞÈß;
+			result = HISTORY;
 			break;
 		case 5:
-			result = ÊÎÌÏÜŞÒÅĞÛ;
+			result = COMPUTERS;
 			break;
 		}
 		return result;

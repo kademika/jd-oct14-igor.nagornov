@@ -5,9 +5,9 @@ public class CarLauncher {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Car car = new Car(Color.GREY, TransBoxType.Ã œ);
+		Car car = new Car(Color.GREY, TransBoxType.MT);
 		printCarInfo(car);
-		Car car2 = new Car(Color.BLUE, TransBoxType.¿ œ);		
+		Car car2 = new Car(Color.BLUE, TransBoxType.AT);		
 		printCarInfo(car2);	
 		Car car3 = new Car();
 		printCarInfo(car3);	

@@ -10,15 +10,15 @@ public class Books_launcher {
 		
 		Library library = new Library();		
 			
-		library.addBookToLibrary(new Book("Побег из Шоушенка", "Кинг Стивен", Genre.УЖАСЫ));				
+		library.addBookToLibrary(new Book("Escape from Shoushenk", "King Steven", Genre.HORRORS));				
 
-//		library.findBookByAuthor(library.getLibraryByAuthorName(), "Конан Дойль Артур");
+//		library.findBookByAuthor(library.getLibraryByAuthorName(), "Conan Doyle Artur");
 // 		library.printLibrary(library.getLibraryByAuthorName());	
 
-//		library.findBookByName(library.getLibraryByBookName(), "Побег из Шоушенка");
+//		library.findBookByName(library.getLibraryByBookName(), "Escape from Shoushenk");
 //		library.printLibrary(library.getLibraryByBookName());
-
-		library.findBookByGenre(library.getLibraryByGenre(), Genre.ДЕТЕКТИВ);
+//
+		library.findBookByGenre(library.getLibraryByGenre(), Genre.DETECTIVE);
 //		library.printLibrary(library.getLibraryByGenre());		
 			
 	}	

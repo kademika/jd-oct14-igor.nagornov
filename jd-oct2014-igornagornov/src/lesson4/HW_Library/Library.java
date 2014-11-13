@@ -2,7 +2,7 @@ package lesson4.HW_Library;
 
 public class Library {
 
-	private final String alphabet = "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ";
+	private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private Book[][] libraryByAuthorName = new Book[alphabet.length()][];
 	private Book[][] libraryByBookName = new Book[alphabet.length()][];
 	private Book[][] libraryByGenre = new Book[6][];
@@ -19,40 +19,40 @@ public class Library {
 
 	public Book[] createLibrary() {
 
-		booksArray[0] = new Book("Властелин колец", "Толкиен", Genre.ФЭНТАЗИ);
-		booksArray[1] = new Book("Собака Баскервилей", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[2] = new Book("Зеленая миля", "Кинг Стивен", Genre.УЖАСЫ);
-		booksArray[3] = new Book("Долина ужаса", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[4] = new Book("Этюд в багровых тонах", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[5] = new Book("Хоббит", "Толкиен", Genre.ФЭНТАЗИ);
-		booksArray[6] = new Book("Ява-трейнер", "Файн Яков", Genre.КОМПЬЮТЕРЫ);
-		booksArray[7] = new Book("Сияние", "Кинг Стивен", Genre.УЖАСЫ);
-		booksArray[8] = new Book("Мобильник", "Кинг Стивен", Genre.УЖАСЫ);
-		booksArray[9] = new Book("Его прощальный обет", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[10] = new Book("Знатный холостяк", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[11] = new Book("Программирование на Java", "Арнольд Кен",
-				Genre.КОМПЬЮТЕРЫ);
-		booksArray[12] = new Book("Пять зернышек апельсина",
-				"Конан Дойль Артур", Genre.ДЕТЕКТИВ);
-		booksArray[13] = new Book("Желтое лицо", "Конан Дойль Артур",
-				Genre.ДЕТЕКТИВ);
-		booksArray[14] = new Book("Двадцать тысяч лье под водой", "Верн Жюль",
-				Genre.ПРИКЛЮЧЕНИЯ);
-		booksArray[15] = new Book("История государства Российского",
-				"Иванов Иван", Genre.ИСТОРИЯ);
-		booksArray[16] = new Book("Таинственный остров", "Верн Жюль",
-				Genre.ПРИКЛЮЧЕНИЯ);
-		booksArray[17] = new Book("История великой державы", "Сидоров Сергей",
-				Genre.ИСТОРИЯ);
-		booksArray[18] = new Book("Хроники Нарнии", "Льюис Клайв Степлс",
-				Genre.ФЭНТАЗИ);
-		booksArray[19] = new Book("Гарри Поттер", "Роулинг Джоан",
-				Genre.ФЭНТАЗИ);
+		booksArray[0] = new Book("Lord of the rings", "Tolkien", Genre.FANTASY);
+		booksArray[1] = new Book("Hound of Baskerville", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[2] = new Book("Green Mile", "King Steven", Genre.HORRORS);
+		booksArray[3] = new Book("The Valley of Fear", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[4] = new Book("Etude in red colors", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[5] = new Book("Hobbit", "Tolkien", Genre.FANTASY);
+		booksArray[6] = new Book("Java trainer", "Faine Yakov", Genre.COMPUTERS);
+		booksArray[7] = new Book("Shining", "King Steven", Genre.HORRORS);
+		booksArray[8] = new Book("Cell", "King Steven", Genre.HORRORS);
+		booksArray[9] = new Book("His farewell vow", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[10] = new Book("The Adventure of the Noble Bachelor", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[11] = new Book("Java programming", "Arnold Ken",
+				Genre.COMPUTERS);
+		booksArray[12] = new Book("Five orange pips",
+				"Conan Doyle Artur", Genre.DETECTIVE);
+		booksArray[13] = new Book("Yellow face", "Conan Doyle Artur",
+				Genre.DETECTIVE);
+		booksArray[14] = new Book("Twenty thousands leages under water", "Vern Jul",
+				Genre.ADVANTURES);
+		booksArray[15] = new Book("History of Russian Federation",
+				"Ivanov Ivan", Genre.HISTORY);
+		booksArray[16] = new Book("Mysterios island", "Vern Jul",
+				Genre.ADVANTURES);
+		booksArray[17] = new Book("History of the great nation", "Sidorov Sergey",
+				Genre.HISTORY);
+		booksArray[18] = new Book("Narnia chronicles", "Luis Clive Stepls",
+				Genre.FANTASY);
+		booksArray[19] = new Book("Garry Potter", "Roaling Joanne",
+				Genre.FANTASY);
 
 		return booksArray;
 
@@ -233,7 +233,7 @@ public class Library {
 								+ bookTemp.getGenre();
 						break;
 					} else
-						result = "По вашему запросу ничего не найдено!";
+						result = "Nothing is found";
 				}
 
 			}
@@ -263,7 +263,7 @@ public class Library {
 			}
 
 			if (k == 0) {
-				System.out.println("Книг этого автора в библиотеке нет");
+				System.out.println("Books of this author are not found!");
 			}
 		}
 
@@ -287,7 +287,7 @@ public class Library {
 			}
 
 			if (k == 0) {
-				System.out.println("Книг этого жанра в библиотеке нет");
+				System.out.println("Books of this genre are not found!");
 			}
 		}
 

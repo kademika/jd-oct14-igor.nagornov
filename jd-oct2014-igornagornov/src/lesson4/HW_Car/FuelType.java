@@ -2,6 +2,6 @@ package lesson4.HW_Car;
 
 public enum FuelType {
 	
-	¡≈Õ«»Õ_80, ¡≈Õ«»Õ_92, ¡≈Õ«»Õ_95, ¡≈Õ«»Õ_98, ƒ»«≈À‹, √¿«
+	BENZINE_80, BENZINE_92, BENZINE_95, BENZINE_98, DISEL, GAS
 
 }

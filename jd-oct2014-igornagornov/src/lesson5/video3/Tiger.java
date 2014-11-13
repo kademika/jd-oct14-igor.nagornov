@@ -5,13 +5,13 @@ public class Tiger extends Tank{
 	private int armor;
 	
 	Tiger(int crew){
-		setColor("красный");
+		setColor("red");
 		setCrew(crew);
 		setMaxSpeed(31);
 		setArmor(1);		
 
-		System.out.println("Мы создали " + getColor() + " танк" + ", экипаж из " + getCrew() + " человек," +
-				" максимальная скорость - " + getMaxSpeed());
+		System.out.println("We have created " + getColor() + " tank" + ", crew is " + getCrew() + " people," +
+				" max speed - " + getMaxSpeed() + ", armor is - " + getArmor());
 		}
 
 	public int getArmor() {
@@ -25,7 +25,7 @@ public class Tiger extends Tank{
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		System.out.println("Двигаем танк " + this.toString());
+		System.out.println("Move tank " + this.toString());
 	}
 
 	

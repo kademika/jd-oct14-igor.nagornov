@@ -5,14 +5,14 @@ public class HW_battleField {
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub
 
-			//c - танк компьютера
-			//t - танк игрока
-			//e - штаб(орел)
-			//w - вода
-			//b - кирпичная стена
-			//r - камни
-			//пробел - пустота
-			//размер поля - 9X9
+			//c - agressor
+			//t - defender
+			//e - eagle
+			//w - water
+			//b - brick
+			//r - rock
+			//space
+			//size - 9X9
 			
 			System.out.println("   c  c  ");
 			System.out.println("  bbbbbc ");

@@ -9,7 +9,7 @@ public class Tank {
 	private int maxSpeed;	
 	
 	public Tank(){
-		this("черный", 2, 100);			
+		this("black", 2, 100);			
 	}
 	
 	public Tank(String color, int crew, int maxSpeed){
@@ -50,7 +50,7 @@ public class Tank {
 	}
 	
 	public void move(){
-		System.out.println("Двигаем танк " + this.toString());
+		System.out.println("Move tank " + this.toString());
 	}
 	
 	@Override

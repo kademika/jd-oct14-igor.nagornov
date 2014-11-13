@@ -19,9 +19,9 @@ public class Car {
 		this.color = color.WHITE;
 		this.engineVolume = 1.6f;
 		this.numberOfHorseForces = 106;
-		this.driveType = driveType.оепедмхи_опхбнд;
-		this.fuelType = fuelType.аемгхм_95;
-		this.transBoxType = transBoxType.лйо;
+		this.driveType = driveType.FRONTWHEELDRIVE;
+		this.fuelType = fuelType.BENZINE_95;
+		this.transBoxType = transBoxType.MT;
 		this.numberOfDoors = 5;
 		this.maxSpeed = 180;
 		this.price = 500000;
@@ -51,8 +51,8 @@ public class Car {
 		this.color = color;
 		this.engineVolume = 1.6f;
 		this.numberOfHorseForces = 106;
-		this.driveType = driveType.оепедмхи_опхбнд;
-		this.fuelType = fuelType.аемгхм_95;
+		this.driveType = driveType.FRONTWHEELDRIVE;
+		this.fuelType = fuelType.BENZINE_95;
 		this.transBoxType = transBoxType;
 		this.numberOfDoors = 5;
 		this.maxSpeed = 180;

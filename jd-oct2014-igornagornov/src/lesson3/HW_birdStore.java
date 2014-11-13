@@ -20,19 +20,19 @@ public class HW_birdStore {
 			sum+=Integer.parseInt(array[i][3]);	
 			
 		}
-		System.out.println("Всего продано птиц " + sum + " штук");
+		System.out.println("Number of sold birds " + sum);
 		
 	}
 
     static void skolkoVNalichii(String[][] array){
     	for(int i=0; i<array.length; i++){
-			System.out.println(array[i][0] + " в наличии " + array[i][1] + " штук");
+			System.out.println(array[i][0] + " in the stock " + array[i][1]);
 		}
 	}
     
     static void ostatokMensheTreh(String[][] array){
     	for(int i=0; i<array.length; i++){
-			if(Integer.valueOf(array[i][1])<3) System.out.println("Нужна поставка " + array[i][0] + "!");
+			if(Integer.valueOf(array[i][1])<3) System.out.println("We need delivery of " + array[i][0] + "!");
 		}
 	}
     

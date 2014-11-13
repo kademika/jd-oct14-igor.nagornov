@@ -13,12 +13,12 @@ public class printTankInfo {
 			
 			Tank t = new Tank();			
 			
-			System.out.println("Мы создали " + t.getColor() + " танк" + ", экипаж из " + t.getCrew() + " человек," +
-						" максимальная скорость - " + t.getMaxSpeed());
+			System.out.println("We have created " + t.getColor() + " tank" + ", crew is " + t.getCrew() + " people," +
+						" max speed - " + t.getMaxSpeed());
 			
-			Tank t2 = new Tank("cерый", 5, 250);
-			System.out.println("Мы создали " + t2.getColor() + " танк" + ", экипаж из " + t2.getCrew() + " человек," +
-					" максимальная скорость - " + t2.getMaxSpeed());
+			Tank t2 = new Tank("grey", 5, 250);
+			System.out.println("We have created " + t2.getColor() + " tank" + ", crew is  " + t2.getCrew() + " people," +
+					" max speed  - " + t2.getMaxSpeed());
 		}
 
 }

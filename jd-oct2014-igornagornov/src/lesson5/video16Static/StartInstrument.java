@@ -8,17 +8,17 @@ public class StartInstrument {
 		Instrument i1 = new Instrument();
 		Instrument i2 = new Instrument();		
 		
-		System.out.println("Поле fabric, общее для всех объектов сейчас - " + Instrument.fabric);
+		System.out.println("Common field fabric is - " + Instrument.fabric);
 		System.out.println(i1.fabric);
 		System.out.println(i2.fabric);
 		System.out.println(); 
 		
-		i2.fabric = "Jackson"; //меняем статическое поле в одном объекте
+		i2.fabric = "Jackson"; //menyaem staticheskoe pole v odnom klasse
 
-		System.out.println("Поле fabric, общее для всех объектов сейчас - " + Instrument.fabric);
-		System.out.println(i1.fabric); //получаем, что в другом объекте оно тоже сменилось, т.к. статическое поле общее
-		System.out.println(i2.fabric); 			//для всех объектов класса и принадлежит к самому классу, 
-													//а не к конкретным объектам
+		System.out.println("Common field fabric is - " + Instrument.fabric);
+		System.out.println(i1.fabric); //v drugom klasse staticheskoe pole tozhe izmenilos, t.k ono obshee
+		System.out.println(i2.fabric); 			//dlya vseh klassov i prenadlezhit k samomu klassu, 
+													//a ne k konkretnim objectam
 														
 
 	}

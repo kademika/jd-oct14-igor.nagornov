@@ -10,8 +10,8 @@ public class PrintTankInfo {
 		private static void printAllTankInfo(){
 			
 			Tank t = new Tank();
-			System.out.println("Мы создали " + t.getColor() + " танк" + ", экипаж из " + t.getCrew() + " человек," +
-					" максимальная скорость - " + t.getMaxSpeed());
+			System.out.println("We have created " + t.getColor() + " tank" + ", crew is " + t.getCrew() + " people," +
+					" max speed - " + t.getMaxSpeed());
 			t.move();
 			
 			BT7 t2 = new BT7(3);			

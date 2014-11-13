@@ -20,7 +20,7 @@ public class HW_start {
 			}
 			System.out.println("GO!");
 		}
-		else System.out.println("Число number меньше нуля");
+		else System.out.println("This nimber is less than zero");
 		
 	}
 }

@@ -8,13 +8,13 @@ public class Launcher {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Private p = new Private(); // не можем использовать поле s из класса, так как оно доступно только внутри класса
+		Private p = new Private(); // ne mozhem ispolzovat' pole s iz klassa, t.k ono dostupno tolko iz etogo klassa
 				
-		Public pu = new Public(); // можем использовать только public поле color, поле style недоступно, т.к. мы в другом пакете
+		Public pu = new Public(); // pole style nedostupno - mi v drugom pakete
 		pu.color = "blue";
 		
 		PackageOnly po = new PackageOnly();
-		po.color = "red"; // поле color доступно, т.к мы в этом же пакете
+		po.color = "red"; // pole color dostupno - mi v etom zhe pakete
 		
 
 	}

@@ -9,8 +9,8 @@ public class Circle extends Shape{
 	
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-//		System.out.println("I'm circle");//если у данного класса нет своего метода draw, 
-									//он запускает его из класса выше по иерархии
+//		System.out.println("I'm circle");//esli u dannogo klassa net svoego metoda draw, 
+									//on zapuskaetsya iz roditelya
 		
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setStroke(new BasicStroke(5)); //change line weight to 5		

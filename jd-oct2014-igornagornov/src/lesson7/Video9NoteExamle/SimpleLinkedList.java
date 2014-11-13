@@ -58,7 +58,7 @@ public class SimpleLinkedList {
 		Note currentNote = root;
 
 		if (currentNote == null){
-			return;
+			throw new IllegalStateException("List is empty, I can't insert object!");			
 		}			
 
 		do {
@@ -67,7 +67,7 @@ public class SimpleLinkedList {
 				break;
 			}
 			currentNote = currentNote.ref;
-		} while (currentNote != null && currentNote.ref != null);
+		} while (currentNote.ref != null);
 
 		if (prevNote == null) {
 			throw new IllegalStateException("List doesn't contain this object!");

@@ -8,7 +8,7 @@ public class Video4_GreetingService {
 			System.out.println("Hello, " + args[0]);	
 		}
 		else{
-			System.out.println("Пожалуйста введите свое имя!");
+			System.out.println("Please enter your name!");
 		}
 
 	}

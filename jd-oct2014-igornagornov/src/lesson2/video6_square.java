@@ -3,13 +3,13 @@ package lesson2;
 public class video6_square {
 
 	static double square(double number){
-		System.out.print(" вадрат числа double - " + number + " равен ");
+		System.out.print("A number double - " + number + " in squre equals ");
 		return number*number;
 		
 	}
 	
 //	static double square(int number){
-//		System.out.print(" вадрат числа int - " + number + " равен ");
+//		System.out.print("A number int - " + number + " in squre equals ");
 //		return number*number;
 //		
 //	}

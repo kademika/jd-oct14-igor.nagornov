@@ -8,8 +8,8 @@ public class Rectangle extends Shape{
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-//		System.out.println("I'm rectangle");//если у данного класса нет своего метода draw, 
-										//он запускает его из класса выше по иерархии		
+//		System.out.println("I'm rectangle");//esli u dannogo klassa net svoego metoda draw, 
+											//on zapuskaetsya iz roditelya		
 		
 		
 		g.setColor(color);

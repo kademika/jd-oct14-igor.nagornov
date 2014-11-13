@@ -6,15 +6,15 @@ public class video23_isSpring {
 		
 		if(month>=3&&month<6) 
 			{
-			 System.out.println("ћес€ц " + month + " весенний");
+			 System.out.println("Month " + month + " is spring");
 			 return 1;
 			}
 		else if (month>=1&&month<3||month>=6&&month<=12) 
 		{
-			System.out.println("ћес€ц " + month + " невесенний");
+			System.out.println("Month " + month + " is not spring");
 			return 0;
 		}
-		System.out.println(month + " неверное значение мес€ца");
+		System.out.println(month + " value is not right!");
 		return -1;
 			
 		

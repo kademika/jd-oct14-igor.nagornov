@@ -3,13 +3,13 @@ package lesson2;
 public class video8_overrriding {
 
 	static double square(double number){
-		System.out.print("OVERRIDING!  вадрат числа double - " + number + " равен ");
+		System.out.print("OVERLOADING! A number double - " + number + " in squre equals ");
 		return number*number;
 		
 	}
 	
 	static double square(int number){
-		System.out.print("OVERRIDING!  вадрат числа int - " + number + " равен ");
+		System.out.print("OVERLOADING! A number int - " + number + " in squre equals ");
 		return number*number;
 		
 	}

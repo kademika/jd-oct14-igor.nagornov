@@ -9,8 +9,8 @@ public class PrintTankInfo {
 
 		Tank[] t = new Tank[3];
 		t[0] = new Tank();
-		t[1] = new Tank("черный", 4, 250);
-		t[2] = new Tank("красный", 3 ,200);		
+		t[1] = new Tank("black", 4, 250);
+		t[2] = new Tank("red", 3 ,200);		
 		
 		printTankInfo(t);
 	}
@@ -18,7 +18,7 @@ public class PrintTankInfo {
 	static void printTankInfo(Tank tank[]){
 		
 		if(tank==null){
-			System.out.println("Массив танков пуст");
+			System.out.println("Tank's array is empty");
 		}
 		else{
 		
@@ -29,7 +29,7 @@ public class PrintTankInfo {
 					System.out.println(value.getMaxSpeed());	
 				}
 				else {
-					System.out.println("Информация по этому танку не заполнена");
+					System.out.println("Tank info is not filled");
 				}
 				System.out.println();						
 			}

@@ -7,7 +7,7 @@ public class LaunchVideo9 {
 		Guitar g = new Guitar();
 		Musician m = new Musician();
 		
-		m.play(g);	// пример upcasting'а, передаем в параметры класс наследник и воспринимаем его как класс родитель	
-	}					//то есть получается, что в параметрах будет объект класса Instrument, а не класса Guitar
+		m.play(g);	// primer upcasting'а, peredaem v parametr class naslednik i vosprinimaem ego kak klass roditel	
+	}					//to est' poluchaetsya, chto v parametrah budet object classa Instrument, a ne klassa Guitar
 
 }
