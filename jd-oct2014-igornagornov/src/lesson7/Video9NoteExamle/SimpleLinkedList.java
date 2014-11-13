@@ -1,9 +1,17 @@
 package lesson7.Video9NoteExamle;
 
-public class SimpleLinkedList {
+import java.util.Iterator;
+
+public class SimpleLinkedList implements Iterable<Object> {
 
 	private Note root;
 	private int size;
+	
+	public SimpleLinkedList() {
+		// TODO Auto-generated constructor stub
+		size = 0;
+
+	}
 
 	private class Note {
 
@@ -12,10 +20,72 @@ public class SimpleLinkedList {
 
 	}
 
-	public SimpleLinkedList() {
-		// TODO Auto-generated constructor stub
-		size = 0;
+	private class SLLIterator implements Iterator<Object> {
+
+		private Note previosNote;
+		private Note currentNote;
+
+		public Iterator<Object> iterator() {
+			// TODO Auto-generated method stub
+			return new SLLIterator();
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			boolean result = false;
+
+			if(root==null){
+				throw new IllegalStateException("List is Empty! Operation failed");
+			}
+			
+			if ((currentNote == null && root != null) || (currentNote != null && currentNote.ref != null)) {
+				result = true;
+			}		
+
+			return result;
+		}
+
+		@Override
+		public Object next() {
+			// TODO Auto-generated method stub
+
+			if (currentNote == null && root != null) {
+				currentNote = root;	
+				return currentNote.object;
+			}
+
+			if (hasNext()) {
+				previosNote = currentNote;
+				currentNote = currentNote.ref;				
+			}
+			
+			return currentNote.object;
+
+		}
+		
+		@Override
+		public void remove(){
+			
+			if(!hasNext()&&previosNote==null){
+				currentNote = null;
+				root=null; //only one element
+			}else if(!hasNext()&&previosNote!=null){
+				previosNote.ref = null;
+				currentNote = null; //last element
+			}else if(hasNext()&&previosNote==null){
+				root = currentNote.ref;
+				currentNote = root; //first element
+			}else{
+				previosNote.ref = currentNote.ref;
+				currentNote = currentNote.ref; //middle element
+			}
+			
+			size--;
+		}
+
 	}
+
 
 	public void addFirst(Object object) {
 
@@ -57,9 +127,10 @@ public class SimpleLinkedList {
 		Note prevNote = null;
 		Note currentNote = root;
 
-		if (currentNote == null){
-			throw new IllegalStateException("List is empty, I can't insert object!");			
-		}			
+		if (currentNote == null) {
+			throw new IllegalStateException(
+					"List is empty, I can't insert object!");
+		}
 
 		do {
 			if (currentNote.object == prevObject) {
@@ -111,6 +182,12 @@ public class SimpleLinkedList {
 
 	public int getSize() {
 		return size;
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+		// TODO Auto-generated method stub
+		return new SLLIterator();
 	}
 
 }
