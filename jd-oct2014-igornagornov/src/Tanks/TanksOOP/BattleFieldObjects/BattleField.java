@@ -1,26 +1,19 @@
 package Tanks.TanksOOP.BattleFieldObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import javax.swing.JPanel;
 
 import Tanks.TanksOOP.Service.Drawable;
 
-public class BattleField extends JPanel implements Drawable{
+public class BattleField implements Drawable{
 
 	final boolean COLORDED_MODE = false;
 
 	private final int BF_WIDTH = 576;
 	private final int BF_HEIGHT = 576;
-	
-	private Brick brick = new Brick();
-	private Water water = new Water();
-	private Rock rock = new Rock();
-	private Eagle eagle = new Eagle();
 
-	private static String[][] battleField = {
+	private String[][] battleFieldTemplate = {
 			{ " ", " ", "W", "B", " ", "B", "W", " ", " " },
 			{ "B", " ", "W", "B", " ", "B", "W", " ", "B" },
 			{ "B", "B", "W", "B", "B", "B", "W", "B", "B" },
@@ -30,26 +23,83 @@ public class BattleField extends JPanel implements Drawable{
 			{ "B", " ", " ", " ", "B", " ", " ", " ", "B" },
 			{ "B", " ", " ", "B", "B", "B", " ", " ", "B" },
 			{ " ", " ", " ", "B", "E", "B", " ", " ", " " } };
+	
+	
+	private BFObject[][] battleField = new BFObject[9][9];
 
-	public static String[][] getBattleField() {
-		return battleField;
+	public BattleField() {
+		drawBattleField();
+	}
+
+	public BattleField(String[][] battleField) {
+		this.battleFieldTemplate = battleField;
+		drawBattleField();
 	}
 	
-	public String scanQuadrant(int v, int h) {
+	private String getQuadrantXY(int v, int h) {
+		return (v - 1) * 64 + "_" + (h - 1) * 64;
+	}
+	
+	private void drawBattleField() {
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				String coordinates = getQuadrantXY(i + 1, j + 1);
+				int separator = coordinates.indexOf("_");
+				int y = Integer.parseInt(coordinates
+						.substring(0, separator));
+				int x = Integer.parseInt(coordinates
+						.substring(separator + 1));
+
+				String obj = battleFieldTemplate[i][j];
+				BFObject bfObject;
+				if (obj.equals("B")) {
+					bfObject = new Brick(x, y);
+				} else if (obj.equals("R")) {
+					bfObject = new Rock(x, y);
+				} else if (obj.equals("E")) {
+					bfObject = new Eagle(x, y);
+				} else if (obj.equals("W")) {
+					bfObject = new Water(x, y);
+				} else {
+					bfObject = new Earth(x, y);
+				}
+				battleField[i][j] = bfObject;
+			}
+		}
+	}
+	
+	@Override
+	public void draw(Graphics g) {
+		for (int j = 0; j < battleField.length; j++) {
+			for (int k = 0; k < battleField.length; k++) {
+				battleField[j][k].draw(g); 
+			}
+		}
+	}
+
+	public String[][] getBattleField() {
+		return battleFieldTemplate;
+	}
+	
+	public BFObject scanQuadrant(int v, int h) {
 		return battleField[v][h];
 
 	}
 
 	public void updateQuadrant(int v, int h, String str) {
-		battleField[v][h] = str;
+		battleFieldTemplate[v][h] = str;
+	}
+	
+	public void destroyObject(int v, int h) {
+		battleField[v][h].destroy();
 	}
 
 	public int getDimensionX() {
-		return battleField.length;
+		return battleFieldTemplate.length;
 	}
 
 	public int getDimensionY() {
-		return battleField.length;
+		return battleFieldTemplate.length;
 	}
 
 	public int getBF_WIDTH() {
@@ -60,7 +110,7 @@ public class BattleField extends JPanel implements Drawable{
 		return BF_HEIGHT;
 	}	
 
-	public String getAgressorLocation() {
+	public static String getAgressorLocation() {
 		int random;
 		String result = "0_0";
 
@@ -85,34 +135,6 @@ public class BattleField extends JPanel implements Drawable{
 		}
 
 		return result;
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		int i = 0;
-		Color cc;
-		for (int v = 0; v < 9; v++) {
-			for (int h = 0; h < 9; h++) {
-				if (COLORDED_MODE) {
-					if (i % 2 == 0) {
-						cc = new Color(252, 241, 177);
-					} else {
-						cc = new Color(233, 243, 255);
-					}
-				} else {
-					cc = new Color(180, 180, 180);
-				}
-				i++;
-				g.setColor(cc);
-				g.fillRect(h * 64, v * 64, 64, 64);
-			}
-		}
-
-		brick.draw(g);
-		water.draw(g);
-		rock.draw(g);
-		eagle.draw(g);
 	}
 	
 

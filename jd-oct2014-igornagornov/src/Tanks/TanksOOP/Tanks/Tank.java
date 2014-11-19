@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Bullet;
-import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
@@ -20,24 +19,24 @@ public abstract class Tank implements Destroyable, Drawable {
 	protected Color tankColor;
 	protected Color towerColor;
 	private Direction direction;
-	private ActionField actionfield;
 	private BattleField battlefield;
+	private boolean destroyed = false;
 
-	public Tank(ActionField actionfield, BattleField battlefield, int x, int y,
-			Direction direction) {
-		this.actionfield = actionfield;
+	public Tank(BattleField battlefield, int x, int y, Direction direction) {
 		this.battlefield = battlefield;
 		this.x = x;
 		this.y = y;
-		this.direction = direction;		
+		this.direction = direction;
 	}
 
-	public Tank(ActionField actionfield, BattleField battlefield) {
-		this(actionfield, battlefield, 128, 512, Direction.UP);
+	public Tank(BattleField battlefield) {
+		this(battlefield, 128, 512, Direction.UP);
 	}
+
+	public abstract Action setUp() throws Exception;
 
 	public Direction getDirection() {
-		return this.direction;
+		return direction;
 	}
 
 	public void setX(int x) {
@@ -46,10 +45,6 @@ public abstract class Tank implements Destroyable, Drawable {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
 	}
 
 	public int getX() {
@@ -64,14 +59,6 @@ public abstract class Tank implements Destroyable, Drawable {
 		return speed;
 	}
 
-	public ActionField getActionfield() {
-		return actionfield;
-	}
-
-	public BattleField getBattlefield() {
-		return battlefield;
-	}
-
 	public void updateX(int x) {
 		this.x += x;
 	}
@@ -84,27 +71,11 @@ public abstract class Tank implements Destroyable, Drawable {
 
 		if (this.direction != direction) {
 			this.direction = direction;
-			actionfield.processTurn(this);
 		}
 	}
 
-	public void move() throws Exception {
-		actionfield.processMove(this);
-	}
+	public Bullet fire() throws Exception {
 
-	public void moveRandom() throws Exception {
-		actionfield.processMoveRandom(this);
-	}
-
-	public void moveToQuadrant(int v, int h) throws Exception {
-		actionfield.processMoveToQuadrant(this, v, h);
-	}
-
-	public void moveToRandomQuadrant() throws Exception {
-		actionfield.processMoveToRandomQuadrant(this);
-	}
-
-	public void fire() throws Exception {
 		Bullet bullet = new Bullet(x + 25, y + 25, direction);
 
 		if ((this.getDirection() == Direction.UP && this.getY() != 0)
@@ -123,74 +94,45 @@ public abstract class Tank implements Destroyable, Drawable {
 						direction);
 			}
 		}
+		
+		return bullet;
 
-		if (this instanceof Tiger) {
-			actionfield.processFire(bullet, true);
-		}
-
-		actionfield.processFire(bullet, false);
-	}
-
-	public void clean() throws Exception {
-		actionfield.processClean(this);
-	}
-
-	public int findBrickAtTop() {
-		return actionfield.processFindBrickAtTop(this);
-	}
-
-	public int findBrickAtBottom() {
-		return actionfield.processFindBrickAtBottom(this);
-	}
-
-	public int findBrickAtLeft() {
-		return actionfield.processFindBrickAtLeft(this);
-	}
-
-	public int findBrickAtRight() {
-		return actionfield.processFindBrickAtRight(this);
-	}
-
-	public boolean isCollision() throws Exception {
-		return actionfield.processCollision(this);
 	}
 
 	@Override
-	public void destroy() throws InterruptedException {
+	public void destroy() throws InterruptedException, Exception {
 		// TODO Auto-generated method stub
-		x = -100;
-		y = -100;
+//		x = -100;
+//		y = -100;
 		direction = Direction.NONE;
+		destroyed = true;
 
+	}
+
+	@Override
+	public boolean isDestroyed() {
+		return destroyed;
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
+		if (!destroyed) {
+			g.setColor(tankColor);
+			g.fillRect(this.getX(), this.getY(), 64, 64);
 
-		g.setColor(tankColor);
-		g.fillRect(this.getX(), this.getY(), 64, 64);
-
-		g.setColor(towerColor);
-		if (this.getDirection() == Direction.UP) {
-			g.fillRect(this.getX() + 20, this.getY(), 24, 34);
-		} else if (this.getDirection() == Direction.DOWN) {
-			g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
-		} else if (this.getDirection() == Direction.LEFT) {
-			g.fillRect(this.getX(), this.getY() + 20, 34, 24);
-		} else {
-			g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+			g.setColor(towerColor);
+			if (this.getDirection() == Direction.UP) {
+				g.fillRect(this.getX() + 20, this.getY(), 24, 34);
+			} else if (this.getDirection() == Direction.DOWN) {
+				g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
+			} else if (this.getDirection() == Direction.LEFT) {
+				g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+			} else {
+				g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+			}
 		}
+
 	}
 
-	// public void setTankOnBattlefield(){
-	//
-	// String coordinates = ActionField.getQuadrant(this.getX(), this.getY());
-	// int separator = coordinates.indexOf("_");
-	// int y = Integer.parseInt(coordinates.substring(0, separator));
-	// int x = Integer.parseInt(coordinates.substring(separator + 1));
-	//
-	// battlefield.updateQuadrant(y, x, "T");
-	//
-	// }
 }

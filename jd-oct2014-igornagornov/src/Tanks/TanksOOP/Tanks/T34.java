@@ -1,26 +1,42 @@
 package Tanks.TanksOOP.Tanks;
 
 import java.awt.Color;
-import java.awt.Graphics;
-
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
-import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Direction;
 
-public class T34 extends Tank{
+public class T34 extends Tank {
 
-	public T34(ActionField actionfield, BattleField battlefield, int x, int y,
-			Direction direction) {		
+	 private Object[] actions = new Object[] {Action.MOVE_TO_QUADRANT, Action.TURN, Action.FIRE, Action.FIRE };
+	 private int step = 0;
+
+	public T34(BattleField battlefield, int x, int y, Direction direction) {
 		// TODO Auto-generated constructor stub
-		super(actionfield, battlefield, x, y, direction);
+		super(battlefield, x, y, direction);
 		tankColor = new Color(0, 255, 0);
 		towerColor = new Color(255, 0, 0);
 	}
 
-	public T34(ActionField actionfield, BattleField battlefield) {		
+	public T34(BattleField battlefield) {
 		// TODO Auto-generated constructor stub
-		super(actionfield, battlefield);
+		super(battlefield);
 	}
-	
-	
+
+	@Override
+	public Action setUp() throws Exception {
+		// TODO Auto-generated method stub
+
+		 if (step >= actions.length) {
+		 step = 0;
+		 }
+		 if (!(actions[step] instanceof Action)) {
+		 turn((Direction) actions[step++]);
+		 }
+		 if (step >= actions.length) {
+		 step = 0;
+		 }
+		 return (Action) actions[step++];
+
+//		return Action.CLEAN;
+	}
+
 }

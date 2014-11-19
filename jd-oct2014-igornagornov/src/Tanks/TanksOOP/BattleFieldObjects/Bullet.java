@@ -13,6 +13,7 @@ public class Bullet implements Destroyable, Drawable{
 	private int y;
 	private int speed = 5;
 	private Direction direction;
+	private boolean isDestroyed=false;
 
 	public Bullet(int x, int y, Direction direction) {
 		this.x = x;
@@ -51,6 +52,7 @@ public class Bullet implements Destroyable, Drawable{
 			x = -100;
 			y = -100;
 			direction = Direction.NONE;
+			isDestroyed = true;
 		
 	}
 	
@@ -58,8 +60,16 @@ public class Bullet implements Destroyable, Drawable{
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(new Color(255, 255, 0));
-		g.fillRect(this.getX(), this.getY(), 14, 14);
+		if(!isDestroyed){
+			g.setColor(new Color(255, 255, 0));
+			g.fillRect(this.getX(), this.getY(), 14, 14);
+		}		
+	}
+
+	@Override
+	public boolean isDestroyed() {
+		// TODO Auto-generated method stub
+		return isDestroyed;
 	}
 
 	
