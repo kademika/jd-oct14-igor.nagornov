@@ -68,6 +68,11 @@ public class Store {
 
 		ElectricGuitar g9 = new ElectricGuitar();
 		addGuitarToStore(g9);
+		
+		ElectricGuitar g10 = new ElectricGuitar("Machogony", "Seymor Duncan",
+				"Seymor Duncan", true, GuitarBrand.IBANEZ, "Blue", "JFX501",
+				FreatboardMaterial.MACHOGONY, false, 7, 22, "Japan", 65000);
+		addGuitarToStore(g10);
 
 	}
 
@@ -286,7 +291,10 @@ public class Store {
 		int index = -1;
 		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i])&& guitar[k][i][j]!=null; j++) {
+		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
+			if(guitar[k][i][j]==null){
+				continue;
+			}
 			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
 				index = j;
 			}
@@ -300,7 +308,10 @@ public class Store {
 		int kol = 0;
 		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i])&&guitar[k][i][j]!=null; j++) {
+		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
+			if(guitar[k][i][j]==null){
+				continue;
+			}
 			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
 				kol++;
 			}
