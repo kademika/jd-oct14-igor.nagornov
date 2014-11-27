@@ -34,12 +34,8 @@ public class ActionField extends JPanel {
 	public ActionField() throws Exception {
 
 		battlefield = new BattleField();
-		 defender = new T34(battlefield, 128, 512, Direction.UP);
-//		defender = new T34(battlefield, 512, 0, Direction.LEFT);
-
-		// String temp = BattleField.getAgressorLocation();//
-		// int x = Integer.parseInt(temp.substring(0, temp.indexOf("_")));
-		// int y = Integer.parseInt(temp.substring(temp.indexOf("_") + 1));
+		defender = new T34(battlefield, 128, 512, Direction.UP);
+//		defender = new T34(battlefield, 512, 0, Direction.LEFT);	
 
 		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
 

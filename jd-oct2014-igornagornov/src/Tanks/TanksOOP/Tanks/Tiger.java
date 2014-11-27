@@ -3,7 +3,6 @@ package Tanks.TanksOOP.Tanks;
 import java.awt.Color;
 
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
-import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Tanks.Action;
 
