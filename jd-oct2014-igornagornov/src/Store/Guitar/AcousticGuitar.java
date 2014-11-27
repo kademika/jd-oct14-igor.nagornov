@@ -3,7 +3,6 @@ package Store.Guitar;
 public class AcousticGuitar extends Guitar {
 
 	private boolean stringsIsNylon;
-	private static int countAcousticGuitar=0;
 
 	public AcousticGuitar() {
 		super();
@@ -26,11 +25,5 @@ public class AcousticGuitar extends Guitar {
 		return stringsIsNylon;
 	}
 
-	public static int getCountAcousticGuitar() {
-		return countAcousticGuitar;
-	}
 	
-	public static void increaseCountAcousticGuitar(){
-		countAcousticGuitar++;
-	}
 }

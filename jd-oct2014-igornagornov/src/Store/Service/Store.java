@@ -1,7 +1,10 @@
 package Store.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import lesson7.video4CollectionsList.Student;
 import Store.Guitar.AcousticGuitar;
 import Store.Guitar.BassGuitar;
 import Store.Guitar.ElectricGuitar;
@@ -14,7 +17,11 @@ import Store.Purchase.Purchase;
 public class Store {
 
 	private Guitar guitar[][][] = new Guitar[3][5][];
-	private Purchase purchase[] = new Purchase[100];
+	List<Purchase> purchase = new ArrayList<>();
+	
+	private int numberOfElectricGuitar;
+	private int numberOfBassGuitar;
+	private int numberOfAcousticGuitar;
 
 	public Store() {
 		fillStore();
@@ -68,32 +75,39 @@ public class Store {
 
 		int k = 0;
 		if (g instanceof AcousticGuitar) {
-			k = 0;
-			AcousticGuitar.increaseCountAcousticGuitar();
+			k = 0;		
+			numberOfAcousticGuitar++;
 		}
 
 		if (g instanceof ElectricGuitar && !(g instanceof BassGuitar)) {
-			k = 1;
-			ElectricGuitar.increaseCountElecticGuitar();
+			k = 1;	
+			numberOfElectricGuitar++;
 		}
 
 		if (g instanceof BassGuitar) {
-			k = 2;
-			BassGuitar.increaseCountBassGuitar();
+			k = 2;	
+			numberOfBassGuitar++;
 		}
 
 		if (guitar[k] == null) {
 			guitar[k] = new Guitar[5][];
 		}
-
-		if (guitar[k][g.getGuitarBrand().ordinal()] == null) {
-			guitar[k][g.getGuitarBrand().ordinal()] = new Guitar[100];
+		
+		int i = g.getGuitarBrand().ordinal();		
+		if (guitar[k][i] == null) {			
+			guitar[k][i] = new Guitar[1];
+			guitar[k][i][0] = g;
+			return;
 		}
 
-		int i = g.getGuitarBrand().ordinal();
-		int j = getNumberOfGuitars(guitar[k][i]);
+		Guitar[] tempGuitarArray = new Guitar[guitar[k][i].length + 1];
 
-		guitar[k][i][j] = g;
+		tempGuitarArray[tempGuitarArray.length - 1] = g;
+		for (int j = 0; j < guitar[k][i].length; j++) {
+			tempGuitarArray[j] = guitar[k][i][j];
+		}
+
+		guitar[k][i] = tempGuitarArray;				
 
 	}
 
@@ -215,60 +229,51 @@ public class Store {
 
 	public void printNumberOfGuitarType() {
 
-		System.out.println("We have " + AcousticGuitar.getCountAcousticGuitar()
+		System.out.println("We have " + getNumberOfAcousticGuitar()
 				+ " acoustic guitars in the stock");
-		System.out.println("We have " + ElectricGuitar.getCountElecticGuitar()
+		System.out.println("We have " + getNumberOfElectricGuitar()
 				+ " electric guitars in the stock");
-		System.out.println("We have " + BassGuitar.getCountBassGuitar()
+		System.out.println("We have " + getNumberOfBassGuitar()
 				+ " bass guitars in the stock");
 		System.out
 				.println("________________________________________________________");
 	}
 
 	public void printGuitarType(GuitarType guitarType) {
-		
-			for (int i = 0; i < guitar[guitarType.ordinal()].length; i++) {
-				if (guitar[guitarType.ordinal()][i] != null) {
-					for (int j = 0; j < guitar[guitarType.ordinal()][i].length; j++) {
-						if (guitar[guitarType.ordinal()][i][j] != null) {
-							System.out
-									.println(guitar[guitarType.ordinal()][i][j]
-											.getClass().getName()
-											+ " "
-											+ guitar[guitarType.ordinal()][i][j]
-													.getGuitarBrand()
-											+ " "
-											+ guitar[guitarType.ordinal()][i][j]
-													.getColor()
-											+ " "
-											+ guitar[guitarType.ordinal()][i][j]
-													.getModel()
-											+ " "
-											+ guitar[guitarType.ordinal()][i][j]
-													.getPrice());
 
-						}
+		for (int i = 0; i < guitar[guitarType.ordinal()].length; i++) {
+			if (guitar[guitarType.ordinal()][i] != null) {
+				for (int j = 0; j < guitar[guitarType.ordinal()][i].length; j++) {
+					if (guitar[guitarType.ordinal()][i][j] != null) {
+						System.out
+								.println(guitar[guitarType.ordinal()][i][j]
+										.getClass().getName()
+										+ " "
+										+ guitar[guitarType.ordinal()][i][j]
+												.getGuitarBrand()
+										+ " "
+										+ guitar[guitarType.ordinal()][i][j]
+												.getColor()
+										+ " "
+										+ guitar[guitarType.ordinal()][i][j]
+												.getModel()
+										+ " "
+										+ guitar[guitarType.ordinal()][i][j]
+												.getPrice());
+
 					}
 				}
 			}
+		}
 
-		
 		System.out
 				.println("________________________________________________________");
 
 	}
 
-	public static int getNumberOfGuitars(Guitar[] guitar) {
+	public static int getNumberOfGuitars(Guitar[] guitar) {		
 
-		int i = 0;
-
-		if (guitar != null) {
-			while (guitar[i] != null) {
-				i++;
-			}
-		}
-
-		return i;
+		return guitar.length;
 
 	}
 
@@ -279,11 +284,11 @@ public class Store {
 	public int getGuitarIndexByModel(int k, int i, String model) {
 
 		int index = -1;
-		model = model.toUpperCase();		
+		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
+		for (int j = 0; j < getNumberOfGuitars(guitar[k][i])&& guitar[k][i][j]!=null; j++) {
 			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
-				index = j;				
+				index = j;
 			}
 		}
 
@@ -295,7 +300,7 @@ public class Store {
 		int kol = 0;
 		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
+		for (int j = 0; j < getNumberOfGuitars(guitar[k][i])&&guitar[k][i][j]!=null; j++) {
 			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
 				kol++;
 			}
@@ -304,7 +309,7 @@ public class Store {
 		return kol;
 	}
 
-	public Purchase[] getPurchase() {
+	public List<Purchase> getPurchase() {
 		return purchase;
 	}
 
@@ -410,5 +415,31 @@ public class Store {
 				.println("__________________________________________________");
 
 	}
+
+	public int getNumberOfElectricGuitar() {
+		return numberOfElectricGuitar;
+	}
+	
+	public void decreasenumberOfElecticGuitar() {
+		numberOfElectricGuitar--;
+	}
+
+	public int getNumberOfBassGuitar() {
+		return numberOfBassGuitar;
+	}
+	
+	public void decreaseNumberOfBassGuitar() {
+		numberOfBassGuitar--;
+	}
+
+	public int getNumberOfAcousticGuitar() {
+		return numberOfAcousticGuitar;
+	}
+	
+	public void decreaseNumberOfAcousticGuitar() {
+		numberOfAcousticGuitar--;
+	}
+	
+	
 
 }

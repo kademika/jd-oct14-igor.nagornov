@@ -1,8 +1,6 @@
 package Store.Guitar;
 
 public class ElectricGuitar extends Guitar {
-
-	private static int countElecticGuitar=0;
 	
 	protected String bodyMaterial;
 	protected String neckName;
@@ -50,15 +48,6 @@ public class ElectricGuitar extends Guitar {
 	public boolean isFloydRose() {
 		return isFloydRose;
 	}
-
-	public static int getCountElecticGuitar() {
-		return countElecticGuitar;
-	}
-
-	public static void increaseCountElecticGuitar() {
-		countElecticGuitar++;
-	}
-
 	
 	
 }

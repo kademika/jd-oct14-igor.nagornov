@@ -1,8 +1,6 @@
 package Store.Guitar;
 
 public class BassGuitar extends ElectricGuitar {
-	
-	private static int countBassGuitar=0;
 
 	public BassGuitar() {		
 		guitarBrand = GuitarBrand.ESP;
@@ -40,14 +38,6 @@ public class BassGuitar extends ElectricGuitar {
 		this.neckName = neckName;
 		this.bridgeName = bridgeName;		
 
-	}
-
-	public static int getCountBassGuitar() {
-		return countBassGuitar;
-	}
-	
-	public static void increaseCountBassGuitar(){
-		countBassGuitar++;
 	}
 
 	

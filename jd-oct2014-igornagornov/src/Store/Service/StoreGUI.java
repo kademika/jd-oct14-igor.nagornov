@@ -111,7 +111,7 @@ public class StoreGUI {
 		jTextArea.setEditable(false);
 		panel.add(jTextArea, new GridBagConstraints(1, 6, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		printPrices();
+		printPrices();		
 
 		jButton1 = new JButton("Buy");
 		panel.add(jButton1, new GridBagConstraints(1, 7, 1, 1, 0, 0,
@@ -146,7 +146,8 @@ public class StoreGUI {
 
 					jTextArea.setText(null);
 					printPrices();
-					store.printPurchases();
+					store.printPurchases();	
+					store.printNumberOfGuitarType();
 
 				} catch (NullPointerException e) {
 					// TODO: handle exception

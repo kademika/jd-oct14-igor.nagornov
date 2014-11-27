@@ -35,8 +35,8 @@ public class Purchase {
 			}
 		} catch (IllegalArgumentException e) {
 			System.err.println("There is no such guitar in store!");
-		} catch (IllegalStateException e) {			
-			System.err.println("Illegal number! We don't have it in store");		
+		} catch (IllegalStateException e) {
+			System.err.println("Illegal number! We don't have it in store");
 		}
 
 	}
@@ -64,8 +64,8 @@ public class Purchase {
 			}
 		} catch (IllegalArgumentException e) {
 			System.err.println("There is no such guitar in store!");
-		} catch (IllegalStateException e) {			
-			System.err.println("Illegal number! We don't have it in store");		
+		} catch (IllegalStateException e) {
+			System.err.println("Illegal number! We don't have it in store");
 		}
 
 	}
@@ -93,17 +93,25 @@ public class Purchase {
 			throw new IllegalStateException();
 		}
 
-		for(int idx=0; idx<number; idx++){
-			int j = store.getGuitarIndexByModel(k, i, model);			
-			store.getGuitar()[k][i][j] = null;
-			
-		}	
+		for (int idx = 0; idx < number; idx++) {
+			int j = store.getGuitarIndexByModel(k, i, model);
+			if (store.getGuitar()[k][i][j] instanceof AcousticGuitar) {
+				store.decreaseNumberOfAcousticGuitar();
+			}
 
-		int kol = 0;
-		while (store.getPurchase()[kol] != null) {
-			kol++;
+			if (store.getGuitar()[k][i][j] instanceof ElectricGuitar
+					&& !(store.getGuitar()[k][i][j] instanceof BassGuitar)) {
+				store.decreasenumberOfElecticGuitar();
+			}
+
+			if (store.getGuitar()[k][i][j] instanceof BassGuitar) {
+				store.decreaseNumberOfBassGuitar();
+			}
+			store.getGuitar()[k][i][j] = null;
+
 		}
-		store.getPurchase()[kol] = this;
+
+		store.getPurchase().add(this);
 
 	}
 

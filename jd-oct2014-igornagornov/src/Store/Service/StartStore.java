@@ -1,6 +1,10 @@
 package Store.Service;
 
 import java.util.Date;
+
+import Store.Guitar.AcousticGuitar;
+import Store.Guitar.BassGuitar;
+import Store.Guitar.ElectricGuitar;
 import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
 import Store.Purchase.Purchase;
@@ -33,8 +37,7 @@ public class StartStore {
 	    
 		store.printPurchases();		
 //	    store.printPurchasesByDate(new Date(114, 10, 22));
-	    store.printNumberOfPurchasesByWeek();
-	    
+//	    store.printNumberOfPurchasesByWeek();   
 		
 
 	}
