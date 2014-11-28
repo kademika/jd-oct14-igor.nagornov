@@ -1,6 +1,10 @@
 package Tanks.TanksOOP.BattleFieldObjects;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Rock extends BFObject{
 
@@ -10,6 +14,10 @@ public class Rock extends BFObject{
 		super(x, y);
 		color = new Color(100, 100, 100);
 		
+		try{
+			image = ImageIO.read(new File("rocks.png").getAbsoluteFile());
+		}catch(IOException e){			
+		}
 	}	
 	
 }

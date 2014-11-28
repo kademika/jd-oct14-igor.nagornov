@@ -37,7 +37,8 @@ public class ActionField extends JPanel {
 		defender = new T34(battlefield, 128, 512, Direction.UP);
 //		defender = new T34(battlefield, 512, 0, Direction.LEFT);	
 
-		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
+//		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
+		agressor = new Tiger(battlefield, 64, 0, Direction.DOWN);
 
 		bullet = new Bullet(-100, -100, Direction.NONE);
 
@@ -560,26 +561,7 @@ public class ActionField extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		int i = 0;
-		Color cc = new Color(180, 180, 180);
-		for (int v = 0; v < 9; v++) {
-			for (int h = 0; h < 9; h++) {
-				// if (COLORDED_MODE) {
-				// if (i % 2 == 0) {
-				// cc = new Color(252, 241, 177);
-				// } else {
-				// cc = new Color(233, 243, 255);
-				// }
-				// } else {
-				// cc = new Color(180, 180, 180);
-				// }
-				// i++;
-				g.setColor(cc);
-				g.fillRect(h * 64, v * 64, 64, 64);
-			}
-		}
-
+		
 		battlefield.draw(g);
 
 		defender.draw(g);

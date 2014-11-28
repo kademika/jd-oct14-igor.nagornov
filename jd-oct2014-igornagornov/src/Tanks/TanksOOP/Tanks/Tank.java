@@ -2,6 +2,12 @@ package Tanks.TanksOOP.Tanks;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Bullet;
@@ -16,11 +22,12 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 	private int x;
 	private int y;
 	protected int speed = 20;
-	protected Color tankColor;
-	protected Color towerColor;
 	private Direction direction;
 	private BattleField battlefield;
 	private boolean destroyed = false;
+	protected Color tankColor;
+	protected Color towerColor;
+	protected Image[] images;
 
 	public Tank(BattleField battlefield, int x, int y, Direction direction) {
 		this.battlefield = battlefield;
@@ -136,20 +143,57 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		if (!destroyed) {
-			g.setColor(tankColor);
-			g.fillRect(this.getX(), this.getY(), 64, 64);
 
-			g.setColor(towerColor);
-			if (this.getDirection() == Direction.UP) {
-				g.fillRect(this.getX() + 20, this.getY(), 24, 34);
-			} else if (this.getDirection() == Direction.DOWN) {
-				g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
-			} else if (this.getDirection() == Direction.LEFT) {
-				g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+			if (images!=null && images[0] != null && images[1] != null && images[2] !=null && images[3] !=null ) {
+				
+				if(this.getDirection().ordinal()!=0){
+					g.drawImage(images[this.getDirection().ordinal()-1], this.getX(), this.getY(),
+							new ImageObserver() {
+								@Override
+								public boolean imageUpdate(Image arg0, int arg1,
+										int arg2, int arg3, int arg4, int arg5) {
+									// TODO Auto-generated method stub
+									return false;
+								}
+							});
+				}
+				
 			} else {
-				g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+				g.setColor(tankColor);
+				g.fillRect(this.getX(), this.getY(), 64, 64);
+
+				g.setColor(towerColor);
+				if (this.getDirection() == Direction.UP) {
+					g.fillRect(this.getX() + 20, this.getY(), 24, 34);
+				} else if (this.getDirection() == Direction.DOWN) {
+					g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
+				} else if (this.getDirection() == Direction.LEFT) {
+					g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+				} else {
+					g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+				}
+			}
+
+		} else {
+
+			try {
+				g.drawImage(
+						ImageIO.read(new File("exploitedearth.png").getAbsoluteFile()),
+						getX(), getY(), getX() + 64, getY() + 64, getX(),
+						getY(), getX() + 64, getY() + 64, new ImageObserver() {
+							@Override
+							public boolean imageUpdate(Image arg0, int arg1,
+									int arg2, int arg3, int arg4, int arg5) {
+								// TODO Auto-generated method stub
+								return false;
+							}
+						});
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+
 
 	}
 
