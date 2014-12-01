@@ -174,26 +174,7 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 				}
 			}
 
-		} else {
-
-			try {
-				g.drawImage(
-						ImageIO.read(new File("exploitedearth.png").getAbsoluteFile()),
-						getX(), getY(), getX() + 64, getY() + 64, getX(),
-						getY(), getX() + 64, getY() + 64, new ImageObserver() {
-							@Override
-							public boolean imageUpdate(Image arg0, int arg1,
-									int arg2, int arg3, int arg4, int arg5) {
-								// TODO Auto-generated method stub
-								return false;
-							}
-						});
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
-
 
 	}
 

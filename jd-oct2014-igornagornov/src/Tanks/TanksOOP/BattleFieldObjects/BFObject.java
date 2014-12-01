@@ -53,20 +53,23 @@ public abstract class BFObject implements Drawable, Destroyable {
 			}
 			
 		}else{
-			try{
-				image = ImageIO.read(new File("exploitedearth.png").getAbsoluteFile());
-			}catch(IOException e){	
-				System.out.println(1);
-			}
 			
-			g.drawImage(image, getX(), getY(), getX()+64, getY()+64, getX(), getY(), getX()+64, getY()+64, new ImageObserver() {					
-				@Override
-				public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
-						int arg4, int arg5) {
-					// TODO Auto-generated method stub
-					return false;
-				}
-			});
+			g.setColor(Color.BLACK);
+			g.fillRect(this.getX(), this.getY(), 64, 64);
+			
+//			try{
+//				image = ImageIO.read(new File("exploitedearth.png").getAbsoluteFile());
+//			}catch(IOException e){					
+//			}
+//			
+//			g.drawImage(image, getX(), getY(), getX()+64, getY()+64, getX(), getY(), getX()+64, getY()+64, new ImageObserver() {					
+//				@Override
+//				public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
+//						int arg4, int arg5) {
+//					// TODO Auto-generated method stub
+//					return false;
+//				}
+//			});
 		}
 	}
 
