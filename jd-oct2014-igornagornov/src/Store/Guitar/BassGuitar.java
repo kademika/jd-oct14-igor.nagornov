@@ -2,43 +2,18 @@ package Store.Guitar;
 
 public class BassGuitar extends ElectricGuitar {
 
-	public BassGuitar() {		
-		guitarBrand = GuitarBrand.ESP;
-		model = "JHGG700";
-		color = "red";
-		freatboardMaterial = FreatboardMaterial.MAPLE;
-		isFreatboardGlued = true;
-		numberOfStrings = 6;
-		numberOfFrets = 24;
-		manufacturer = "USA";
-		price = 45000;
-		bodyMaterial = "Machogony";
-		neckName = "Dimarzio";
-		bridgeName = "EMG";		
-		numberOfStrings = 4;	
-
-	}
-
-	public BassGuitar(String bodyMaterial, String neckName, String bridgeName,
-			boolean isFloydRose, GuitarBrand guitarBrand, String color,
-			String model, FreatboardMaterial freatboardMaterial,
+	public BassGuitar(GuitarBrand guitarBrand, String color, String model,
+			String bodyMaterial, FreatboardMaterial freatboardMaterial,
 			boolean isFreatboardGlued, int numberOfStrings, int numberOfFrets,
-			String manufacturer, int price) {
-
-		this.guitarBrand = guitarBrand;
-		this.color = color;
-		this.model = model;				
-		this.freatboardMaterial = freatboardMaterial;
-		this.isFreatboardGlued = isFreatboardGlued;
-		this.numberOfStrings = numberOfStrings;
-		this.numberOfFrets = numberOfFrets;
-		this.manufacturer = manufacturer;
-		this.price = price;
-		this.bodyMaterial = bodyMaterial;
-		this.neckName = neckName;
-		this.bridgeName = bridgeName;		
-
+			String manufacturer, int price, String bridgeName, String neckName,
+			boolean isFloydRose) {
+		
+		super(guitarBrand, color, model, bodyMaterial, freatboardMaterial,
+				isFreatboardGlued, numberOfStrings, numberOfFrets, manufacturer, price,
+				bridgeName, neckName, isFloydRose);
+		this.isFloydRose = false;
+		
 	}
 
-	
+
 }

@@ -136,12 +136,11 @@ public class StoreGUI {
 					}
 
 					if (customerName.trim().isEmpty()) {
-						new Purchase(store, convertGuitarType(guitarType),
-								convertGuitarBrand(guitarBrand), model, number);
+						store.newPurchase(convertGuitarType(guitarType),
+								convertGuitarBrand(guitarBrand), model, number, "", new Date());
 					} else {
-						new Purchase(store, convertGuitarType(guitarType),
-								convertGuitarBrand(guitarBrand), model, number,
-								customerName, new Date());
+						store.newPurchase(convertGuitarType(guitarType),
+								convertGuitarBrand(guitarBrand), model, number, customerName, new Date());
 					}
 
 					jTextArea.setText(null);
@@ -203,9 +202,9 @@ public class StoreGUI {
 
 	}
 
-	public void printPrices() {
+	private void printPrices() {
 
-		for (Guitar[][] guitarType : store.getGuitar()) {
+		for (Guitar[][] guitarType : store.getDb().getGuitar()) {
 			if (guitarType != null) {
 				for (Guitar[] guitarBrand : guitarType) {
 					if (guitarBrand != null) {

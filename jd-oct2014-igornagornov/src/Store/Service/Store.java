@@ -1,122 +1,96 @@
 package Store.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
+import Store.Customer.Customer;
 import Store.Guitar.AcousticGuitar;
 import Store.Guitar.BassGuitar;
 import Store.Guitar.ElectricGuitar;
-import Store.Guitar.FreatboardMaterial;
 import Store.Guitar.Guitar;
 import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
 import Store.Purchase.Purchase;
 
 public class Store {
-
-	private Guitar guitar[][][] = new Guitar[3][5][];
-	List<Purchase> purchase = new ArrayList<>();
 	
-	private int numberOfElectricGuitar;
-	private int numberOfBassGuitar;
-	private int numberOfAcousticGuitar;
+	private DataBase db;
 
 	public Store() {
-		fillStore();
+		db = new DataBase();				
 	}
-
-	private void fillStore() {
-
-		ElectricGuitar g = new ElectricGuitar();
-		addGuitarToStore(g);
-
-		ElectricGuitar g1 = new ElectricGuitar("Machogony", "Seymor Duncan",
-				"Seymor Duncan", true, GuitarBrand.ESP, "Black", "JP123",
-				FreatboardMaterial.MACHOGONY, false, 7, 22, "Japan", 65000);
-		addGuitarToStore(g1);
-
-		ElectricGuitar g2 = new ElectricGuitar("Machogony", "Seymor Duncan",
-				"EMG", false, GuitarBrand.FENDER, "Blue", "PO443",
-				FreatboardMaterial.MACHOGONY, false, 7, 22, "Japan", 70000);
-		addGuitarToStore(g2);
-
-		BassGuitar g3 = new BassGuitar();
-		addGuitarToStore(g3);
-
-		BassGuitar g4 = new BassGuitar("Machogony", "EMG", "EMG", false,
-				GuitarBrand.GIBSON, "White", "TE321",
-				FreatboardMaterial.MACHOGONY, false, 4, 24, "Japan", 55000);
-		addGuitarToStore(g4);
-
-		AcousticGuitar g5 = new AcousticGuitar();
-		addGuitarToStore(g5);
-
-		AcousticGuitar g6 = new AcousticGuitar(GuitarBrand.GIBSON, "red",
-				"RHD12", FreatboardMaterial.MAPLE, true, 6, 19, "Japan", 40000,
-				true);
-		addGuitarToStore(g6);
-
-		AcousticGuitar g7 = new AcousticGuitar(GuitarBrand.JACKSON, "blue",
-				"PR981", FreatboardMaterial.MACHOGONY, false, 12, 24, "USA",
-				80000, true);
-		addGuitarToStore(g7);
-
-		ElectricGuitar g8 = new ElectricGuitar();
-		addGuitarToStore(g8);
-
-		ElectricGuitar g9 = new ElectricGuitar();
-		addGuitarToStore(g9);
+	
+	public void newPurchase(GuitarType guitarType,
+			GuitarBrand guitarBrand, String model, int number,
+			String customerName, Date date){
 		
-		ElectricGuitar g10 = new ElectricGuitar("Machogony", "Seymor Duncan",
-				"Seymor Duncan", true, GuitarBrand.IBANEZ, "Blue", "JFX501",
-				FreatboardMaterial.MACHOGONY, false, 7, 22, "Japan", 65000);
-		addGuitarToStore(g10);
-
-	}
-
-	public void addGuitarToStore(Guitar g) {
-
-		int k = 0;
-		if (g instanceof AcousticGuitar) {
-			k = 0;		
-			numberOfAcousticGuitar++;
-		}
-
-		if (g instanceof ElectricGuitar && !(g instanceof BassGuitar)) {
-			k = 1;	
-			numberOfElectricGuitar++;
-		}
-
-		if (g instanceof BassGuitar) {
-			k = 2;	
-			numberOfBassGuitar++;
-		}
-
-		if (guitar[k] == null) {
-			guitar[k] = new Guitar[5][];
+		Purchase  purchase = new Purchase();
+		Customer customer;
+		
+		if(customerName==""){
+			customer = new Customer();		
+		}else{
+			customer = new Customer(customerName);	
 		}
 		
-		int i = g.getGuitarBrand().ordinal();		
-		if (guitar[k][i] == null) {			
-			guitar[k][i] = new Guitar[1];
-			guitar[k][i][0] = g;
-			return;
+		
+		int k = guitarType.ordinal();
+		int i = guitarBrand.ordinal();
+		int j = this.getGuitarIndexByModel(k, i, model);
+		purchase.setCustomer(customer);
+		purchase.setNumber(number);
+		purchase.setDate(date);
+		
+
+		try {
+			if (j != -1) {
+
+				purchase.setGuitar(db.getGuitar()[k][i][j]);
+				executePurchase(purchase, k, i, model, number);
+
+			} else {
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			System.err.println("There is no such guitar in store!");
+		} catch (IllegalStateException e) {
+			System.err.println("Illegal number! We don't have it in store");
+		}
+	}
+	
+	private void executePurchase(Purchase purchase, int k, int i, String model,
+			int number) throws IllegalStateException {
+
+		if (number < 1 || number > this.getGuitarNumberByModel(k, i, model)) {
+			throw new IllegalStateException();
 		}
 
-		Guitar[] tempGuitarArray = new Guitar[guitar[k][i].length + 1];
+		for (int idx = 0; idx < number; idx++) {
+			int j = this.getGuitarIndexByModel(k, i, model);
+			if (db.getGuitar()[k][i][j] instanceof AcousticGuitar) {
+				db.decreaseNumberOfAcousticGuitar();
+			}
 
-		tempGuitarArray[tempGuitarArray.length - 1] = g;
-		for (int j = 0; j < guitar[k][i].length; j++) {
-			tempGuitarArray[j] = guitar[k][i][j];
+			if (db.getGuitar()[k][i][j] instanceof ElectricGuitar
+					&& !(db.getGuitar()[k][i][j] instanceof BassGuitar)) {
+				db.decreasenumberOfElecticGuitar();
+			}
+
+			if (db.getGuitar()[k][i][j] instanceof BassGuitar) {
+				db.decreaseNumberOfBassGuitar();
+			}
+//			db.getGuitar()[k][i][j] = null;
+			db.removeGuitarFromDB(k, i, j);
+
 		}
 
-		guitar[k][i] = tempGuitarArray;				
+		db.getPurchase().add(purchase);
 
 	}
 
 	public void printStore() {
 
-		for (Guitar[][] guitarType : guitar) {
+		for (Guitar[][] guitarType : db.getGuitar()) {
 			if (guitarType != null) {
 				for (Guitar[] guitarBrand : guitarType) {
 					if (guitarBrand != null) {
@@ -196,7 +170,7 @@ public class Store {
 
 	public void printPrices() {
 
-		for (Guitar[][] guitarType : guitar) {
+		for (Guitar[][] guitarType : db.getGuitar()) {
 			if (guitarType != null) {
 				for (Guitar[] guitarBrand : guitarType) {
 					if (guitarBrand != null) {
@@ -232,11 +206,11 @@ public class Store {
 
 	public void printNumberOfGuitarType() {
 
-		System.out.println("We have " + getNumberOfAcousticGuitar()
+		System.out.println("We have " + db.getNumberOfAcousticGuitar()
 				+ " acoustic guitars in the stock");
-		System.out.println("We have " + getNumberOfElectricGuitar()
+		System.out.println("We have " + db.getNumberOfElectricGuitar()
 				+ " electric guitars in the stock");
-		System.out.println("We have " + getNumberOfBassGuitar()
+		System.out.println("We have " + db.getNumberOfBassGuitar()
 				+ " bass guitars in the stock");
 		System.out
 				.println("________________________________________________________");
@@ -244,24 +218,24 @@ public class Store {
 
 	public void printGuitarType(GuitarType guitarType) {
 
-		for (int i = 0; i < guitar[guitarType.ordinal()].length; i++) {
-			if (guitar[guitarType.ordinal()][i] != null) {
-				for (int j = 0; j < guitar[guitarType.ordinal()][i].length; j++) {
-					if (guitar[guitarType.ordinal()][i][j] != null) {
+		for (int i = 0; i < db.getGuitar()[guitarType.ordinal()].length; i++) {
+			if (db.getGuitar()[guitarType.ordinal()][i] != null) {
+				for (int j = 0; j < db.getGuitar()[guitarType.ordinal()][i].length; j++) {
+					if (db.getGuitar()[guitarType.ordinal()][i][j] != null) {
 						System.out
-								.println(guitar[guitarType.ordinal()][i][j]
+								.println(db.getGuitar()[guitarType.ordinal()][i][j]
 										.getClass().getName()
 										+ " "
-										+ guitar[guitarType.ordinal()][i][j]
+										+ db.getGuitar()[guitarType.ordinal()][i][j]
 												.getGuitarBrand()
 										+ " "
-										+ guitar[guitarType.ordinal()][i][j]
+										+ db.getGuitar()[guitarType.ordinal()][i][j]
 												.getColor()
 										+ " "
-										+ guitar[guitarType.ordinal()][i][j]
+										+ db.getGuitar()[guitarType.ordinal()][i][j]
 												.getModel()
 										+ " "
-										+ guitar[guitarType.ordinal()][i][j]
+										+ db.getGuitar()[guitarType.ordinal()][i][j]
 												.getPrice());
 
 					}
@@ -274,14 +248,10 @@ public class Store {
 
 	}
 
-	public static int getNumberOfGuitars(Guitar[] guitar) {		
+	public int getNumberOfGuitars(Guitar[] guitar) {		
 
 		return guitar.length;
 
-	}
-
-	public Guitar[][][] getGuitar() {
-		return guitar;
 	}
 
 	public int getGuitarIndexByModel(int k, int i, String model) {
@@ -289,11 +259,11 @@ public class Store {
 		int index = -1;
 		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
-			if(guitar[k][i][j]==null){
+		for (int j = 0; j < getNumberOfGuitars(db.getGuitar()[k][i]); j++) {
+			if(db.getGuitar()[k][i][j]==null){
 				continue;
 			}
-			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
+			if (db.getGuitar()[k][i][j].getModel().toUpperCase().equals(model)) {
 				index = j;
 			}
 		}
@@ -306,11 +276,11 @@ public class Store {
 		int kol = 0;
 		model = model.toUpperCase();
 
-		for (int j = 0; j < getNumberOfGuitars(guitar[k][i]); j++) {
-			if(guitar[k][i][j]==null){
+		for (int j = 0; j < getNumberOfGuitars(db.getGuitar()[k][i]); j++) {
+			if(db.getGuitar()[k][i][j]==null){
 				continue;
 			}
-			if (guitar[k][i][j].getModel().toUpperCase().equals(model)) {
+			if (db.getGuitar()[k][i][j].getModel().toUpperCase().equals(model)) {
 				kol++;
 			}
 		}
@@ -318,16 +288,12 @@ public class Store {
 		return kol;
 	}
 
-	public List<Purchase> getPurchase() {
-		return purchase;
-	}
-
 	public void printPurchases() {
 
 		int sum = 0;
 		int number = 0;
 
-		for (Purchase value : purchase) {
+		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
 				number++;
 				sum += (value.getNumber() * value.getGuitar().getPrice());
@@ -357,7 +323,7 @@ public class Store {
 		int sum = 0;
 		int number = 0;
 
-		for (Purchase value : purchase) {
+		for (Purchase value : db.getPurchase()) {
 			if (value != null && value.getDate().getDate() == date.getDate()) {
 				number++;
 				sum += (value.getNumber() * value.getGuitar().getPrice());
@@ -389,7 +355,7 @@ public class Store {
 		Date now = new Date();
 		int[] numberOfPurchaseByWeek = new int[7];
 
-		for (Purchase value : purchase) {
+		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
 
 				for (int i = 0; i < numberOfPurchaseByWeek.length; i++) {
@@ -425,30 +391,9 @@ public class Store {
 
 	}
 
-	public int getNumberOfElectricGuitar() {
-		return numberOfElectricGuitar;
-	}
-	
-	public void decreasenumberOfElecticGuitar() {
-		numberOfElectricGuitar--;
-	}
-
-	public int getNumberOfBassGuitar() {
-		return numberOfBassGuitar;
-	}
-	
-	public void decreaseNumberOfBassGuitar() {
-		numberOfBassGuitar--;
-	}
-
-	public int getNumberOfAcousticGuitar() {
-		return numberOfAcousticGuitar;
-	}
-	
-	public void decreaseNumberOfAcousticGuitar() {
-		numberOfAcousticGuitar--;
-	}
-	
+	public DataBase getDb() {
+		return db;
+	}	
 	
 
 }

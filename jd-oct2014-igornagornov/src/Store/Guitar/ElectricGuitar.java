@@ -5,24 +5,12 @@ public class ElectricGuitar extends Guitar {
 	protected String bodyMaterial;
 	protected String neckName;
 	protected String bridgeName;	
-	private boolean isFloydRose;
+	protected boolean isFloydRose;	
 
-	public ElectricGuitar() {
-		// TODO Auto-generated constructor stub
-
-		super();
-		bodyMaterial = "Machogony";
-		neckName = "Dimarzio";
-		bridgeName = "Dimarzio";
-		isFloydRose = true;			
-		
-	}
-
-	public ElectricGuitar(String bodyMaterial, String neckName,
-			String bridgeName, boolean isFloydRose, GuitarBrand guitarBrand,
-			String color, String model, FreatboardMaterial freatboardMaterial,
-			boolean isFreatboardGlued, int numberOfStrings, int numberOfFrets,
-			String manufacturer, int price) {
+	
+	public ElectricGuitar(GuitarBrand guitarBrand, String color, String model, String bodyMaterial, 
+			FreatboardMaterial freatboardMaterial, boolean isFreatboardGlued, int numberOfStrings, int numberOfFrets,
+			String manufacturer, int price,	String bridgeName, String neckName, boolean isFloydRose) {
 
 		super(guitarBrand, color, model, freatboardMaterial, isFreatboardGlued, numberOfStrings, numberOfFrets, manufacturer, price);
 

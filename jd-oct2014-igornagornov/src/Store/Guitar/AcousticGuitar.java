@@ -4,11 +4,6 @@ public class AcousticGuitar extends Guitar {
 
 	private boolean stringsIsNylon;
 
-	public AcousticGuitar() {
-		super();
-		this.stringsIsNylon = false;		
-	}
-
 	public AcousticGuitar(GuitarBrand guitarBrand, String color, String model,
 			FreatboardMaterial freatboardMaterial, boolean isFreatboardGlued,
 			int numberOfStrings, int numberOfFrets, String manufacturer,

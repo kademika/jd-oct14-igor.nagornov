@@ -12,23 +12,6 @@ public abstract class Guitar {
 	protected String manufacturer;
 	protected int price;
 
-	public Guitar() {
-		this(GuitarBrand.IBANEZ, "Black", "Indonezia", 20000);
-	}
-
-	public Guitar(GuitarBrand guitarBrand, String color, String manufacturer,
-			int price) {
-		this.guitarBrand = guitarBrand;
-		model = "JFX500";
-		this.color = color;
-		freatboardMaterial = FreatboardMaterial.MAPLE;
-		isFreatboardGlued = true;
-		numberOfStrings = 6;
-		numberOfFrets = 24;
-		this.manufacturer = manufacturer;
-		this.price = price;
-
-	}
 
 	public Guitar(GuitarBrand guitarBrand, String color, String model,
 			FreatboardMaterial freatboardMaterial, boolean isFreatboardGlued,
