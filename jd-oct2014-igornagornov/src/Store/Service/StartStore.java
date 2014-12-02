@@ -1,13 +1,8 @@
 package Store.Service;
 
 import java.util.Date;
-
-import Store.Guitar.AcousticGuitar;
-import Store.Guitar.BassGuitar;
-import Store.Guitar.ElectricGuitar;
 import Store.Guitar.GuitarBrand;
-import Store.Guitar.GuitarType;
-import Store.Purchase.Purchase;
+import Store.Guitar.GuitarType;;
 
 public class StartStore {
 
@@ -17,7 +12,7 @@ public class StartStore {
 		Store store = new Store();	
 		StoreGUI storeGUI = new StoreGUI(store);
 
-		store.printStore(true); // if parameter is true, print by date, else print all information
+		store.printStore(true); // if parameter is true, print by price, else print all information
 		store.printNumberOfGuitarType();
 		store.printGuitarType(GuitarType.ACOUSTIC);	
 		
