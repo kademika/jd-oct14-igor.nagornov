@@ -68,7 +68,7 @@ public class DataBase {
 		addGuitarToDB(g5);
 
 		AcousticGuitar g6 = new AcousticGuitar(GuitarBrand.FENDER, "red",
-				"GAG12", FreatboardMaterial.MAPLE, true, 6, 24, "USA", 45000,
+				"FAG543", FreatboardMaterial.MAPLE, true, 6, 24, "USA", 45000,
 				false);
 		addGuitarToDB(g6);
 

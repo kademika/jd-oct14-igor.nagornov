@@ -1,8 +1,6 @@
 package Store.Service;
 
-import java.util.Arrays;
 import java.util.Date;
-
 import Store.Customer.Customer;
 import Store.Guitar.AcousticGuitar;
 import Store.Guitar.BassGuitar;
@@ -13,34 +11,31 @@ import Store.Guitar.GuitarType;
 import Store.Purchase.Purchase;
 
 public class Store {
-	
+
 	private DataBase db;
 
 	public Store() {
-		db = new DataBase();				
+		db = new DataBase();
 	}
-	
-	public void newPurchase(GuitarType guitarType,
-			GuitarBrand guitarBrand, String model, int number,
-			String customerName, Date date){
-		
-		Purchase  purchase = new Purchase();
+
+	public void newPurchase(GuitarType guitarType, GuitarBrand guitarBrand,
+			String model, int number, String customerName, Date date) {
+
+		Purchase purchase = new Purchase();
 		Customer customer;
-		
-		if(customerName==""){
-			customer = new Customer();		
-		}else{
-			customer = new Customer(customerName);	
+
+		if (customerName == "") {
+			customer = new Customer();
+		} else {
+			customer = new Customer(customerName);
 		}
-		
-		
+
 		int k = guitarType.ordinal();
 		int i = guitarBrand.ordinal();
 		int j = this.getGuitarIndexByModel(k, i, model);
 		purchase.setCustomer(customer);
 		purchase.setNumber(number);
 		purchase.setDate(date);
-		
 
 		try {
 			if (j != -1) {
@@ -57,7 +52,7 @@ public class Store {
 			System.err.println("Illegal number! We don't have it in store");
 		}
 	}
-	
+
 	private void executePurchase(Purchase purchase, int k, int i, String model,
 			int number) throws IllegalStateException {
 
@@ -79,7 +74,7 @@ public class Store {
 			if (db.getGuitar()[k][i][j] instanceof BassGuitar) {
 				db.decreaseNumberOfBassGuitar();
 			}
-//			db.getGuitar()[k][i][j] = null;
+			// db.getGuitar()[k][i][j] = null;
 			db.removeGuitarFromDB(k, i, j);
 
 		}
@@ -88,7 +83,7 @@ public class Store {
 
 	}
 
-	public void printStore() {
+	public void printStore(boolean pricesOnly) {
 
 		for (Guitar[][] guitarType : db.getGuitar()) {
 			if (guitarType != null) {
@@ -96,87 +91,8 @@ public class Store {
 					if (guitarBrand != null) {
 						for (Guitar guitarTemp : guitarBrand) {
 							if (guitarTemp != null) {
-								if (guitarTemp instanceof ElectricGuitar
-										&& !(guitarTemp instanceof BassGuitar)) {
-									ElectricGuitar valueTemp = (ElectricGuitar) guitarTemp;
-									System.out.println("Electric Guitar - "
-											+ valueTemp.getGuitarBrand() + " "
-											+ valueTemp.getColor() + " "
-											+ valueTemp.getModel() + " "
-											+ valueTemp.getFreatboardMaterial()
-											+ " "
-											+ valueTemp.isFreatboardGlued()
-											+ " "
-											+ valueTemp.getNumberOfStrings()
-											+ " "
-											+ valueTemp.getNumberOfFrets()
-											+ " " + valueTemp.getManufacturer()
-											+ " " + valueTemp.getPrice() + " "
-											+ valueTemp.getBodyMaterial() + " "
-											+ valueTemp.getNeckName() + " "
-											+ valueTemp.getBridgeName() + " "
-											+ valueTemp.isFloydRose());
-								}
 
-								if (guitarTemp instanceof BassGuitar) {
-									BassGuitar valueTemp = (BassGuitar) guitarTemp;
-									System.out.println("Bass Guitar - "
-											+ valueTemp.getGuitarBrand() + " "
-											+ valueTemp.getColor() + " "
-											+ valueTemp.getModel() + " "
-											+ valueTemp.getFreatboardMaterial()
-											+ " "
-											+ valueTemp.isFreatboardGlued()
-											+ " "
-											+ valueTemp.getNumberOfStrings()
-											+ " "
-											+ valueTemp.getNumberOfFrets()
-											+ " " + valueTemp.getManufacturer()
-											+ " " + valueTemp.getPrice() + " "
-											+ valueTemp.getBodyMaterial() + " "
-											+ valueTemp.getNeckName() + " "
-											+ valueTemp.getBridgeName() + " "
-											+ valueTemp.isFloydRose());
-								}
-								if (guitarTemp instanceof AcousticGuitar) {
-									AcousticGuitar valueTemp = (AcousticGuitar) guitarTemp;
-									System.out.println("Acoustic Guitar - "
-											+ valueTemp.getGuitarBrand() + " "
-											+ valueTemp.getColor() + " "
-											+ valueTemp.getModel() + " "
-											+ valueTemp.getFreatboardMaterial()
-											+ " "
-											+ valueTemp.isFreatboardGlued()
-											+ " "
-											+ valueTemp.getNumberOfStrings()
-											+ " "
-											+ valueTemp.getNumberOfFrets()
-											+ " " + valueTemp.getManufacturer()
-											+ " " + valueTemp.getPrice() + " "
-											+ valueTemp.isStringsIsNylon());
-
-								}
-							}
-						}
-					}
-				}
-			}
-
-		}
-		System.out
-				.println("_____________________________________________________________________________________________________________");
-
-	}
-
-	public void printPrices() {
-
-		for (Guitar[][] guitarType : db.getGuitar()) {
-			if (guitarType != null) {
-				for (Guitar[] guitarBrand : guitarType) {
-					if (guitarBrand != null) {
-						for (Guitar guitarTemp : guitarBrand) {
-							if (guitarTemp != null) {
-								System.out.println(guitarTemp
+								System.out.print(guitarTemp
 										.getClass()
 										.getName()
 										.substring(
@@ -187,10 +103,47 @@ public class Store {
 										+ " "
 										+ guitarTemp.getColor()
 										+ " "
-										+ guitarTemp.getModel()
-										+ " "
-										+ guitarTemp.getPrice());
+										+ guitarTemp.getModel() + " ");
 
+								if (pricesOnly == false) {
+									System.out.print(guitarTemp
+											.getFreatboardMaterial()
+											+ " "
+											+ guitarTemp.isFreatboardGlued()
+											+ " "
+											+ guitarTemp.getNumberOfStrings()
+											+ " "
+											+ guitarTemp.getNumberOfFrets()
+											+ " "
+											+ guitarTemp.getManufacturer()
+											+ " ");
+								}
+
+								System.out.print(guitarTemp.getPrice() + " ");
+
+								if (pricesOnly == true) {
+									System.out.println();
+									continue;
+								}
+
+								if (guitarTemp instanceof ElectricGuitar
+										|| (guitarTemp instanceof BassGuitar)) {
+									ElectricGuitar valueTemp = (ElectricGuitar) guitarTemp;
+									System.out.println(valueTemp
+											.getBodyMaterial()
+											+ " "
+											+ valueTemp.getNeckName()
+											+ " "
+											+ valueTemp.getBridgeName()
+											+ " "
+											+ valueTemp.isFloydRose());
+								}
+
+								if (guitarTemp instanceof AcousticGuitar) {
+									AcousticGuitar valueTemp = (AcousticGuitar) guitarTemp;
+									System.out.println(valueTemp
+											.isStringsIsNylon());
+								}
 							}
 						}
 					}
@@ -198,9 +151,8 @@ public class Store {
 			}
 
 		}
-
 		System.out
-				.println("________________________________________________________");
+				.println("_____________________________________________________________________________________________________________");
 
 	}
 
@@ -218,25 +170,29 @@ public class Store {
 
 	public void printGuitarType(GuitarType guitarType) {
 
-		for (int i = 0; i < db.getGuitar()[guitarType.ordinal()].length; i++) {
-			if (db.getGuitar()[guitarType.ordinal()][i] != null) {
-				for (int j = 0; j < db.getGuitar()[guitarType.ordinal()][i].length; j++) {
-					if (db.getGuitar()[guitarType.ordinal()][i][j] != null) {
+		int idx = guitarType.ordinal();
+
+		for (int i = 0; i < db.getGuitar()[idx].length; i++) {
+			if (db.getGuitar()[idx][i] != null) {
+				for (int j = 0; j < db.getGuitar()[idx][i].length; j++) {
+					if (db.getGuitar()[idx][i][j] != null) {
 						System.out
-								.println(db.getGuitar()[guitarType.ordinal()][i][j]
-										.getClass().getName()
+								.println(db.getGuitar()[idx][i][j]
+										.getClass()
+										.getName()
+										.substring(
+												db.getGuitar()[idx][i][j]
+														.getClass().getName()
+														.lastIndexOf(".") + 1)
 										+ " "
-										+ db.getGuitar()[guitarType.ordinal()][i][j]
+										+ db.getGuitar()[idx][i][j]
 												.getGuitarBrand()
 										+ " "
-										+ db.getGuitar()[guitarType.ordinal()][i][j]
-												.getColor()
+										+ db.getGuitar()[idx][i][j].getColor()
 										+ " "
-										+ db.getGuitar()[guitarType.ordinal()][i][j]
-												.getModel()
+										+ db.getGuitar()[idx][i][j].getModel()
 										+ " "
-										+ db.getGuitar()[guitarType.ordinal()][i][j]
-												.getPrice());
+										+ db.getGuitar()[idx][i][j].getPrice());
 
 					}
 				}
@@ -248,7 +204,7 @@ public class Store {
 
 	}
 
-	public int getNumberOfGuitars(Guitar[] guitar) {		
+	public int getNumberOfGuitars(Guitar[] guitar) {
 
 		return guitar.length;
 
@@ -260,7 +216,7 @@ public class Store {
 		model = model.toUpperCase();
 
 		for (int j = 0; j < getNumberOfGuitars(db.getGuitar()[k][i]); j++) {
-			if(db.getGuitar()[k][i][j]==null){
+			if (db.getGuitar()[k][i][j] == null) {
 				continue;
 			}
 			if (db.getGuitar()[k][i][j].getModel().toUpperCase().equals(model)) {
@@ -277,7 +233,7 @@ public class Store {
 		model = model.toUpperCase();
 
 		for (int j = 0; j < getNumberOfGuitars(db.getGuitar()[k][i]); j++) {
-			if(db.getGuitar()[k][i][j]==null){
+			if (db.getGuitar()[k][i][j] == null) {
 				continue;
 			}
 			if (db.getGuitar()[k][i][j].getModel().toUpperCase().equals(model)) {
@@ -288,13 +244,21 @@ public class Store {
 		return kol;
 	}
 
-	public void printPurchases() {
+	public void printPurchases(Date date) {
 
 		int sum = 0;
 		int number = 0;
 
 		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
+				if (date != null) {
+
+					if (value.getDate().getDate() != date.getDate()) {
+						continue;
+					}
+
+				}
+
 				number++;
 				sum += (value.getNumber() * value.getGuitar().getPrice());
 				System.out.println("Purchase " + number + " "
@@ -304,49 +268,15 @@ public class Store {
 						+ value.getNumber() + " "
 						+ (value.getNumber() * value.getGuitar().getPrice())
 						+ " " + value.getDate());
+
 			}
 
 		}
 
-		if (number != 0) {
-			System.out
-					.println("__________________________________________________");
-			System.out.println("All " + number
-					+ " purchases                            " + sum);
-		} else
-			System.out.println("At this time there is no purchases!");
-
-	}
-
-	public void printPurchasesByDate(Date date) {
-
-		int sum = 0;
-		int number = 0;
-
-		for (Purchase value : db.getPurchase()) {
-			if (value != null && value.getDate().getDate() == date.getDate()) {
-				number++;
-				sum += (value.getNumber() * value.getGuitar().getPrice());
-				System.out.println("Purchase " + number + " "
-						+ value.getCustomer().getName() + " "
-						+ value.getGuitar().getGuitarBrand() + " "
-						+ value.getGuitar().getModel() + " "
-						+ value.getNumber() + " "
-						+ (value.getNumber() * value.getGuitar().getPrice())
-						+ " " + value.getDate());
-			}
-
-		}
-
-		if (number != 0) {
-			System.out
-					.println("__________________________________________________");
-			System.out.println("All " + number
-					+ " purchases                            " + sum);
-		}
-
-		else
-			System.out.println("There is no purchases at this date!");
+		System.out
+				.println("__________________________________________________");
+		System.out.println("All " + number
+				+ " purchases                            " + sum);
 
 	}
 
@@ -362,6 +292,7 @@ public class Store {
 					if (value.getDate().getDate() == now.getDate()
 							- (numberOfPurchaseByWeek.length - 1) + i) {
 						numberOfPurchaseByWeek[i]++;
+
 					}
 				}
 
@@ -393,7 +324,6 @@ public class Store {
 
 	public DataBase getDb() {
 		return db;
-	}	
-	
+	}
 
 }

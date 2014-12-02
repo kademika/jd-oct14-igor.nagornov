@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import Store.Guitar.Guitar;
 import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
-import Store.Purchase.Purchase;
 
 public class StoreGUI {
 
@@ -145,7 +144,7 @@ public class StoreGUI {
 
 					jTextArea.setText(null);
 					printPrices();
-					store.printPurchases();	
+					store.printPurchases(null);	
 					store.printNumberOfGuitarType();
 
 				} catch (NullPointerException e) {
