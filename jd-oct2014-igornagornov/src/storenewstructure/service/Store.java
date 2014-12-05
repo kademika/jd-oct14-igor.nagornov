@@ -16,7 +16,7 @@ public class Store {
 	private DataBase db;
 
 	public Store() {
-		db = new DataBase();
+		db = new DataBase();		
 	}
 
 	public void newPurchase(GuitarType guitarType, GuitarBrand guitarBrand,

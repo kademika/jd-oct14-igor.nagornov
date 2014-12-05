@@ -17,22 +17,24 @@ public class StartStore {
 		Store store = new Store();		
 		fillDB(store.getDb());
 		
+		StoreGUI gui = new StoreGUI(store);		
+		
 		store.printStore(false);
 		store.printNumberOfGuitarType();
 		store.printGuitarType(GuitarType.ELECTRIC);		
 		
-		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
-
-		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.JACKSON,
-				"JAG637", 1, "Igor Nagornov", new Date(114, 10, 3, 9, 10, 0)); //year-1900, month, day, hour, minute, second
- 
-		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.FENDER,
-				"fag543", 1, "Ivan Petrov", new Date(114, 11, 4, 16, 55, 0));		  	
-	    
-	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new Date());	    
+//		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
+//
+//		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.JACKSON,
+//				"JAG637", 1, "Igor Nagornov", new Date(114, 10, 3, 9, 10, 0)); //year-1900, month, day, hour, minute, second
+// 
+//		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.FENDER,
+//				"fag543", 1, "Ivan Petrov", new Date(114, 11, 4, 16, 55, 0));		  	
+//	    
+//	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new Date());	    
 		
-		store.printPurchases(null);	 // if parameter is null, print all purchase, else print by date
-	    store.printNumberOfPurchasesByWeek();     
+//		store.printPurchases(null);	 // if parameter is null, print all purchase, else print by date
+//	    store.printNumberOfPurchasesByWeek();     
 		
 
 	}
