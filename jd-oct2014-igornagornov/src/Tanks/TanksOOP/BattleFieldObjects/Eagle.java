@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Eagle extends BFObject {
 
@@ -15,12 +11,12 @@ public class Eagle extends BFObject {
 		// TODO Auto-generated constructor stub
 
 		super(x, y);
-		color = new Color(255, 255, 255);
+		color = new Color(0, 255, 255);
 
-		try {
-			image = ImageIO.read(new File("eagle.png"));
-		} catch (IOException e) {
-		}
+		image = getEagle();
+
+		imageDestroyed = getExploitedEarth();
+
 	}
 
 	@Override
@@ -45,23 +41,23 @@ public class Eagle extends BFObject {
 			}
 
 		} else {
-			try {
-				image = ImageIO.read(new File("exploitedearth.png").getAbsoluteFile());
-			} catch (IOException e) {
+			if (imageDestroyed != null) {
+				g.drawImage(imageDestroyed, getX(), getY(), getX() + 64,
+						getY() + 64, getX(), getY(), getX() + 64, getY() + 64,
+						new ImageObserver() {
+							@Override
+							public boolean imageUpdate(Image arg0, int arg1,
+									int arg2, int arg3, int arg4, int arg5) {
+								// TODO Auto-generated method stub
+								return false;
+							}
+						});
+			} else {
+				g.setColor(Color.BLACK);
+				g.fillRect(this.getX(), this.getY(), 64, 64);
 			}
 
-			g.drawImage(image, getX(), getY(), getX() + 64, getY() + 64,
-					getX(), getY(), getX() + 64, getY() + 64,
-					new ImageObserver() {
-						@Override
-						public boolean imageUpdate(Image arg0, int arg1,
-								int arg2, int arg3, int arg4, int arg5) {
-							// TODO Auto-generated method stub
-							return false;
-						}
-					});
 		}
 
 	}
-
 }

@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.util.Random;
 
 
+
 import Tanks.TanksOOP.Service.Drawable;
+import Tanks.TanksOOP.Service.LoadImages;
 
 public class BattleField implements Drawable{
 
@@ -21,7 +23,7 @@ public class BattleField implements Drawable{
 			{ "B", "B", "R", "R", "R", "R", "R", "B", "B" },
 			{ "B", "B", " ", " ", "B", " ", " ", "B", "B" },
 			{ "B", " ", " ", " ", "B", " ", " ", " ", "B" },
-			{ "B", " ", " ", "B", "B", "B", " ", " ", "B" },
+			{ "B", " ", " ", "W", "W", "W", " ", " ", "B" },
 			{ " ", " ", " ", "B", "E", "B", " ", " ", " " } };
 	
 	
@@ -41,6 +43,9 @@ public class BattleField implements Drawable{
 	}
 	
 	private void drawBattleField() {
+		
+		new LoadImages();
+		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				String coordinates = getQuadrantXY(i + 1, j + 1);
@@ -51,7 +56,8 @@ public class BattleField implements Drawable{
 						.substring(separator + 1));
 
 				String obj = battleFieldTemplate[i][j];
-				BFObject bfObject;
+				BFObject bfObject;				
+				
 				if (obj.equals("B")) {
 					bfObject = new Brick(x, y);
 				} else if (obj.equals("R")) {
@@ -77,8 +83,8 @@ public class BattleField implements Drawable{
 		}
 	}
 
-	public String[][] getBattleField() {
-		return battleFieldTemplate;
+	public BFObject[][] getBattleField() {
+		return battleField;
 	}
 	
 	public BFObject scanQuadrant(int v, int h) {
@@ -110,7 +116,7 @@ public class BattleField implements Drawable{
 		return BF_HEIGHT;
 	}	
 
-	public static String getAgressorLocation() {
+	public String getAgressorLocation() {
 		int random;
 		String result = "0_0";
 

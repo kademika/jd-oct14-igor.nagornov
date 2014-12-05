@@ -20,14 +20,12 @@ public class BT7 extends Tank {
 		tankColor = new Color(255, 255, 0);
 		towerColor = new Color(255, 0, 0);
 		setImages();
+		imageDestroyed = getExploitedEarth();
+		
 	}
 
 	public BT7(BattleField battlefield) {
-		this(battlefield, 512, 0, Direction.DOWN);
-		speed = 10;
-		tankColor = new Color(255, 255, 0);
-		towerColor = new Color(255, 0, 0);
-		setImages();
+		this(battlefield, 512, 0, Direction.DOWN);		
 	}
 
 	@Override

@@ -11,8 +11,9 @@ import javax.imageio.ImageIO;
 
 import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Drawable;
+import Tanks.TanksOOP.Service.LoadImages;
 
-public abstract class BFObject implements Drawable, Destroyable {
+public abstract class BFObject extends LoadImages implements Drawable, Destroyable {
 
 	// current position on BF
 	private int x;
@@ -20,6 +21,7 @@ public abstract class BFObject implements Drawable, Destroyable {
 
 	protected Color color;
 	protected Image image;
+	protected Image imageDestroyed;
 
 	private boolean isDestroyed = false;
 
@@ -27,7 +29,6 @@ public abstract class BFObject implements Drawable, Destroyable {
 		this.x = x;
 		this.y = y;
 	}
-	
 
 	@Override
 	public void destroy() {
@@ -37,39 +38,40 @@ public abstract class BFObject implements Drawable, Destroyable {
 	@Override
 	public void draw(Graphics g) {
 		if (!isDestroyed) {
-			if(image!=null)
-			{				
-				g.drawImage(image, getX(), getY(), getX()+64, getY()+64, getX(), getY(), getX()+64, getY()+64, new ImageObserver() {					
-					@Override
-					public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
-							int arg4, int arg5) {
-						// TODO Auto-generated method stub
-						return false;
-					}
-				});
-			}else{				
+			if (image != null) {
+				g.drawImage(image, getX(), getY(), getX() + 64, getY() + 64,
+						getX(), getY(), getX() + 64, getY() + 64,
+						new ImageObserver() {
+							@Override
+							public boolean imageUpdate(Image arg0, int arg1,
+									int arg2, int arg3, int arg4, int arg5) {
+								// TODO Auto-generated method stub
+								return false;
+							}
+						});
+			} else {
 				g.setColor(this.color);
-				g.fillRect(this.getX(), this.getY(), 64, 64);	
+				g.fillRect(this.getX(), this.getY(), 64, 64);
 			}
+
+		} else {
 			
-		}else{
-			
-			g.setColor(Color.BLACK);
-			g.fillRect(this.getX(), this.getY(), 64, 64);
-			
-//			try{
-//				image = ImageIO.read(new File("exploitedearth.png").getAbsoluteFile());
-//			}catch(IOException e){					
-//			}
-//			
-//			g.drawImage(image, getX(), getY(), getX()+64, getY()+64, getX(), getY(), getX()+64, getY()+64, new ImageObserver() {					
-//				@Override
-//				public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
-//						int arg4, int arg5) {
-//					// TODO Auto-generated method stub
-//					return false;
-//				}
-//			});
+			if (imageDestroyed != null) {
+				g.drawImage(imageDestroyed, getX(), getY(), getX() + 64,
+						getY() + 64, getX(), getY(), getX() + 64, getY() + 64,
+						new ImageObserver() {
+							@Override
+							public boolean imageUpdate(Image arg0, int arg1,
+									int arg2, int arg3, int arg4, int arg5) {
+								// TODO Auto-generated method stub
+								return false;
+							}
+						});
+			} else {
+				 g.setColor(Color.BLACK);
+				 g.fillRect(this.getX(), this.getY(), 64, 64);
+			}
+
 		}
 	}
 

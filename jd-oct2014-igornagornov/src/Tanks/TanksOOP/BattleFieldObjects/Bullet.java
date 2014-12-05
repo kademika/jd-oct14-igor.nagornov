@@ -4,16 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
+import Tanks.TanksOOP.Service.LoadImages;
 
-public class Bullet implements Destroyable, Drawable{
+public class Bullet extends LoadImages implements Destroyable, Drawable{
 
 	private int x;
 	private int y;
@@ -27,10 +23,7 @@ public class Bullet implements Destroyable, Drawable{
 		this.y = y;
 		this.direction = direction;
 
-		try {
-			image = ImageIO.read(new File("bullet.png"));
-		} catch (IOException e) {
-		}
+		image = getBullet();
 	}
 
 	public int getX() {

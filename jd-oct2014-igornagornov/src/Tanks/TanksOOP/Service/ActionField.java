@@ -1,6 +1,5 @@
 package Tanks.TanksOOP.Service;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
@@ -35,7 +34,7 @@ public class ActionField extends JPanel {
 
 		battlefield = new BattleField();
 		defender = new T34(battlefield, 128, 512, Direction.UP);
-//		defender = new T34(battlefield, 512, 0, Direction.LEFT);	
+//		defender = new T34(battlefield, 512, 0, Direction.LEFT);
 
 //		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
 		agressor = new Tiger(battlefield, 64, 0, Direction.DOWN);
@@ -104,9 +103,9 @@ public class ActionField extends JPanel {
 				|| (direction == Direction.DOWN && tank.getY() == 512)
 				|| (direction == Direction.LEFT && tank.getX() == 0)
 				|| (direction == Direction.RIGHT && tank.getX() == 512 || direction == Direction.NONE)) {
-			System.out.println("[illegal move] direction: "
-					+ tank.getDirection() + " tankX: " + tank.getX()
-					+ ", tankY: " + tank.getY());
+//			System.out.println("[illegal move] direction: "
+//					+ tank.getDirection() + " tankX: " + tank.getX()
+//					+ ", tankY: " + tank.getY());
 			return;
 		}
 
@@ -117,24 +116,24 @@ public class ActionField extends JPanel {
 		while (covered < 64) {
 			if (tank.getDirection() == Direction.UP) {
 				tank.updateY(-step);
-				System.out.println("[move up] direction: "
-						+ tank.getDirection() + " tankX: " + tank.getX()
-						+ ", tankY: " + tank.getY());
+//				System.out.println("[move up] direction: "
+//						+ tank.getDirection() + " tankX: " + tank.getX()
+//						+ ", tankY: " + tank.getY());
 			} else if (tank.getDirection() == Direction.DOWN) {
 				tank.updateY(step);
-				System.out.println("[move down] direction: "
-						+ tank.getDirection() + " tankX: " + tank.getX()
-						+ ", tankY: " + tank.getY());
+//				System.out.println("[move down] direction: "
+//						+ tank.getDirection() + " tankX: " + tank.getX()
+//						+ ", tankY: " + tank.getY());
 			} else if (tank.getDirection() == Direction.LEFT) {
 				tank.updateX(-step);
-				System.out.println("[move left] direction: "
-						+ tank.getDirection() + " tankX: " + tank.getX()
-						+ ", tankY: " + tank.getY());
+//				System.out.println("[move left] direction: "
+//						+ tank.getDirection() + " tankX: " + tank.getX()
+//						+ ", tankY: " + tank.getY());
 			} else {
 				tank.updateX(step);
-				System.out.println("[move right] direction: "
-						+ tank.getDirection() + " tankX: " + tank.getX()
-						+ ", tankY: " + tank.getY());
+//				System.out.println("[move right] direction: "
+//						+ tank.getDirection() + " tankX: " + tank.getX()
+//						+ ", tankY: " + tank.getY());
 			}
 			covered += step;
 
@@ -232,8 +231,6 @@ public class ActionField extends JPanel {
 				if (agressor instanceof Tiger) {
 					if (((Tiger) agressor).isRised()) {
 						bullet.destroy();
-						agressor.setX(-100);
-						agressor.setY(-100);
 						repaint();
 						Thread.sleep(3000);
 						agressorRise();
@@ -546,7 +543,7 @@ public class ActionField extends JPanel {
 
 	private void agressorRise() throws Exception {
 
-		String temp = BattleField.getAgressorLocation();
+		String temp = battlefield.getAgressorLocation();
 		int agrX = Integer.parseInt(temp.substring(0, temp.indexOf("_")));
 		int agrY = Integer.parseInt(temp.substring(temp.indexOf("_") + 1));
 
@@ -561,14 +558,34 @@ public class ActionField extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
+		String defenderPos = getQuadrant(defender.getX()+32, defender.getY()+32);
+		int separator = defenderPos.indexOf("_");
+		int defV = Integer.parseInt(defenderPos.substring(0, separator));
+		int defH = Integer.parseInt(defenderPos.substring(separator + 1));	
 		
-		battlefield.draw(g);
+		
+		String agressorPos = getQuadrant(agressor.getX()+32, agressor.getY()+32);		
+		int agrV = Integer.parseInt(agressorPos.substring(0, separator));		
+		int agrH = Integer.parseInt(agressorPos.substring(separator + 1));		
+		
 
-		defender.draw(g);
-
-		agressor.draw(g);
-
-		bullet.draw(g);
+		if (battlefield.getBattleField()[defV][defH] instanceof Water) {
+			defender.draw(g);
+			battlefield.draw(g);
+			agressor.draw(g);
+			bullet.draw(g);
+		} else if (battlefield.getBattleField()[agrV][agrH] instanceof Water) {
+			agressor.draw(g);
+			battlefield.draw(g);
+			defender.draw(g);
+			bullet.draw(g);
+		} else {
+			battlefield.draw(g);
+			agressor.draw(g);
+			defender.draw(g);
+			bullet.draw(g);
+		}
 
 	}
 

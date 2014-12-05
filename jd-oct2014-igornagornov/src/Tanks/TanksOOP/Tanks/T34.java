@@ -22,24 +22,28 @@ public class T34 extends Tank {
 		tankColor = new Color(0, 255, 0);
 		towerColor = new Color(255, 0, 0);
 		setImages();
+		imageDestroyed = getExploitedEarth();
 	}
 
 	public T34(BattleField battlefield) {
 		// TODO Auto-generated constructor stub
 		super(battlefield);
+		tankColor = new Color(0, 255, 0);
+		towerColor = new Color(255, 0, 0);
 		setImages();
+		imageDestroyed = getExploitedEarth();
 	}
 
 	@Override
 	public Action setUp() throws Exception {
 		// TODO Auto-generated method stub
 
-		 if (step >= actions.length) {
-		 step = 0;
-		 }		
-		 return (Action) actions[step++];
+//		 if (step >= actions.length) {
+//		 step = 0;
+//		 }		
+//		 return (Action) actions[step++];
 
-//		return Action.NONE;
+		return Action.NONE;
 	}
 
 	@Override
