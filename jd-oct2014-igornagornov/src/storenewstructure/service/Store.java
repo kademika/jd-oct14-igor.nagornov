@@ -133,15 +133,14 @@ public class Store {
 		String result = "";
 
 		return result += "We have " + db.getNumberOfAcousticGuitar()
-				+ " acoustic guitars in the stock\n" + "We have "
-				+ db.getNumberOfElectricGuitar()
-				+ " electric guitars in the stock\n" + "We have "
-				+ db.getNumberOfBassGuitar() + " bass guitars in the stock\n";
+				+ " acoustic guitars, " + db.getNumberOfElectricGuitar()
+				+ " electric guitars, " + db.getNumberOfBassGuitar()
+				+ " bass guitars in the stock\n";
 
 	}
 
-	public String printGuitarByType(GuitarType guitarType) {
-		
+	public String printGuitarByType(GuitarType guitarType, boolean onlyPrices) {
+
 		String result = "";
 
 		int idx = guitarType.ordinal();
@@ -159,12 +158,43 @@ public class Store {
 						+ " "
 						+ guitarTemp.getColor()
 						+ " "
-						+ guitarTemp.getModel()
-						+ " " + guitarTemp.getPrice() + "\n";
+						+ guitarTemp.getModel() + " ";
+
+				if (onlyPrices == false) {
+					result += guitarTemp.getFreatboardMaterial() + " "
+							+ guitarTemp.isFreatboardGlued() + " "
+							+ guitarTemp.getNumberOfStrings() + " "
+							+ guitarTemp.getNumberOfFrets() + " "
+							+ guitarTemp.getManufacturer() + " ";
+				}
+
+				result += guitarTemp.getPrice() + " ";
+
+				if (onlyPrices == true) {
+					result += "\n";
+					continue;
+				}
+
+				if (guitarTemp instanceof ElectricGuitar
+						|| (guitarTemp instanceof BassGuitar)) {
+					ElectricGuitar valueTemp = (ElectricGuitar) guitarTemp;
+					result += valueTemp.getBodyMaterial() + " "
+							+ valueTemp.getNeckName() + " "
+							+ valueTemp.getBridgeName() + " "
+							+ valueTemp.isFloydRose();
+				}
+
+				if (guitarTemp instanceof AcousticGuitar) {
+					AcousticGuitar valueTemp = (AcousticGuitar) guitarTemp;
+					result += valueTemp.isStringsIsNylon();
+
+				}
+
+				result += "\n";
 
 			}
 		}
-		
+
 		return result;
 
 	}

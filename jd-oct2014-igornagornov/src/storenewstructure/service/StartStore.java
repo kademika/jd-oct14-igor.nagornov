@@ -17,11 +17,7 @@ public class StartStore {
 		Store store = new Store();		
 		fillDB(store.getDb());
 		
-		StoreGUI gui = new StoreGUI(store);		
-		
-		System.out.println(store.printStore(false));
-		System.out.println(store.printNumberOfGuitarType());
-		System.out.println(store.printGuitarByType(GuitarType.ELECTRIC));		
+		StoreGUI gui = new StoreGUI(store);					
 		
 //		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
 //

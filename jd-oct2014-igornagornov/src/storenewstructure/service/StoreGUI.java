@@ -2,6 +2,7 @@ package storenewstructure.service;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -45,6 +46,7 @@ public class StoreGUI {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel3;
+	private JLabel jLabel4;
 	private JTextField jTextField1;
 	private JTextField jTextField2;
 	private JFormattedTextField jTextField3;
@@ -166,7 +168,7 @@ public class StoreGUI {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.ACOUSTIC));	
+				jTextArea.setText(store.printGuitarByType(GuitarType.ACOUSTIC, jRadioButton1.isSelected()));	
 			}
 		});
 		jRadioButton4 = new JRadioButton("Show electric");
@@ -175,7 +177,7 @@ public class StoreGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.ELECTRIC));	
+				jTextArea.setText(store.printGuitarByType(GuitarType.ELECTRIC, jRadioButton1.isSelected()));	
 			}
 		});		
 		jRadioButton5 = new JRadioButton("Show bass");
@@ -184,7 +186,7 @@ public class StoreGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.BASS));
+				jTextArea.setText(store.printGuitarByType(GuitarType.BASS, jRadioButton1.isSelected()));
 			}
 		});
 		ButtonGroup buttonGroup2 = new ButtonGroup();
@@ -238,9 +240,10 @@ public class StoreGUI {
 					}
 
 					jTextArea.setText(null);
-					jTextArea.setText(store.printStore(false));
-					store.printPurchases(null);
-					store.printNumberOfGuitarType();
+					jTextArea.setText(store.printStore(jRadioButton1.isSelected()));
+
+					jLabel4.setText(store.printNumberOfGuitarType());
+					jLabel4.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
 				} catch (NullPointerException e) {
 					// TODO: handle exception
@@ -256,6 +259,11 @@ public class StoreGUI {
 			}
 
 		});
+		
+		jLabel4 = new JLabel(store.printNumberOfGuitarType());
+		jLabel4.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		panel.add(jLabel4, new GridBagConstraints(1, 8, 1, 1, 0, 0,
+				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
 
 		return panel;
 	}
