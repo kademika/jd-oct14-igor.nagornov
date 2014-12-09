@@ -229,10 +229,12 @@ public class Store {
 		return kol;
 	}
 
-	public void printPurchases(Date date) {
+	public String printPurchases(Date date) {
 
 		int sum = 0;
 		int number = 0;
+		String result = "";
+		
 
 		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
@@ -246,27 +248,27 @@ public class Store {
 
 				number++;
 				sum += (value.getNumber() * value.getGuitar().getPrice());
-				System.out.println("Purchase " + number + " "
+				result += "Purchase " + number + " "
 						+ value.getCustomer().getName() + " "
 						+ value.getGuitar().getGuitarBrand() + " "
 						+ value.getGuitar().getModel() + " "
 						+ value.getNumber() + " "
 						+ (value.getNumber() * value.getGuitar().getPrice())
-						+ " " + value.getDate());
+						+ " " + value.getDate() + "\n";
 
 			}
 
 		}
 
-		System.out
-				.println("__________________________________________________");
-		System.out.println("All " + number
-				+ " purchases                            " + sum);
+		result += "\nAll " + number + " purchases, all wasted money - " + sum + "\n";
+		
+		return result;
 
 	}
 
-	public void printNumberOfPurchasesByWeek() {
+	public String printNumberOfPurchasesByWeek() {
 
+		String result = "";
 		Date now = new Date();
 		int[] numberOfPurchaseByWeek = new int[7];
 
@@ -288,22 +290,20 @@ public class Store {
 		for (int i = 0; i < numberOfPurchaseByWeek.length; i++) {
 
 			if (i == numberOfPurchaseByWeek.length - 1) {
-				System.out.println(numberOfPurchaseByWeek[i]
-						+ " purchases were made today");
+				result += numberOfPurchaseByWeek[i]
+						+ " purchases were made today\n";
 			} else if (i == numberOfPurchaseByWeek.length - 2) {
-				System.out.println(numberOfPurchaseByWeek[i]
-						+ " purchases were made yesterday");
+				result += numberOfPurchaseByWeek[i]
+						+ " purchases were made yesterday\n";
 			} else
-				System.out
-						.println(numberOfPurchaseByWeek[i]
+				result += numberOfPurchaseByWeek[i]
 								+ " purchases were made "
 								+ (numberOfPurchaseByWeek.length - i - 1)
-								+ " days ago");
+								+ " days ago\n";
 
 		}
-
-		System.out
-				.println("__________________________________________________");
+		
+		return result;		
 
 	}
 

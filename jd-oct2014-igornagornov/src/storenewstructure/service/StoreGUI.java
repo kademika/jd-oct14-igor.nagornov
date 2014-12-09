@@ -5,13 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -22,14 +21,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
-import storenewstructure.guitar.AcousticGuitar;
-import storenewstructure.guitar.BassGuitar;
-import storenewstructure.guitar.ElectricGuitar;
-import storenewstructure.guitar.Guitar;
 import storenewstructure.guitar.GuitarBrand;
 import storenewstructure.guitar.GuitarType;
 
@@ -43,29 +38,34 @@ public class StoreGUI {
 	private int number;
 
 	private JPanel panel;
-	private JLabel jLabel1;
-	private JLabel jLabel2;
-	private JLabel jLabel3;
-	private JLabel jLabel4;
-	private JTextField jTextField1;
-	private JTextField jTextField2;
-	private JFormattedTextField jTextField3;
+	private JLabel customerNameLabel;
+	private JLabel guitarModelLabel;
+	private JLabel guitarNumberLabel;
+	private JLabel printInfoLabel;
+	private JLabel chooseTypeLabel;
+	private JLabel chooseBrandLabel;
+	private JTextField customerNameTextField;
+	private JTextField guitarModelTextField;
+	private JFormattedTextField guitarNumberTextField;
 	private JComboBox jComboBoxGuitarType;
 	private JComboBox jComboBoxGuitarBrand;
 	private JTextArea jTextArea;
-	private JRadioButton jRadioButton1;
-	private JRadioButton jRadioButton2;
-	private JRadioButton jRadioButton3;
-	private JRadioButton jRadioButton4;
-	private JRadioButton jRadioButton5;
-	private JButton jButton1;
+	private JScrollPane scrollPane;
+	private JRadioButton jRadioButtonPricesOnly;
+	private JRadioButton jRadioButtonAllInfo;
+	private JRadioButton jRadioButtonAcousticType;
+	private JRadioButton jRadioButtonElectricType;
+	private JRadioButton jRadioButtonBassType;
+	private JButton jButtonBuy;
+	private JButton jButtonShowPurchases;
+	private JButton jButtonShowPurchaseStatistics;
 
 	public StoreGUI(Store store) {
 
 		this.store = store;
 
 		JFrame frame = new JFrame("Welcome to guitar store");
-		frame.setMinimumSize(new Dimension(1024, 768));
+		frame.setMinimumSize(new Dimension(800, 600));
 		frame.setLocation(200,100);
 		frame.getContentPane().add(createPanel());
 
@@ -79,61 +79,77 @@ public class StoreGUI {
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 
-		jLabel1 = new JLabel("Enter your name");
-		panel.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0), 0, 0));
-
-		jTextField1 = new JTextField();
-		jTextField1.setColumns(25);
-		panel.add(jTextField1, new GridBagConstraints(1, 0, 1, 1, 0, 0,
+		
+		JPanel customerPanel = new JPanel();
+		customerNameLabel = new JLabel("Enter your name");
+		customerPanel.add(customerNameLabel);
+		
+		customerNameTextField = new JTextField();
+		customerNameTextField.setColumns(25);
+		customerPanel.add(customerNameTextField);
+		panel.add(customerPanel, new GridBagConstraints(0, 0, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
 
+		JPanel chooseGuitarPanel = new JPanel();
+		
+		chooseTypeLabel = new JLabel("Choose guitar type");
+		chooseGuitarPanel.add(chooseTypeLabel);
+		
 		String[] jComboBoxGuitarTypeValues = { GuitarType.ACOUSTIC.toString(),
 				GuitarType.ELECTRIC.toString(), GuitarType.BASS.toString() };
 		jComboBoxGuitarType = new JComboBox(jComboBoxGuitarTypeValues);
-		panel.add(jComboBoxGuitarType, new GridBagConstraints(0, 2, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-
+		chooseGuitarPanel.add(jComboBoxGuitarType);	
+		
+		chooseBrandLabel = new JLabel("Choose guitar brand");
+		chooseGuitarPanel.add(chooseBrandLabel);
+		
 		String[] jComboBoxGuitarBrandValues = { GuitarBrand.FENDER.toString(),
 				GuitarBrand.IBANEZ.toString(), GuitarBrand.GIBSON.toString(),
 				GuitarBrand.JACKSON.toString(), GuitarBrand.ESP.toString() };
-		jComboBoxGuitarBrand = new JComboBox(jComboBoxGuitarBrandValues);//
-		panel.add(jComboBoxGuitarBrand, new GridBagConstraints(1, 2, 1, 1, 0,
-				0, GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0,
-				0));
+		jComboBoxGuitarBrand = new JComboBox(jComboBoxGuitarBrandValues);
+		chooseGuitarPanel.add(jComboBoxGuitarBrand);
+		
+		panel.add(chooseGuitarPanel, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));		
+		
+		
+		JPanel enterFieldsGuitarPanel = new JPanel();
+		
+		guitarModelLabel = new JLabel("Enter guitar model");
+		enterFieldsGuitarPanel.add(guitarModelLabel);		
+		
+		guitarModelTextField = new JTextField();
+		guitarModelTextField.setColumns(10);
+		enterFieldsGuitarPanel.add(guitarModelTextField);
 
-		jLabel2 = new JLabel("Enter guitar model");
-		panel.add(jLabel2, new GridBagConstraints(0, 4, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-
-		jTextField2 = new JTextField();
-		jTextField2.setColumns(10);
-		panel.add(jTextField2, new GridBagConstraints(1, 4, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-
-		jLabel3 = new JLabel("Enter number");
-		panel.add(jLabel3, new GridBagConstraints(0, 5, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0), 0, 0));
+		guitarNumberLabel = new JLabel("Enter number");
+		enterFieldsGuitarPanel.add(guitarNumberLabel);
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance();
-		jTextField3 = new JFormattedTextField(numberFormat);
-		jTextField3.setValue(1);
-		jTextField3.setColumns(2);
-		panel.add(jTextField3, new GridBagConstraints(1, 5, 1, 1, 0, 0,
+		guitarNumberTextField = new JFormattedTextField(numberFormat);
+		guitarNumberTextField.setValue(1);
+		guitarNumberTextField.setColumns(2);
+		enterFieldsGuitarPanel.add(guitarNumberTextField);
+		model = guitarNumberTextField.getText();	
+		
+		panel.add(enterFieldsGuitarPanel, new GridBagConstraints(0, 2, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		model = jTextField3.getText();
 
-		jTextArea = new JTextArea(10, 30);
+		jTextArea = new JTextArea(10, 50);
 		jTextArea.setEditable(false);
 		jTextArea.setText(store.printStore(true));
-		panel.add(jTextArea, new GridBagConstraints(1, 6, 1, 1, 0, 0,
+		scrollPane = new JScrollPane(jTextArea);
+		panel.add(scrollPane, new GridBagConstraints(0, 3, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+		
+		printInfoLabel = new JLabel(store.printNumberOfGuitarType());
+		printInfoLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		panel.add(printInfoLabel, new GridBagConstraints(0, 4, 1, 1, 0, 0,
+				GridBagConstraints.CENTER, 0, new Insets(0, 0, 0, 0), 0, 0));
 
-		jRadioButton1 = new JRadioButton("Prices only");
-		jRadioButton1.setSelected(true);
-		jRadioButton1.addActionListener(new ActionListener() {
+		jRadioButtonPricesOnly = new JRadioButton("Prices only");
+		jRadioButtonPricesOnly.setSelected(true);
+		jRadioButtonPricesOnly.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,8 +159,8 @@ public class StoreGUI {
 			}
 		});
 
-		jRadioButton2 = new JRadioButton("All information");
-		jRadioButton2.addActionListener(new ActionListener() {
+		jRadioButtonAllInfo = new JRadioButton("All information");
+		jRadioButtonAllInfo.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -154,64 +170,68 @@ public class StoreGUI {
 			}
 		});
 
-		ButtonGroup buttonGroup1 = new ButtonGroup();
-		buttonGroup1.add(jRadioButton1);
-		buttonGroup1.add(jRadioButton2);
+		ButtonGroup buttonGroupPrintInfo = new ButtonGroup();
+		buttonGroupPrintInfo.add(jRadioButtonPricesOnly);
+		buttonGroupPrintInfo.add(jRadioButtonAllInfo);
 
-		JPanel bgPanel1 = new JPanel();
-		bgPanel1.setLayout(new GridBagLayout());
-		bgPanel1.setBorder(BorderFactory.createLineBorder(Color.lightGray));		
+		JPanel filterPanel = new JPanel();
+		filterPanel.setLayout(new GridBagLayout());
+		filterPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));		
 		
-		jRadioButton3 = new JRadioButton("Show acoustic");
-		jRadioButton3.addActionListener(new ActionListener() {			
+		jRadioButtonAcousticType = new JRadioButton("Show acoustic");
+		jRadioButtonAcousticType.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.ACOUSTIC, jRadioButton1.isSelected()));	
+				jTextArea.setText(store.printGuitarByType(GuitarType.ACOUSTIC, jRadioButtonPricesOnly.isSelected()));	
 			}
 		});
-		jRadioButton4 = new JRadioButton("Show electric");
-		jRadioButton4.addActionListener(new ActionListener() {			
+		
+		jRadioButtonElectricType = new JRadioButton("Show electric");
+		jRadioButtonElectricType.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.ELECTRIC, jRadioButton1.isSelected()));	
+				jTextArea.setText(store.printGuitarByType(GuitarType.ELECTRIC, jRadioButtonPricesOnly.isSelected()));	
 			}
 		});		
-		jRadioButton5 = new JRadioButton("Show bass");
-		jRadioButton5.addActionListener(new ActionListener() {			
+		
+		jRadioButtonBassType = new JRadioButton("Show bass");
+		jRadioButtonBassType.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				jTextArea.setText(null);
-				jTextArea.setText(store.printGuitarByType(GuitarType.BASS, jRadioButton1.isSelected()));
+				jTextArea.setText(store.printGuitarByType(GuitarType.BASS, jRadioButtonPricesOnly.isSelected()));
 			}
 		});
-		ButtonGroup buttonGroup2 = new ButtonGroup();
-		buttonGroup2.add(jRadioButton3);
-		buttonGroup2.add(jRadioButton4);
-		buttonGroup2.add(jRadioButton5);
-		bgPanel1.add(jRadioButton1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+		
+		ButtonGroup buttonGroupPrintType = new ButtonGroup();
+		buttonGroupPrintType.add(jRadioButtonAcousticType);
+		buttonGroupPrintType.add(jRadioButtonElectricType);
+		buttonGroupPrintType.add(jRadioButtonBassType);
+		filterPanel.add(jRadioButtonPricesOnly, new GridBagConstraints(0, 0, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		bgPanel1.add(jRadioButton2, new GridBagConstraints(1, 0, 1, 1, 0, 0,
+		filterPanel.add(jRadioButtonAllInfo, new GridBagConstraints(1, 0, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		bgPanel1.add(jRadioButton3, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+		filterPanel.add(jRadioButtonAcousticType, new GridBagConstraints(0, 1, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		bgPanel1.add(jRadioButton4, new GridBagConstraints(1, 1, 1, 1, 0, 0,
+		filterPanel.add(jRadioButtonElectricType, new GridBagConstraints(1, 1, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		bgPanel1.add(jRadioButton5, new GridBagConstraints(2, 1, 1, 1, 0, 0,
+		filterPanel.add(jRadioButtonBassType, new GridBagConstraints(2, 1, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		panel.add(bgPanel1, new GridBagConstraints(1, 7, 1, 1, 0, 0,
+		panel.add(filterPanel, new GridBagConstraints(0, 5, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));		
 		
 
-		jButton1 = new JButton("Buy");
-		panel.add(jButton1, new GridBagConstraints(2, 7, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+		JPanel actionButtons = new JPanel();
+		
+		jButtonBuy = new JButton("Buy");
+		actionButtons.add(jButtonBuy);			
 
-		jButton1.addActionListener(new ActionListener() {
+		jButtonBuy.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg) {
@@ -221,9 +241,9 @@ public class StoreGUI {
 					guitarBrand = (String) jComboBoxGuitarBrand
 							.getSelectedItem();
 					guitarType = (String) jComboBoxGuitarType.getSelectedItem();
-					model = jTextField2.getText();
-					number = Integer.parseInt(jTextField3.getText());
-					customerName = jTextField1.getText();
+					model = guitarModelTextField.getText();
+					number = Integer.parseInt(guitarNumberTextField.getText());
+					customerName = customerNameTextField.getText();
 
 					if (model.trim().isEmpty()) {
 						throw new NullPointerException();
@@ -240,10 +260,10 @@ public class StoreGUI {
 					}
 
 					jTextArea.setText(null);
-					jTextArea.setText(store.printStore(jRadioButton1.isSelected()));
+					jTextArea.setText(store.printStore(jRadioButtonPricesOnly.isSelected()));
 
-					jLabel4.setText(store.printNumberOfGuitarType());
-					jLabel4.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+					printInfoLabel.setText(store.printNumberOfGuitarType());
+					printInfoLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
 				} catch (NullPointerException e) {
 					// TODO: handle exception
@@ -258,12 +278,32 @@ public class StoreGUI {
 
 			}
 
+		});	
+		
+		
+		jButtonShowPurchases = new JButton("Show purchases");
+		actionButtons.add(jButtonShowPurchases);			
+		jButtonShowPurchases.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				newPurchaseInfoWindow(store.printPurchases(null));
+			}
+		});		
+		
+		jButtonShowPurchaseStatistics = new JButton("Show purchase statistics by week");
+		actionButtons.add(jButtonShowPurchaseStatistics);
+		jButtonShowPurchaseStatistics.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				newPurchaseInfoWindow(store.printNumberOfPurchasesByWeek());
+			}
 		});
 		
-		jLabel4 = new JLabel(store.printNumberOfGuitarType());
-		jLabel4.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-		panel.add(jLabel4, new GridBagConstraints(1, 8, 1, 1, 0, 0,
+		panel.add(actionButtons, new GridBagConstraints(0, 6, 1, 1, 0, 0,
 				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+		
 
 		return panel;
 	}
@@ -303,6 +343,26 @@ public class StoreGUI {
 		return GuitarBrand.ESP;
 
 	}	
+	
+	private void newPurchaseInfoWindow(String info){
+		
+		JFrame frame = new JFrame("Purchase information");
+		frame.setMinimumSize(new Dimension(600, 450));
+		frame.setLocation(300,200);
+		JPanel jp = new JPanel();
+		
+		JTextArea ta = new JTextArea(20, 50);
+		ta.setEditable(false);
+		ta.setText(info);
+		JScrollPane sp = new JScrollPane(ta);				
+		jp.add(sp);				
+		
+		frame.getContentPane().add(jp);
+
+		frame.pack();
+		frame.setVisible(true);
+		
+	}
 
 	
 

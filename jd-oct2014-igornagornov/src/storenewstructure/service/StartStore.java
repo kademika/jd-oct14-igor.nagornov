@@ -19,18 +19,15 @@ public class StartStore {
 		
 		StoreGUI gui = new StoreGUI(store);					
 		
-//		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
-//
-//		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.JACKSON,
-//				"JAG637", 1, "Igor Nagornov", new Date(114, 10, 3, 9, 10, 0)); //year-1900, month, day, hour, minute, second
-// 
-//		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.FENDER,
-//				"fag543", 1, "Ivan Petrov", new Date(114, 11, 4, 16, 55, 0));		  	
-//	    
-//	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new Date());	    
-		
-//		store.printPurchases(null);	 // if parameter is null, print all purchase, else print by date
-//	    store.printNumberOfPurchasesByWeek();     
+		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
+
+		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.JACKSON,
+				"JAG637", 1, "Igor Nagornov", new Date(114, 10, 3, 9, 10, 0)); //year-1900, month, day, hour, minute, second
+ 
+		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.FENDER,
+				"fag543", 1, "Ivan Petrov", new Date(114, 11, 4, 16, 55, 0));		  	
+	    
+	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new Date());	
 		
 
 	}
@@ -41,12 +38,7 @@ public class StartStore {
 				"JFX500", "Machogony", FreatboardMaterial.MACHOGONY, true, 7,
 				24, "Indonezia", 20000, "EMG", "Seymor Duncan", true);
 		db.addGuitarToDB(g);
-
-		// new ElectricGuitar(guitarBrand, color, model, bodyMaterial,
-		// freatboardMaterial, isFreatboardGlued, numberOfStrings,
-		// numberOfFrets, manufacturer, price, bridgeName, neckName,
-		// isFloydRose)
-
+		
 		ElectricGuitar g1 = new ElectricGuitar(GuitarBrand.ESP, "White",
 				"EEG123", "Machogony", FreatboardMaterial.MAPLE, false, 6, 24,
 				"USA", 50000, "Seymor Duncan", "Seymor Duncan", true);
@@ -57,10 +49,6 @@ public class StartStore {
 				"USA", 45000, "Dimarzio", "Dimarzio", false);
 		db.addGuitarToDB(g2);
 
-		// new BassGuitar(guitarBrand, color, model, bodyMaterial,
-		// freatboardMaterial, isFreatboardGlued, numberOfStrings,
-		// numberOfFrets, manufacturer, price, bridgeName, neckName,
-		// isFloydRose)
 		BassGuitar g3 = new BassGuitar(GuitarBrand.GIBSON, "Red", "GBG472",
 				"Maple", FreatboardMaterial.MACHOGONY, false, 4, 24, "USA",
 				75000, "Dimarzio", "Dimarzio", false);
@@ -71,9 +59,6 @@ public class StartStore {
 				65000, "EMG", "EMG", false);
 		db.addGuitarToDB(g4);
 
-		// new AcousticGuitar(guitarBrand, color, model, freatboardMaterial,
-		// isFreatboardGlued, numberOfStrings, numberOfFrets, manufacturer,
-		// price, stringsIsNylon)
 		AcousticGuitar g5 = new AcousticGuitar(GuitarBrand.GIBSON, "red",
 				"GAG12", FreatboardMaterial.MAPLE, true, 6, 19, "Japan", 40000,
 				true);
