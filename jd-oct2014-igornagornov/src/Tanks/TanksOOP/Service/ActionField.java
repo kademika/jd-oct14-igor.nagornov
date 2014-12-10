@@ -36,8 +36,8 @@ public class ActionField extends JPanel {
 		defender = new T34(battlefield, 128, 512, Direction.UP);
 //		defender = new T34(battlefield, 512, 0, Direction.LEFT);
 
-//		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
-		agressor = new Tiger(battlefield, 64, 0, Direction.DOWN);
+		agressor = new BT7(battlefield, 64, 0, Direction.DOWN);
+//		agressor = new Tiger(battlefield, 64, 0, Direction.DOWN);
 
 		bullet = new Bullet(-100, -100, Direction.NONE);
 
@@ -284,15 +284,14 @@ public class ActionField extends JPanel {
 		int y = tank.getY();
 		while (y > 0) {
 			y -= 64;
-			if (!(tank instanceof BT7)) {
-
-				if (!quadrantIsEmpty(tank.getX(), y)) {
+			if (tank instanceof BT7) {
+				if (findEagle(tank.getX(), y)) {
 					distanceUp = tank.getY() - y - 64;
 					break;
-				}
+				}				
 
 			} else {
-				if (findEagle(tank.getX(), y)) {
+				if (!quadrantIsEmpty(tank.getX(), y)) {
 					distanceUp = tank.getY() - y - 64;
 					break;
 				}
@@ -311,16 +310,16 @@ public class ActionField extends JPanel {
 		int y = tank.getY();
 		while (y < 512) {
 			y += 64;
-			if (!(tank instanceof BT7)) {
-				if (!quadrantIsEmpty(tank.getX(), y)) {
-					distanceDown = y - tank.getY() - 64;
-					break;
-				}
-			} else {
+			if (tank instanceof BT7) {
 				if (findEagle(tank.getX(), y)) {
 					distanceDown = y - tank.getY() - 64;
 					break;
 				}
+			} else {				
+				if (!quadrantIsEmpty(tank.getX(), y)) {
+					distanceDown = y - tank.getY() - 64;
+					break;
+				}				
 			}
 
 		}
@@ -334,13 +333,13 @@ public class ActionField extends JPanel {
 		int x = tank.getX();
 		while (x > 0) {
 			x -= 64;
-			if (!(tank instanceof BT7)) {
-				if (!quadrantIsEmpty(x, tank.getY())) {
+			if (tank instanceof BT7) {
+				if (findEagle(x, tank.getY())) {
 					distanceLeft = tank.getX() - x - 64;
 					break;
-				}
+				}				
 			} else {
-				if (findEagle(x, tank.getY())) {
+				if (!quadrantIsEmpty(x, tank.getY())) {
 					distanceLeft = tank.getX() - x - 64;
 					break;
 				}
@@ -357,16 +356,16 @@ public class ActionField extends JPanel {
 		int x = tank.getX();
 		while (x < 512) {
 			x += 64;
-			if (!(tank instanceof BT7)) {
-				if (!quadrantIsEmpty(x, tank.getY())) {
-					distanceRight = x - tank.getX() - 64;
-					break;
-				}
-			} else {
+			if (tank instanceof BT7) {
 				if (findEagle(x, tank.getY())) {
 					distanceRight = x - tank.getX() - 64;
 					break;
 				}
+			} else {
+				if (!quadrantIsEmpty(x, tank.getY())) {
+					distanceRight = x - tank.getX() - 64;
+					break;
+				}				
 			}
 
 		}
@@ -557,18 +556,16 @@ public class ActionField extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
+		super.paintComponent(g);		
+		
 		String defenderPos = getQuadrant(defender.getX()+32, defender.getY()+32);
 		int separator = defenderPos.indexOf("_");
 		int defV = Integer.parseInt(defenderPos.substring(0, separator));
-		int defH = Integer.parseInt(defenderPos.substring(separator + 1));	
-		
+		int defH = Integer.parseInt(defenderPos.substring(separator + 1));			
 		
 		String agressorPos = getQuadrant(agressor.getX()+32, agressor.getY()+32);		
 		int agrV = Integer.parseInt(agressorPos.substring(0, separator));		
-		int agrH = Integer.parseInt(agressorPos.substring(separator + 1));		
-		
+		int agrH = Integer.parseInt(agressorPos.substring(separator + 1));			
 
 		if (battlefield.getBattleField()[defV][defH] instanceof Water) {
 			defender.draw(g);

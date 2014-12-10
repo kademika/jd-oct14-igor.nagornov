@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -267,14 +268,12 @@ public class StoreGUI {
 
 				} catch (NullPointerException e) {
 					// TODO: handle exception
-					System.err
-							.println("One of fields is empty. You should enter values!");
+					JOptionPane.showMessageDialog(null, "One of fields is empty. You should enter values!", "Warning", JOptionPane.WARNING_MESSAGE);					
 				} catch (IllegalArgumentException e) {
-					System.err.println("There is no such guitar in store!");
+					JOptionPane.showMessageDialog(null, "There is no such guitar in store!", "Information", JOptionPane.INFORMATION_MESSAGE);					
 				} catch (IllegalStateException e) {
-					System.err
-							.println("Illegal number! We don't have it in store");
-				}
+					JOptionPane.showMessageDialog(null, "Illegal number! We don't have it in store", "Error Message", JOptionPane.ERROR_MESSAGE);					
+				}	
 
 			}
 

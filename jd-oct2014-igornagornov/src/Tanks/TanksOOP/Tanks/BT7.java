@@ -16,7 +16,7 @@ public class BT7 extends Tank {
 	public BT7(BattleField battlefield, int x, int y,
 			Direction direction) {
 		super(battlefield, x, y, direction);
-		speed = 10;
+		speed = 15;
 		tankColor = new Color(255, 255, 0);
 		towerColor = new Color(255, 0, 0);
 		setImages();
@@ -31,7 +31,7 @@ public class BT7 extends Tank {
 	@Override
 	public Action setUp() {
 		// TODO Auto-generated method stub
-		return Action.CLEAN;
+		return Action.NONE;
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class BattleField implements Drawable{
 			{ "B", "B", " ", " ", "B", " ", " ", "B", "B" },
 			{ "B", " ", " ", " ", "B", " ", " ", " ", "B" },
 			{ "B", " ", " ", "W", "W", "W", " ", " ", "B" },
-			{ " ", " ", " ", "B", "E", "B", " ", " ", " " } };
+			{ " ", " ", " ", "W", "E", "W", " ", " ", " " } };
 	
 	
 	private BFObject[][] battleField = new BFObject[9][9];

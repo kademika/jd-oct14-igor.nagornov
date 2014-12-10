@@ -21,7 +21,8 @@ public class Store {
 	}
 
 	public void newPurchase(GuitarType guitarType, GuitarBrand guitarBrand,
-			String model, int number, String customerName, Date date) {
+			String model, int number, String customerName, Date date)
+			throws RuntimeException {
 
 		Purchase purchase = new Purchase();
 		Customer customer;
@@ -39,18 +40,12 @@ public class Store {
 		purchase.setNumber(number);
 		purchase.setDate(date);
 
-		try {
-			if (j != -1) {
-				purchase.setGuitar(db.getGuitarTypeList().get(k).get(i).get(j));
-				executePurchase(purchase, k, i, model, number);
+		if (j != -1) {
+			purchase.setGuitar(db.getGuitarTypeList().get(k).get(i).get(j));
+			executePurchase(purchase, k, i, model, number);
 
-			} else {
-				throw new IllegalArgumentException();
-			}
-		} catch (IllegalArgumentException e) {
-			System.err.println("There is no such guitar in store!");
-		} catch (IllegalStateException e) {
-			System.err.println("Illegal number! We don't have it in store");
+		} else {
+			throw new IllegalArgumentException();
 		}
 
 	}
@@ -158,7 +153,8 @@ public class Store {
 						+ " "
 						+ guitarTemp.getColor()
 						+ " "
-						+ guitarTemp.getModel() + " ";
+						+ guitarTemp.getModel()
+						+ " ";
 
 				if (onlyPrices == false) {
 					result += guitarTemp.getFreatboardMaterial() + " "
@@ -234,7 +230,6 @@ public class Store {
 		int sum = 0;
 		int number = 0;
 		String result = "";
-		
 
 		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
@@ -260,8 +255,9 @@ public class Store {
 
 		}
 
-		result += "\nAll " + number + " purchases, all wasted money - " + sum + "\n";
-		
+		result += "\nAll " + number + " purchases, all wasted money - " + sum
+				+ "\n";
+
 		return result;
 
 	}
@@ -296,14 +292,13 @@ public class Store {
 				result += numberOfPurchaseByWeek[i]
 						+ " purchases were made yesterday\n";
 			} else
-				result += numberOfPurchaseByWeek[i]
-								+ " purchases were made "
-								+ (numberOfPurchaseByWeek.length - i - 1)
-								+ " days ago\n";
+				result += numberOfPurchaseByWeek[i] + " purchases were made "
+						+ (numberOfPurchaseByWeek.length - i - 1)
+						+ " days ago\n";
 
 		}
-		
-		return result;		
+
+		return result;
 
 	}
 

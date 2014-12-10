@@ -119,9 +119,10 @@ public class Person {
 				"Dvizhencev", 32);
 		Person p3 = new Person("Sergey Nagornov", 28, 35500, "Nizhniy Novgorod",
 				"Dvizhencev", 32);
-//
-//		System.out.println(p1.equals(p2));
-//		System.out.println(p1.hashCode() + " " + p2.hashCode());
+
+		System.out.println(p1.equals(p2));
+		System.out.println(p1.hashCode() + " " + p2.hashCode());	
+		System.out.println(p1);
 		
 		Map<String, Person> hm = new HashMap<>(); // String - Key, Person - Value
 		

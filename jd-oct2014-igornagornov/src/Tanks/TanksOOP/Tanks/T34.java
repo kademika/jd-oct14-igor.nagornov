@@ -38,12 +38,12 @@ public class T34 extends Tank {
 	public Action setUp() throws Exception {
 		// TODO Auto-generated method stub
 
-//		 if (step >= actions.length) {
-//		 step = 0;
-//		 }		
-//		 return (Action) actions[step++];
+		 if (step >= actions.length) {
+		 step = 0;
+		 }		
+		 return (Action) actions[step++];
 
-		return Action.NONE;
+//		return Action.NONE;
 	}
 
 	@Override

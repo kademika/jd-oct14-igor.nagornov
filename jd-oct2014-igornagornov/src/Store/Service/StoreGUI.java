@@ -8,14 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import Store.Guitar.Guitar;
 import Store.Guitar.GuitarBrand;
 import Store.Guitar.GuitarType;
@@ -149,17 +152,9 @@ public class StoreGUI {
 
 				} catch (NullPointerException e) {
 					// TODO: handle exception
-					System.err
-							.println("One of fields is empty. You should enter values!");
-				} catch (IllegalArgumentException e) {
-					System.err.println("There is no such guitar in store!");
-				} catch (IllegalStateException e) {
-					System.err
-							.println("Illegal number! We don't have it in store");
-				}
-				
+					System.err.println("One field is empty!");				
+				} 		
 			}
-
 		});
 
 		return panel;
