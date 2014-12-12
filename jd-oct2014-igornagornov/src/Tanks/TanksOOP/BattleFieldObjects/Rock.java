@@ -2,6 +2,8 @@ package Tanks.TanksOOP.BattleFieldObjects;
 
 import java.awt.Color;
 
+import Tanks.TanksOOP.Service.LoadImages;
+
 public class Rock extends BFObject{
 
 	
@@ -10,9 +12,8 @@ public class Rock extends BFObject{
 		super(x, y);
 		color = new Color(100, 100, 100);
 		
-		image = getRocks();
-		
-		imageDestroyed = getExploitedEarth();
+		image = LoadImages.getRocks();		
+		imageDestroyed = LoadImages.getExploitedEarth();
 	}	
 	
 }

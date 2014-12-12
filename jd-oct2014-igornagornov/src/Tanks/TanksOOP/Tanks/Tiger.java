@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.Service.Direction;
+import Tanks.TanksOOP.Service.LoadImages;
 import Tanks.TanksOOP.Tanks.Action;
 
 public class Tiger extends Tank {
@@ -25,12 +26,12 @@ public class Tiger extends Tank {
 		towerColor = new Color(0, 255, 0);
 		lives = 1;
 		setImages();
-		imageDestroyed = getExploitedEarth();
+		imageDestroyed = LoadImages.getExploitedEarth();
 
 	}
 
 	public Tiger(BattleField battlefield) {
-		this(battlefield, 0, 0, Direction.RIGHT);		
+		this(battlefield, 64, 0, Direction.DOWN);		
 	}
 
 	public int getArmor() {

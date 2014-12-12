@@ -3,13 +3,12 @@ package Tanks.TanksOOP.Service;
 public class Launcher {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
+		
+		ChooseTankModelForm chooseTankModelForm = new ChooseTankModelForm();
+		
+		
 
-		ActionField af = new ActionField();
-		af.runTheGame();
-		
-		
-		
 	}
 
 }

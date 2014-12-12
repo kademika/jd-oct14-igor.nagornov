@@ -12,7 +12,7 @@ import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
 import Tanks.TanksOOP.Service.LoadImages;
 
-public abstract class Tank extends LoadImages implements Destroyable, Drawable, InterfaceTank {
+public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 
 	// 1 - top, 2 - bottom, 3 - left, 4 - right
 
@@ -26,6 +26,14 @@ public abstract class Tank extends LoadImages implements Destroyable, Drawable, 
 	protected Color towerColor;
 	protected Image[] images;
 	protected Image imageDestroyed;
+	protected ImageObserver imageObserver = new ImageObserver() {
+		@Override
+		public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
+				int arg4, int arg5) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	};
 
 	public Tank(BattleField battlefield, int x, int y, Direction direction) {
 		this.battlefield = battlefield;
@@ -146,15 +154,7 @@ public abstract class Tank extends LoadImages implements Destroyable, Drawable, 
 				
 				if(this.getDirection().ordinal()!=0){				
 					
-					g.drawImage(images[this.getDirection().ordinal()-1], this.getX(), this.getY(),
-							new ImageObserver() {
-								@Override
-								public boolean imageUpdate(Image arg0, int arg1,
-										int arg2, int arg3, int arg4, int arg5) {
-									// TODO Auto-generated method stub
-									return false;
-								}
-							});								
+					g.drawImage(images[this.getDirection().ordinal()-1], this.getX(), this.getY(), imageObserver);								
 				}
 				
 			} else {
@@ -177,14 +177,7 @@ public abstract class Tank extends LoadImages implements Destroyable, Drawable, 
 			if (imageDestroyed != null) {
 				g.drawImage(imageDestroyed, getX(), getY(), getX() + 64,
 						getY() + 64, getX(), getY(), getX() + 64, getY() + 64,
-						new ImageObserver() {
-							@Override
-							public boolean imageUpdate(Image arg0, int arg1,
-									int arg2, int arg3, int arg4, int arg5) {
-								// TODO Auto-generated method stub
-								return false;
-							}
-						});
+						imageObserver);
 			} else {
 				 g.setColor(Color.BLACK);
 				 g.fillRect(this.getX(), this.getY(), 64, 64);

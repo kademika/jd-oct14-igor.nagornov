@@ -6,15 +6,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class LoadImages {
-	
-	private Image bricks;	
-	private Image earth;
-	private Image exploitedEarth;
-	private Image rocks;
-	private Image water;
-	private Image eagle;
-	private Image bullet;
-	
+
+	private static Image bricks;
+	private static Image earth;
+	private static Image exploitedEarth;
+	private static Image rocks;
+	private static Image water;
+	private static Image eagle;
+	private static Image bullet;
+
 	public LoadImages() {
 		// TODO Auto-generated constructor stub
 		try {
@@ -22,65 +22,64 @@ public class LoadImages {
 					.getAbsoluteFile());
 		} catch (IOException e) {
 		}
-		
-		try{
+
+		try {
 			bricks = ImageIO.read(new File("bricks.jpg").getAbsoluteFile());
-		}catch(IOException e){			
+		} catch (IOException e) {
 		}
-		
-		try{
+
+		try {
 			earth = ImageIO.read(new File("earth.png").getAbsoluteFile());
-		}catch(IOException e){			
+		} catch (IOException e) {
 		}
-		
-		try{
+
+		try {
 			rocks = ImageIO.read(new File("rocks.png").getAbsoluteFile());
-		}catch(IOException e){			
+		} catch (IOException e) {
 		}
-		
-		try{
+
+		try {
 			water = ImageIO.read(new File("water.png").getAbsoluteFile());
-		}catch(IOException e){			
+		} catch (IOException e) {
 		}
-		
+
 		try {
 			eagle = ImageIO.read(new File("eagle.png"));
 		} catch (IOException e) {
 		}
-		
+
 		try {
 			bullet = ImageIO.read(new File("bullet.png"));
 		} catch (IOException e) {
 		}
-		
-	}	
-	
 
-	public Image getExploitedEarth() {		
-		return exploitedEarth;			
 	}
-	
-	public Image getBricks() {
+
+	public static Image getExploitedEarth() {
+		return exploitedEarth;
+	}
+
+	public static Image getBricks() {
 		return bricks;
 	}
-	
-	public Image getEarth() {
+
+	public static Image getEarth() {
 		return earth;
 	}
-	
-	public Image getRocks() {
+
+	public static Image getRocks() {
 		return rocks;
 	}
-	
-	public Image getWater() {
+
+	public static Image getWater() {
 		return water;
 	}
-	
-	public Image getEagle() {
+
+	public static Image getEagle() {
 		return eagle;
 	}
-	
-	public Image getBullet() {
+
+	public static Image getBullet() {
 		return bullet;
 	}
 

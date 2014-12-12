@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.Service.Direction;
+import Tanks.TanksOOP.Service.LoadImages;
 
 public class BT7 extends Tank {
 
@@ -20,18 +21,18 @@ public class BT7 extends Tank {
 		tankColor = new Color(255, 255, 0);
 		towerColor = new Color(255, 0, 0);
 		setImages();
-		imageDestroyed = getExploitedEarth();
+		imageDestroyed = LoadImages.getExploitedEarth();
 		
 	}
 
 	public BT7(BattleField battlefield) {
-		this(battlefield, 512, 0, Direction.DOWN);		
+		this(battlefield, 64, 0, Direction.DOWN);		
 	}
 
 	@Override
 	public Action setUp() {
 		// TODO Auto-generated method stub
-		return Action.NONE;
+		return Action.CLEAN;
 	}
 
 	@Override

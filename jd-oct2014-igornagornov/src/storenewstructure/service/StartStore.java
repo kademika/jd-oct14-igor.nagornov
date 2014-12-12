@@ -1,6 +1,10 @@
 package storenewstructure.service;
 
+import java.awt.SplashScreen;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import storenewstructure.guitar.AcousticGuitar;
 import storenewstructure.guitar.BassGuitar;
@@ -11,23 +15,29 @@ import storenewstructure.guitar.GuitarType;
 
 public class StartStore {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
+		SplashScreen sp = SplashScreen.getSplashScreen();
+		Thread.sleep(5000);
+		sp.close();
+		
 		Store store = new Store();		
-		fillDB(store.getDb());
+		fillDB(store.getDb());				
 		
-		StoreGUI gui = new StoreGUI(store);					
-		
-		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new Date());					
+		store.newPurchase(GuitarType.BASS, GuitarBrand.GIBSON, "gbg472", 1, "", new GregorianCalendar());					
 
 		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.JACKSON,
-				"JAG637", 1, "Igor Nagornov", new Date(114, 10, 3, 9, 10, 0)); //year-1900, month, day, hour, minute, second
+				"JAG637", 1, "Igor Nagornov", new GregorianCalendar()); 						
  
 		store.newPurchase(GuitarType.ACOUSTIC, GuitarBrand.FENDER,
-				"fag543", 1, "Ivan Petrov", new Date(114, 11, 4, 16, 55, 0));		  	
+				"fag543", 1, "Ivan Petrov", new GregorianCalendar(2014,
+						Calendar.DECEMBER, 9, 14, 40));			
+	   	
+	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new GregorianCalendar(2014,
+				Calendar.DECEMBER, 8, 15, 30));	
 	    
-	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new Date());	
+	    StoreGUI gui = new StoreGUI(store);	
 		
 
 	}

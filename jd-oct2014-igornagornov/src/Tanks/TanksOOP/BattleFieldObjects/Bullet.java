@@ -9,7 +9,7 @@ import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
 import Tanks.TanksOOP.Service.LoadImages;
 
-public class Bullet extends LoadImages implements Destroyable, Drawable{
+public class Bullet implements Destroyable, Drawable{
 
 	private int x;
 	private int y;
@@ -23,7 +23,7 @@ public class Bullet extends LoadImages implements Destroyable, Drawable{
 		this.y = y;
 		this.direction = direction;
 
-		image = getBullet();
+		image = LoadImages.getBullet();
 	}
 
 	public int getX() {

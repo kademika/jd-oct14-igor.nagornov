@@ -3,6 +3,7 @@ package Tanks.TanksOOP.BattleFieldObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Drawable;
 import Tanks.TanksOOP.Service.LoadImages;
 
-public abstract class BFObject extends LoadImages implements Drawable, Destroyable {
+public abstract class BFObject implements Drawable, Destroyable {
 
 	// current position on BF
 	private int x;
@@ -22,6 +23,14 @@ public abstract class BFObject extends LoadImages implements Drawable, Destroyab
 	protected Color color;
 	protected Image image;
 	protected Image imageDestroyed;
+	protected ImageObserver imageObserver = new ImageObserver() {
+		@Override
+		public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3,
+				int arg4, int arg5) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	};
 
 	private boolean isDestroyed = false;
 
@@ -40,36 +49,21 @@ public abstract class BFObject extends LoadImages implements Drawable, Destroyab
 		if (!isDestroyed) {
 			if (image != null) {
 				g.drawImage(image, getX(), getY(), getX() + 64, getY() + 64,
-						getX(), getY(), getX() + 64, getY() + 64,
-						new ImageObserver() {
-							@Override
-							public boolean imageUpdate(Image arg0, int arg1,
-									int arg2, int arg3, int arg4, int arg5) {
-								// TODO Auto-generated method stub
-								return false;
-							}
-						});
+						getX(), getY(), getX() + 64, getY() + 64, imageObserver);
 			} else {
 				g.setColor(this.color);
 				g.fillRect(this.getX(), this.getY(), 64, 64);
 			}
 
 		} else {
-			
+
 			if (imageDestroyed != null) {
 				g.drawImage(imageDestroyed, getX(), getY(), getX() + 64,
 						getY() + 64, getX(), getY(), getX() + 64, getY() + 64,
-						new ImageObserver() {
-							@Override
-							public boolean imageUpdate(Image arg0, int arg1,
-									int arg2, int arg3, int arg4, int arg5) {
-								// TODO Auto-generated method stub
-								return false;
-							}
-						});
+						imageObserver);
 			} else {
-				 g.setColor(Color.BLACK);
-				 g.fillRect(this.getX(), this.getY(), 64, 64);
+				g.setColor(Color.BLACK);
+				g.fillRect(this.getX(), this.getY(), 64, 64);
 			}
 
 		}

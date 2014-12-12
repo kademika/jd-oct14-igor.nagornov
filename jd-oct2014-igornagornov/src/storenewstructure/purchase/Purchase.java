@@ -1,5 +1,6 @@
 package storenewstructure.purchase;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import storenewstructure.customer.Customer;
@@ -11,7 +12,7 @@ public class Purchase {
 	private Customer customer;
 	private Guitar guitar;
 	private int number;
-	private Date date;
+	private Calendar date;
 
 	public Purchase() {
 		// TODO Auto-generated constructor stub
@@ -29,7 +30,7 @@ public class Purchase {
 		return number;
 	}
 
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 
@@ -45,7 +46,7 @@ public class Purchase {
 		this.number = number;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 	

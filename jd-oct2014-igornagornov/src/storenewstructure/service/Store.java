@@ -1,6 +1,9 @@
 package storenewstructure.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import storenewstructure.customer.Customer;
@@ -21,7 +24,7 @@ public class Store {
 	}
 
 	public void newPurchase(GuitarType guitarType, GuitarBrand guitarBrand,
-			String model, int number, String customerName, Date date)
+			String model, int number, String customerName, Calendar date)
 			throws RuntimeException {
 
 		Purchase purchase = new Purchase();
@@ -225,17 +228,20 @@ public class Store {
 		return kol;
 	}
 
-	public String printPurchases(Date date) {
+	public String printPurchases(Calendar date) {
 
 		int sum = 0;
 		int number = 0;
 		String result = "";
 
+		SimpleDateFormat formatter;
+		formatter = new SimpleDateFormat("EEEE dd.MM.YYYY k:mm");
+
 		for (Purchase value : db.getPurchase()) {
 			if (value != null) {
 				if (date != null) {
 
-					if (value.getDate().getDate() != date.getDate()) {
+					if (value.getDate().getTime() != date.getTime()) {
 						continue;
 					}
 
@@ -249,7 +255,8 @@ public class Store {
 						+ value.getGuitar().getModel() + " "
 						+ value.getNumber() + " "
 						+ (value.getNumber() * value.getGuitar().getPrice())
-						+ " " + value.getDate() + "\n";
+						+ " " + formatter.format(value.getDate().getTime())
+						+ "\n";
 
 			}
 
@@ -265,36 +272,43 @@ public class Store {
 	public String printNumberOfPurchasesByWeek() {
 
 		String result = "";
-		Date now = new Date();
+		Calendar now = new GregorianCalendar();;
 		int[] numberOfPurchaseByWeek = new int[7];
 
-		for (Purchase value : db.getPurchase()) {
-			if (value != null) {
+		SimpleDateFormat formatter;
+		formatter = new SimpleDateFormat("EEEE dd.MM.YYYY");
+		
+		for (int i = 0; i < numberOfPurchaseByWeek.length; i++) {
 
-				for (int i = 0; i < numberOfPurchaseByWeek.length; i++) {
-					if (value.getDate().getDate() == now.getDate()
-							- (numberOfPurchaseByWeek.length - 1) + i) {
-						numberOfPurchaseByWeek[i]++;
+			for (Purchase value : db.getPurchase()) {
 
+				{
+					String valueDate = formatter.format(value.getDate()
+							.getTime());
+					String currentDate = formatter.format(now.getTime());
+					
+					if (valueDate.equals(currentDate)) {
+						numberOfPurchaseByWeek[i]++;						
 					}
+
 				}
 
 			}
 
+			now.add(Calendar.DATE, -1);
 		}
 
 		for (int i = 0; i < numberOfPurchaseByWeek.length; i++) {
 
-			if (i == numberOfPurchaseByWeek.length - 1) {
+			if (i == 0) {
 				result += numberOfPurchaseByWeek[i]
 						+ " purchases were made today\n";
-			} else if (i == numberOfPurchaseByWeek.length - 2) {
+			} else if (i == 1) {
 				result += numberOfPurchaseByWeek[i]
 						+ " purchases were made yesterday\n";
 			} else
 				result += numberOfPurchaseByWeek[i] + " purchases were made "
-						+ (numberOfPurchaseByWeek.length - i - 1)
-						+ " days ago\n";
+						+ i + " days ago\n";
 
 		}
 
