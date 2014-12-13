@@ -15,8 +15,8 @@ public class DemoStack {
 		stack.pop();
 		stack.pop();
 		stack.pop();
-		stack.pop();
-		stack.pop();
+//		stack.pop();
+//		stack.pop();
 		
 		stack.printStack();		
 		System.out.println(stack.peak());

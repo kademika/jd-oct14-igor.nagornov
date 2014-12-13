@@ -78,7 +78,19 @@ public class BattleField implements Drawable{
 	public void draw(Graphics g) {
 		for (int j = 0; j < battleField.length; j++) {
 			for (int k = 0; k < battleField.length; k++) {
-				battleField[j][k].draw(g); 
+				if(!(battleField[j][k] instanceof Water)){
+					battleField[j][k].draw(g);					
+				}				 
+			}
+		}
+	}
+	
+	public void drawWater(Graphics g){
+		for (int j = 0; j < battleField.length; j++) {
+			for (int k = 0; k < battleField.length; k++) {
+				if(battleField[j][k] instanceof Water){
+					battleField[j][k].draw(g);					
+				}				 
 			}
 		}
 	}

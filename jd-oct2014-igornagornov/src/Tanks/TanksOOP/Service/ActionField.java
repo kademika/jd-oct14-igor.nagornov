@@ -3,11 +3,9 @@ package Tanks.TanksOOP.Service;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
 import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Brick;
@@ -25,42 +23,40 @@ import Tanks.TanksOOP.Tanks.Tiger;
 public class ActionField extends JPanel {
 
 	final boolean COLORDED_MODE = false;
-	private BattleField battlefield;
-	private Tank defender;
-	private Tank agressor;
-	private Bullet bullet;
+	private BattleField battlefield = new BattleField();
+	private Tank defender = new T34(battlefield, 128, 512, Direction.UP);
+	private Tank agressor = new Tiger(battlefield);
+	private Bullet bullet = new Bullet(-100, -100, Direction.NONE);
 	
+
 	public ActionField() {
 		// TODO Auto-generated constructor stub
-		
-		battlefield = new BattleField();
-		defender = new T34(battlefield, 128, 512, Direction.UP);
-//		defender = new T34(battlefield, 512, 0, Direction.LEFT);
-		
-		bullet = new Bullet(-100, -100, Direction.NONE);
-		
-		JFrame frame = new JFrame("BATTLE FIELD, OOP");
-		frame.setLocation(750, 150);
-		frame.setMinimumSize(new Dimension(battlefield.getBF_WIDTH(),
+
+		new ChooseTankModelForm(this);
+
+		JFrame mainFrame = new JFrame("BATTLE FIELD, OOP");
+		mainFrame.setLocation(750, 150);
+		mainFrame.setMinimumSize(new Dimension(battlefield.getBF_WIDTH(),
 				battlefield.getBF_HEIGHT() + 22));
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.getContentPane().add(this);
-		frame.pack();
-		frame.setVisible(true);
+		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		mainFrame.getContentPane().add(this);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+
 	}
-	
-	public void setAgressor(boolean isTigerSelected){
-		if(!isTigerSelected){
+
+	public void setAgressor(boolean isTigerSelected) {
+		if (!isTigerSelected) {
 			agressor = new BT7(battlefield);
-		}else{
+		} else {
 			agressor = new Tiger(battlefield);
-		}		
-		
+		}
+
 	}
 
 	void runTheGame() throws Exception {
 
-		while (!agressor.isDestroyed() && !defender.isDestroyed()) {
+		while (!agressor.isDestroyed() && !defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())) {
 			processAction(agressor.setUp(), agressor);
 			processAction(defender.setUp(), defender);
 
@@ -146,7 +142,7 @@ public class ActionField extends JPanel {
 
 	}
 
-	private void processMoveToQuadrant(Tank tank, int v, int h)
+	private void moveToQuadrant(Tank tank, int v, int h)
 			throws Exception {
 
 		String coordinates = getQuadrantXY(v, h);
@@ -202,7 +198,7 @@ public class ActionField extends JPanel {
 		int j = r.nextInt(9);
 
 		if (i != 0 && j != 0) {
-			processMoveToQuadrant(tank, i, j);
+			moveToQuadrant(tank, i, j);
 			Thread.sleep(1000);
 		}
 
@@ -273,7 +269,11 @@ public class ActionField extends JPanel {
 		}
 
 		if (minDistance == 512) {
-			processMoveToRandomQuadrant(tank);
+			if(tank instanceof BT7){
+				processMoveRandom(tank);
+			}else{
+				processMoveToRandomQuadrant(tank);
+			}			
 			return;
 		}
 		tank.turn(Direction.getDirection(direction));
@@ -560,43 +560,13 @@ public class ActionField extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		String defenderPos = getQuadrant(defender.getX() + 32, defender.getY() + 32);
-		int separator = defenderPos.indexOf("_");
-		int defV = Integer.parseInt(defenderPos.substring(0, separator));
-		int defH = Integer.parseInt(defenderPos.substring(separator + 1));
-
-		String agressorPos = getQuadrant(agressor.getX() + 32,
-				agressor.getY() + 32);
-		int agrV = Integer.parseInt(agressorPos.substring(0, separator));
-		int agrH = Integer.parseInt(agressorPos.substring(separator + 1));
-
-		if (battlefield.getBattleField()[defV][defH] instanceof Water) {
-			defender.draw(g);
-			battlefield.draw(g);
-			agressor.draw(g);
-			bullet.draw(g);
-		} else if (battlefield.getBattleField()[agrV][agrH] instanceof Water) {
-			agressor.draw(g);
-			battlefield.draw(g);
-			defender.draw(g);
-			bullet.draw(g);
-		} else {
-			battlefield.draw(g);
-			agressor.draw(g);
-			defender.draw(g);
-			bullet.draw(g);
-		}
+		
+		battlefield.draw(g);
+		agressor.draw(g);
+		defender.draw(g);		
+		battlefield.drawWater(g);
+		bullet.draw(g);	
 
 	}
 
-	public void setAgressor(Tank agressor) {
-		this.agressor = agressor;
-	}
-	
-
-	public BattleField getBattlefield() {
-		return battlefield;
-	}
-	
 }

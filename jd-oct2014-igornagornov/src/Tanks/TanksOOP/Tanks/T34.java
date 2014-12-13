@@ -13,7 +13,7 @@ import Tanks.TanksOOP.Service.LoadImages;
 
 public class T34 extends Tank {
 
-	 private Action[] actions = new Action[] {Action.MOVE_RANDOM, Action.FIRE, Action.MOVE_TO_RANDOM_QUADRANT, Action.FIRE};
+	 private Action[] actions = new Action[] {Action.MOVE_TO_RANDOM_QUADRANT, Action.FIRE};
 	 private int step = 0;
 
 	public T34(BattleField battlefield, int x, int y, Direction direction) {
@@ -39,7 +39,7 @@ public class T34 extends Tank {
 		 }		
 		 return (Action) actions[step++];
 
-//		return Action.NONE;
+//		return Action.CLEAN;
 	}
 
 	@Override
