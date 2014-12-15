@@ -8,7 +8,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
+import Tanks.TanksOOP.BattleFieldObjects.Eagle;
+import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.LoadImages;
 import Tanks.TanksOOP.Tanks.Action;
@@ -31,7 +34,7 @@ public class Tiger extends Tank {
 	}
 
 	public Tiger(BattleField battlefield) {
-		this(battlefield, 64, 0, Direction.DOWN);		
+		this(battlefield, 64, 0, Direction.DOWN);
 	}
 
 	public int getArmor() {
@@ -101,5 +104,7 @@ public class Tiger extends Tank {
 		if (!this.isDestroyed() && !isRised) {
 			super.draw(g);
 		}
-	}
+	}	
+
+
 }

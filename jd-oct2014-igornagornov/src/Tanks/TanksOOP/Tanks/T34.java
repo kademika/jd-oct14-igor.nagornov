@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -13,8 +14,9 @@ import Tanks.TanksOOP.Service.LoadImages;
 
 public class T34 extends Tank {
 
-	 private Action[] actions = new Action[] {Action.MOVE_TO_RANDOM_QUADRANT, Action.FIRE};
-	 private int step = 0;
+	// private Action[] actions = new Action[] {Action.CLEAN,
+	// Action.MOVE_RANDOM};
+	// private int step = 0;
 
 	public T34(BattleField battlefield, int x, int y, Direction direction) {
 		// TODO Auto-generated constructor stub
@@ -27,19 +29,19 @@ public class T34 extends Tank {
 
 	public T34(BattleField battlefield) {
 		// TODO Auto-generated constructor stub
-		super(battlefield);		
+		super(battlefield);
 	}
 
 	@Override
 	public Action setUp() throws Exception {
 		// TODO Auto-generated method stub
 
-		 if (step >= actions.length) {
-		 step = 0;
-		 }		
-		 return (Action) actions[step++];
+		// if (step >= actions.length) {
+		// step = 0;
+		// }
+		// return (Action) actions[step++];
 
-//		return Action.CLEAN;
+		return Action.CLEAN;
 	}
 
 	@Override
@@ -57,5 +59,30 @@ public class T34 extends Tank {
 		}
 	}
 
+	public String generateNextPosition() throws Exception {
+
+		Random r = new Random();
+		String nextPosition = "8_3";
+
+		int v = r.nextInt(9);
+		int h = r.nextInt(9);
+
+		while (v < 6) {
+			v = r.nextInt(9);
+		}
+
+		while (h < 2 || h > 6) {
+			h = r.nextInt(9);
+		}
+
+		if (v == 8 && h == 4) {
+			nextPosition = "8_3";
+		} else {
+			nextPosition = v + "_" + h;
+		}
+
+		return nextPosition;
+
+	}
 
 }

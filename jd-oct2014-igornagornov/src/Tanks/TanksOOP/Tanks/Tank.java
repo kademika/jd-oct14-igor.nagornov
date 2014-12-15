@@ -5,8 +5,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
 
+import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Bullet;
+import Tanks.TanksOOP.BattleFieldObjects.Eagle;
+import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
@@ -20,7 +23,7 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 	private int y;
 	protected int speed = 20;
 	private Direction direction;
-	private BattleField battlefield;
+	protected BattleField battlefield;
 	private boolean destroyed = false;
 	protected Color tankColor;
 	protected Color towerColor;
@@ -83,28 +86,84 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 		if (this.direction != direction) {
 			this.direction = direction;
 		}
+	}	
+	
+	public boolean findEnemy(int cX, int cY, Tank tank) {
+
+		String coordinates = ActionField.getQuadrant(cX, cY);
+		String coordinatesDefender = ActionField.getQuadrant(tank.getX(),
+				tank.getY());
+
+		if (coordinates.equals(coordinatesDefender)) {
+			return true;
+		}
+
+		return false;
+
+	}	
+
+	public int findObjectAtTop(Tank tank) {
+		int distanceUp = 512;
+
+		int y = this.getY();
+		while (y > 0) {
+			y -= 64;
+
+			if (this.findEnemy(this.getX(), y, tank)) {
+				distanceUp = this.getY() - y - 64;
+				break;
+			}
+		}
+		return distanceUp;
 	}
 
-	public void turnAround() throws Exception {
+	public int findObjectAtBottom(Tank tank) {
+		// TODO Auto-generated method stub
 
-		switch (direction) {
-		case UP: {
-			direction = Direction.DOWN;
-		}
-		case DOWN: {
-			direction = Direction.UP;
-		}
-		case LEFT: {
-			direction = Direction.RIGHT;
-		}
-		case RIGHT: {
-			direction = Direction.LEFT;
-		}
-		default: {
-			direction = Direction.NONE;
-		}
-		}
+		int distanceDown = 512;
 
+		int y = this.getY();
+		while (y < 512) {
+			y += 64;
+
+			if (this.findEnemy(this.getX(), y, tank)) {
+				distanceDown = y - this.getY() - 64;
+				break;
+			}
+		}
+		return distanceDown;
+	}
+	
+	public int findObjectAtLeft(Tank tank) {
+		// TODO Auto-generated method stub
+		int distanceLeft = 512;
+
+		int x = this.getX();
+		while (x > 0) {
+			x -= 64;
+
+			if (this.findEnemy(x, this.getY(), tank)) {
+				distanceLeft = this.getX() - x - 64;
+				break;
+			}
+		}
+		return distanceLeft;
+	}
+
+	public int findObjectAtRight(Tank tank) {
+		// TODO Auto-generated method stub
+		int distanceRight = 512;
+
+		int x = this.getX();
+		while (x < 512) {
+			x += 64;
+
+			if (this.findEnemy(x, this.getY(), tank)) {
+				distanceRight = x - this.getX() - 64;
+				break;
+			}
+		}
+		return distanceRight;
 	}
 
 	public Bullet fire() throws Exception {

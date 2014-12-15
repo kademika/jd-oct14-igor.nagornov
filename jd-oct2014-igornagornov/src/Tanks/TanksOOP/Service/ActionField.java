@@ -10,7 +10,6 @@ import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Brick;
 import Tanks.TanksOOP.BattleFieldObjects.Bullet;
-import Tanks.TanksOOP.BattleFieldObjects.Eagle;
 import Tanks.TanksOOP.BattleFieldObjects.Earth;
 import Tanks.TanksOOP.BattleFieldObjects.Rock;
 import Tanks.TanksOOP.BattleFieldObjects.Water;
@@ -57,20 +56,33 @@ public class ActionField extends JPanel {
 	void runTheGame() throws Exception {
 
 		while (!agressor.isDestroyed() && !defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())) {
-			processAction(agressor.setUp(), agressor);
-			processAction(defender.setUp(), defender);
-
+			if(!agressor.isDestroyed() && !defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())){
+				processAction(agressor.setUp(), agressor);
+				processAction(defender.setUp(), defender);
+			}
 		}
+		
+		String result="";
+		
+		if(agressor.isDestroyed()){
+			result = "Defender win!";
+		}
+		
+		if(defender.isDestroyed() || battlefield.getBattleField()[8][4].isDestroyed()){
+			result = "Agressor win!";
+		}
+		
+		new ShowWinnerForm(result);
 
 	}
 
-	private String getQuadrant(int x, int y) {
+	public static String getQuadrant(int x, int y) {
 		x /= 64;
 		y /= 64;
 		return (y + "_" + x);
 	}
 
-	private String getQuadrantXY(int v, int h) {
+	public static String getQuadrantXY(int v, int h) {
 		return v * 64 + "_" + h * 64;
 	}
 
@@ -251,10 +263,17 @@ public class ActionField extends JPanel {
 
 		int distanceUp, distanceDown, distanceLeft, distanceRight, minDistance = 512;
 
-		distanceUp = findObjectAtTop(tank);
-		distanceDown = findObjectAtBottom(tank);
-		distanceLeft = findObjectAtLeft(tank);
-		distanceRight = findObjectAtRight(tank);
+		if(tank instanceof T34){
+			distanceUp = tank.findObjectAtTop(agressor);
+			distanceDown = tank.findObjectAtBottom(agressor);
+			distanceLeft = tank.findObjectAtLeft(agressor);
+			distanceRight = tank.findObjectAtRight(agressor);
+		}else{
+			distanceUp = tank.findObjectAtTop(defender);
+			distanceDown = tank.findObjectAtBottom(defender);
+			distanceLeft = tank.findObjectAtLeft(defender);
+			distanceRight = tank.findObjectAtRight(defender);
+		}		
 
 		int[] distances = { distanceUp, distanceDown, distanceLeft,
 				distanceRight };
@@ -269,112 +288,31 @@ public class ActionField extends JPanel {
 		}
 
 		if (minDistance == 512) {
-			if(tank instanceof BT7){
-				processMoveRandom(tank);
+			if(tank instanceof T34){				
+				String coordinatesNext = ((T34) tank).generateNextPosition();
+				int v = Integer.parseInt(coordinatesNext.split("_")[0]);
+				int h = Integer.parseInt(coordinatesNext.split("_")[1]);
+				moveToQuadrant(tank, v, h);				
 			}else{
 				processMoveToRandomQuadrant(tank);
-			}			
+			}
+									
 			return;
 		}
+		
 		tank.turn(Direction.getDirection(direction));
-		processFire(tank);
-
-	}
-
-	private int findObjectAtTop(Tank tank) {
-		int distanceUp = 512;
-
-		int y = tank.getY();
-		while (y > 0) {
-			y -= 64;
-			if (tank instanceof BT7) {
-				if (findEagle(tank.getX(), y)) {
-					distanceUp = tank.getY() - y - 64;
-					break;
-				}
-
-			} else {
-				if (!quadrantIsEmpty(tank.getX(), y)) {
-					distanceUp = tank.getY() - y - 64;
-					break;
-				}
+		
+		if(!(tank.isDestroyed())){
+			processFire(tank);
+			if(tank instanceof BT7 || tank instanceof T34){
+				processMoveRandom(tank);
 			}
+		}	
 
-		}
-
-		return distanceUp;
 
 	}
 
-	private int findObjectAtBottom(Tank tank) {
-
-		int distanceDown = 512;
-
-		int y = tank.getY();
-		while (y < 512) {
-			y += 64;
-			if (tank instanceof BT7) {
-				if (findEagle(tank.getX(), y)) {
-					distanceDown = y - tank.getY() - 64;
-					break;
-				}
-			} else {
-				if (!quadrantIsEmpty(tank.getX(), y)) {
-					distanceDown = y - tank.getY() - 64;
-					break;
-				}
-			}
-
-		}
-
-		return distanceDown;
-	}
-
-	private int findObjectAtLeft(Tank tank) {
-		int distanceLeft = 512;
-
-		int x = tank.getX();
-		while (x > 0) {
-			x -= 64;
-			if (tank instanceof BT7) {
-				if (findEagle(x, tank.getY())) {
-					distanceLeft = tank.getX() - x - 64;
-					break;
-				}
-			} else {
-				if (!quadrantIsEmpty(x, tank.getY())) {
-					distanceLeft = tank.getX() - x - 64;
-					break;
-				}
-			}
-
-		}
-
-		return distanceLeft;
-	}
-
-	private int findObjectAtRight(Tank tank) {
-		int distanceRight = 512;
-
-		int x = tank.getX();
-		while (x < 512) {
-			x += 64;
-			if (tank instanceof BT7) {
-				if (findEagle(x, tank.getY())) {
-					distanceRight = x - tank.getX() - 64;
-					break;
-				}
-			} else {
-				if (!quadrantIsEmpty(x, tank.getY())) {
-					distanceRight = x - tank.getX() - 64;
-					break;
-				}
-			}
-
-		}
-
-		return distanceRight;
-	}
+	
 
 	private boolean checkInterception(boolean isTiger) throws Exception {
 
@@ -471,8 +409,7 @@ public class ActionField extends JPanel {
 			} else {
 				if (tank instanceof Tiger) {
 					processFire(tank);
-				} else {
-					tank.turnAround();
+				} else {					
 					processMoveRandom(tank);
 				}
 
@@ -519,28 +456,6 @@ public class ActionField extends JPanel {
 		}
 
 		return true;
-	}
-
-	private boolean findEagle(int cX, int cY) {
-
-		String coordinates;
-		coordinates = getQuadrant(cX, cY);
-
-		int separator = coordinates.indexOf("_");
-		int y = Integer.parseInt(coordinates.substring(0, separator));
-		int x = Integer.parseInt(coordinates.substring(separator + 1));
-
-		if ((y >= 0 && y < battlefield.getDimensionY())
-				&& (x >= 0 && x < battlefield.getDimensionX())) {
-
-			BFObject bfObject = battlefield.scanQuadrant(y, x);
-
-			if (!bfObject.isDestroyed() && bfObject instanceof Eagle) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void agressorRise() throws Exception {
