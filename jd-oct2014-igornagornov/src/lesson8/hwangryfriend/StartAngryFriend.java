@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -24,45 +23,19 @@ public class StartAngryFriend extends JPanel {
 		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setResizable(false);
 		frame.setLocation(300, 100);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		
+		addMouseListener(new MouseAdapter() {			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub				
-				
+				// TODO Auto-generated method stub
 				if (x == e.getX() && y == e.getY()) {
 					win = true;
 				}
 			}
-		});
+		});			
 
-		addMouseMotionListener(new MouseMotionListener() {
+		addMouseMotionListener(new MouseAdapter() {		
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -102,11 +75,6 @@ public class StartAngryFriend extends JPanel {
 				repaint();
 			}
 
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
 		});
 
 		frame.getContentPane().add(this);
@@ -136,7 +104,7 @@ public class StartAngryFriend extends JPanel {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		StartAngryFriend ms = new StartAngryFriend();
+		new StartAngryFriend();
 
 	}
 

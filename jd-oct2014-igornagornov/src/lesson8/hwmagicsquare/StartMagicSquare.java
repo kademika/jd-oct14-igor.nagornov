@@ -3,9 +3,10 @@ package lesson8.hwmagicsquare;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Random;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,34 +21,9 @@ public class StartMagicSquare extends JPanel {
 		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setPreferredSize(new Dimension(800, 600));
 		frame.setLocation(300, 100);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-
-		addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
+		
+		addMouseListener(new MouseAdapter() {				
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -80,7 +56,7 @@ public class StartMagicSquare extends JPanel {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		StartMagicSquare ms = new StartMagicSquare();
+		new StartMagicSquare();
 
 	}
 
