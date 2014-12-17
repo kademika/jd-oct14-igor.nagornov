@@ -1,11 +1,8 @@
 package storenewstructure.purchase;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import storenewstructure.customer.Customer;
 import storenewstructure.guitar.Guitar;
-
 
 public class Purchase {
 

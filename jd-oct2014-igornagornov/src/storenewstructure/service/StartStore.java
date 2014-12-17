@@ -1,9 +1,7 @@
 package storenewstructure.service;
 
 import java.awt.SplashScreen;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import storenewstructure.guitar.AcousticGuitar;
@@ -37,7 +35,7 @@ public class StartStore {
 	    store.newPurchase(GuitarType.ELECTRIC, GuitarBrand.IBANEZ, "JFX500", 3, "", new GregorianCalendar(2014,
 				Calendar.DECEMBER, 8, 15, 30));	
 	    
-	    StoreGUI gui = new StoreGUI(store);	
+	    new StoreGUI(store);	
 		
 
 	}
