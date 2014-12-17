@@ -14,10 +14,6 @@ import Tanks.TanksOOP.Service.LoadImages;
 
 public class T34 extends Tank {
 
-	// private Action[] actions = new Action[] {Action.CLEAN,
-	// Action.MOVE_RANDOM};
-	// private int step = 0;
-
 	public T34(BattleField battlefield, int x, int y, Direction direction) {
 		// TODO Auto-generated constructor stub
 		super(battlefield, x, y, direction);
@@ -35,11 +31,6 @@ public class T34 extends Tank {
 	@Override
 	public Action setUp() throws Exception {
 		// TODO Auto-generated method stub
-
-		// if (step >= actions.length) {
-		// step = 0;
-		// }
-		// return (Action) actions[step++];
 
 		return Action.CLEAN;
 	}
@@ -80,6 +71,20 @@ public class T34 extends Tank {
 		} else {
 			nextPosition = v + "_" + h;
 		}
+
+		return nextPosition;
+
+	}
+	
+	public String generatePositionNearEagle(int h) throws Exception {
+
+		String nextPosition = "8_3";		
+		
+		if(h > 4){
+			nextPosition = "8_5";
+		}else if (h == 4){
+			nextPosition = "7_4";
+		}		
 
 		return nextPosition;
 

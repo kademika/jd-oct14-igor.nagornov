@@ -4,16 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
-
-import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Bullet;
-import Tanks.TanksOOP.BattleFieldObjects.Eagle;
 import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Destroyable;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.Drawable;
-import Tanks.TanksOOP.Service.LoadImages;
 
 public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 
@@ -21,9 +17,10 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 
 	private int x;
 	private int y;
-	protected int speed = 20;
+	protected int speed = 16;
 	private Direction direction;
 	protected BattleField battlefield;
+	private Bullet bullet;
 	private boolean destroyed = false;
 	protected Color tankColor;
 	protected Color towerColor;
@@ -51,6 +48,10 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 
 	public Direction getDirection() {
 		return direction;
+	}
+	
+	public Bullet getBullet() {
+		return bullet;
 	}
 
 	public void setX(int x) {
@@ -168,24 +169,24 @@ public abstract class Tank implements Destroyable, Drawable, InterfaceTank {
 
 	public Bullet fire() throws Exception {
 
-		Bullet bullet = new Bullet(x + 25, y + 25, direction);
+		bullet = new Bullet(x + 25, y + 25, direction);
 
-		if ((this.getDirection() == Direction.UP && this.getY() != 0)
-				|| (this.getDirection() == Direction.DOWN && this.getY() < 512)
-				|| (this.getDirection() == Direction.LEFT && this.getX() != 0)
-				|| (this.getDirection() == Direction.RIGHT && this.getX() < 512)) {
-			if (this.getDirection() == Direction.UP) {
-				bullet = new Bullet(this.getX() + 25, this.getY(), direction);
-			} else if (this.getDirection() == Direction.DOWN) {
-				bullet = new Bullet(this.getX() + 25, this.getY() + 64,
-						direction);
-			} else if (this.getDirection() == Direction.LEFT) {
-				bullet = new Bullet(this.getX(), this.getY() + 25, direction);
-			} else {
-				bullet = new Bullet(this.getX() + 64, this.getY() + 25,
-						direction);
-			}
-		}
+//		if ((this.getDirection() == Direction.UP && this.getY() != 0)
+//				|| (this.getDirection() == Direction.DOWN && this.getY() < 512)
+//				|| (this.getDirection() == Direction.LEFT && this.getX() != 0)
+//				|| (this.getDirection() == Direction.RIGHT && this.getX() < 512)) {
+//			if (this.getDirection() == Direction.UP) {
+//				bullet = new Bullet(this.getX() + 25, this.getY(), direction);
+//			} else if (this.getDirection() == Direction.DOWN) {
+//				bullet = new Bullet(this.getX() + 25, this.getY() + 64,
+//						direction);
+//			} else if (this.getDirection() == Direction.LEFT) {
+//				bullet = new Bullet(this.getX(), this.getY() + 25, direction);
+//			} else {
+//				bullet = new Bullet(this.getX() + 64, this.getY() + 25,
+//						direction);
+//			}
+//		}
 
 		return bullet;
 

@@ -5,13 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
-import Tanks.TanksOOP.BattleFieldObjects.Eagle;
-import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.LoadImages;
 import Tanks.TanksOOP.Tanks.Action;

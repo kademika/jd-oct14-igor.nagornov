@@ -30,7 +30,7 @@ public class ChooseTankModelForm implements ActionListener {
 
 		actionField = af;
 		chooseEnemyFrame = new JFrame("CHOOSE YOUR ENEMY");
-		chooseEnemyFrame.setLocation(750, 150);
+		chooseEnemyFrame.setLocation(700, 300);
 		chooseEnemyFrame.setMinimumSize(new Dimension(300, 200));
 		chooseEnemyFrame
 				.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

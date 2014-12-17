@@ -13,7 +13,7 @@ public class Bullet implements Destroyable, Drawable{
 
 	private int x;
 	private int y;
-	private int speed = 5;
+	private int speed = 3;
 	private Direction direction;
 	private boolean isDestroyed=false;
 	private Image image;

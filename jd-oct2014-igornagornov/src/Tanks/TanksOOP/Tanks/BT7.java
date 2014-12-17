@@ -4,22 +4,22 @@ import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import Tanks.TanksOOP.BattleFieldObjects.BFObject;
 import Tanks.TanksOOP.BattleFieldObjects.BattleField;
 import Tanks.TanksOOP.BattleFieldObjects.Eagle;
-import Tanks.TanksOOP.BattleFieldObjects.Rock;
 import Tanks.TanksOOP.Service.ActionField;
 import Tanks.TanksOOP.Service.Direction;
 import Tanks.TanksOOP.Service.LoadImages;
 
 public class BT7 extends Tank {
 
+	private Action[] actions = new Action[] { Action.CLEAN, Action.MOVE_RANDOM };
+	private int step = 0;
+
 	public BT7(BattleField battlefield, int x, int y, Direction direction) {
 		super(battlefield, x, y, direction);
-		speed = 15;
+		speed = 8;
 		tankColor = new Color(255, 255, 0);
 		towerColor = new Color(255, 0, 0);
 		setImages();
@@ -34,7 +34,10 @@ public class BT7 extends Tank {
 	@Override
 	public Action setUp() {
 		// TODO Auto-generated method stub
-		 return Action.CLEAN;
+		if (step >= actions.length) {
+			step = 0;
+		}
+		return (Action) actions[step++];
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class BT7 extends Tank {
 				&& (x >= 0 && x < battlefield.getDimensionX())) {
 
 			BFObject bfObject = battlefield.scanQuadrant(y, x);
-			
+
 			if (!bfObject.isDestroyed() && bfObject instanceof Eagle) {
 				return true;
 			}
@@ -73,7 +76,7 @@ public class BT7 extends Tank {
 
 		return false;
 	}
-	
+
 	@Override
 	public int findObjectAtTop(Tank tank) {
 		int distanceUp = 512;

@@ -34,7 +34,7 @@ public class ActionField extends JPanel {
 		new ChooseTankModelForm(this);
 
 		JFrame mainFrame = new JFrame("BATTLE FIELD, OOP");
-		mainFrame.setLocation(750, 150);
+		mainFrame.setLocation(500, 150);
 		mainFrame.setMinimumSize(new Dimension(battlefield.getBF_WIDTH(),
 				battlefield.getBF_HEIGHT() + 22));
 		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -56,8 +56,11 @@ public class ActionField extends JPanel {
 	void runTheGame() throws Exception {
 
 		while (!agressor.isDestroyed() && !defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())) {
-			if(!agressor.isDestroyed() && !defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())){
+			if(!agressor.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())){
 				processAction(agressor.setUp(), agressor);
+				
+			}
+			if(!defender.isDestroyed() && !(battlefield.getBattleField()[8][4].isDestroyed())){
 				processAction(defender.setUp(), defender);
 			}
 		}
@@ -201,6 +204,38 @@ public class ActionField extends JPanel {
 		}
 
 	}
+	
+	private void moveAside(Tank tank) throws Exception {
+
+		// TODO Auto-generated method stub
+
+		Direction direction = tank.getDirection();
+		
+		switch(direction){
+		case UP:{
+			direction = Direction.RIGHT;
+			break;
+		}			
+		case DOWN:{
+			direction = Direction.LEFT;
+			break;
+		}
+		case LEFT:{
+			direction = Direction.UP;
+			break;
+		}
+		case RIGHT:{
+			direction = Direction.DOWN;
+			break;
+		}
+		default:
+			break;
+		}	
+		
+		tank.turn(direction);
+		processMove(tank);		
+
+	}
 
 	private void processMoveToRandomQuadrant(Tank tank) throws Exception {
 
@@ -232,11 +267,9 @@ public class ActionField extends JPanel {
 				bullet.updateX(-step);
 			} else {
 				bullet.updateX(step);
-			}
+			}			
 
-			boolean isTiger = (tank instanceof Tiger);
-
-			if (checkInterception(isTiger)) {
+			if (checkInterception()) {
 				bullet.destroy();
 
 				if (agressor instanceof Tiger) {
@@ -249,12 +282,10 @@ public class ActionField extends JPanel {
 						return;
 					}
 				}
-
 			}
 
 			repaint();
 			Thread.sleep(bullet.getSpeed());
-
 		}
 
 	}
@@ -288,8 +319,19 @@ public class ActionField extends JPanel {
 		}
 
 		if (minDistance == 512) {
-			if(tank instanceof T34){				
-				String coordinatesNext = ((T34) tank).generateNextPosition();
+			if(tank instanceof T34){	
+				String coordinatesNext = "8_3";
+				
+				String coordinatesAgressor = getQuadrant(agressor.getX(), agressor.getY());
+				int agrV = Integer.parseInt(coordinatesAgressor.split("_")[0]);
+				int agrH = Integer.parseInt(coordinatesAgressor.split("_")[1]);
+				
+				if(agrV > 4){
+					coordinatesNext =  ((T34) tank).generatePositionNearEagle(agrH);
+				}else{
+					coordinatesNext = ((T34) tank).generateNextPosition();
+				}				
+				
 				int v = Integer.parseInt(coordinatesNext.split("_")[0]);
 				int h = Integer.parseInt(coordinatesNext.split("_")[1]);
 				moveToQuadrant(tank, v, h);				
@@ -304,17 +346,17 @@ public class ActionField extends JPanel {
 		
 		if(!(tank.isDestroyed())){
 			processFire(tank);
-			if(tank instanceof BT7 || tank instanceof T34){
-				processMoveRandom(tank);
+			if(tank instanceof T34){
+				moveAside(tank);
 			}
 		}	
 
 
 	}
 
-	
-
-	private boolean checkInterception(boolean isTiger) throws Exception {
+	private boolean checkInterception() throws Exception {
+		
+		boolean isTiger = (agressor instanceof Tiger);
 
 		String coordinates = getQuadrant(bullet.getX(), bullet.getY());
 		int separator = coordinates.indexOf("_");
@@ -334,7 +376,7 @@ public class ActionField extends JPanel {
 					&& !(bfObject instanceof Water)) {
 
 				if (bfObject instanceof Rock) {
-					if (isTiger) {
+					if (isTiger && bullet == agressor.getBullet()) {
 						battlefield.destroyObject(y, x);
 					}
 				} else {
@@ -344,12 +386,12 @@ public class ActionField extends JPanel {
 				return true;
 			}
 
-			if (coordinatesAgressor.equals(coordinates)) {
+			if (coordinatesAgressor.equals(coordinates)&&agressor.getBullet() != bullet) {
 				agressor.destroy();
 				return true;
 			}
 
-			if (coordinatesDefender.equals(coordinates)) {
+			if (coordinatesDefender.equals(coordinates)&&defender.getBullet() != bullet) {
 				defender.destroy();
 				return true;
 			}
@@ -393,11 +435,11 @@ public class ActionField extends JPanel {
 		int xNext = Integer.parseInt(coordinatesNext.split("_")[1]);
 		String quadrantNext = getQuadrant(xNext, yNext);
 
-		if (tank instanceof T34 && coordinatesAgressor.equals(quadrantNext)) {
+		if (tank instanceof T34 && coordinatesAgressor.equals(quadrantNext) && !(agressor.isDestroyed())) {
 			processFire(tank);
 		}
 		if ((tank instanceof Tiger || tank instanceof BT7)
-				&& coordinatesDefender.equals(quadrantNext)) {
+				&& coordinatesDefender.equals(quadrantNext) && !(defender.isDestroyed())) {
 			processFire(tank);
 		}
 
@@ -412,9 +454,7 @@ public class ActionField extends JPanel {
 				} else {					
 					processMoveRandom(tank);
 				}
-
 			}
-
 		}
 
 		if (quadrantIsEmpty(xNext, yNext)) {

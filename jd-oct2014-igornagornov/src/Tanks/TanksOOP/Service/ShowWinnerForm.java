@@ -8,11 +8,9 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 public class ShowWinnerForm extends JPanel{
 	
@@ -26,7 +24,7 @@ public class ShowWinnerForm extends JPanel{
 		JFrame mainFrame = new JFrame("Game over");
 		mainFrame.setMinimumSize(new Dimension(450,275));
 		mainFrame.setResizable(false);
-		mainFrame.setLocation(750, 150);		
+		mainFrame.setLocation(550, 300);		
 		mainFrame.getContentPane().add(this);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
