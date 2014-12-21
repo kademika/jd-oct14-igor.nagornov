@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -71,14 +72,15 @@ public class ChooseTankModelForm implements ActionListener {
 		chooseEnemyFrame.setVisible(true);
 
 		while (true) {
-			try {
+			try {				
+				Thread.sleep(1000);
 				if (!chooseButtonClicked) {
 					throw new IllegalStateException(
 							"You should choose your enemy and press choose button!");
 				} else {
 					break;
 				}
-			} catch (IllegalStateException e) {
+			} catch (IllegalStateException | InterruptedException e) {
 //				e.printStackTrace();
 			}
 		}
